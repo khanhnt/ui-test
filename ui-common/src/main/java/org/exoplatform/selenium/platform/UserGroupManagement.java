@@ -187,7 +187,9 @@ public class UserGroupManagement extends PlatformBase {
 		String groupName =  "//*[text()='Select Group']/..//*[contains(text(), '${groupName}')]";
 		String groupName_2 =  "//*[text()='selectGroup']/..//*[contains(text(), '${groupName}')]";
 		String groupName_3 = "//*[contains(text(), 'select a group')]/..//*[contains(text(), '${groupName}')]";
+		String groupNameBis =  "//*[text()='selectGroup']/..//*[contains(text(), '${groupName}')]";
 		String[] temp;			 
+		
 		/* Delimiter */
 		String delimiter = "/";
 		Boolean isInPermissionTab = (Boolean) (params.length > 0? params[0]: false);
@@ -203,6 +205,8 @@ public class UserGroupManagement extends PlatformBase {
 					click(By.xpath(groupName_2.replace("${groupName}", temp[i])));
 				}else if (isElementPresent(By.xpath(groupName_3.replace("${groupName}", temp[i])))){
 					click(By.xpath(groupName_3.replace("${groupName}", temp[i])));
+				}else if (isElementPresent(By.xpath(groupNameBis.replace("${groupName}", temp[i])))){
+					click(By.xpath(groupNameBis.replace("${groupName}", temp[i])));
 				}
 			}else{
 				click(By.linkText(temp[i]));

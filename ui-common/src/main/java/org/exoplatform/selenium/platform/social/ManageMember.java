@@ -29,7 +29,7 @@ import org.openqa.selenium.By;
  */
 public class ManageMember extends SpaceManagement {
 	
-	ManageAccount magAcc = new ManageAccount(driver);
+	ManageAccount magAcc;
 	NavigationToolbar nav = new NavigationToolbar(driver);
 	//UserGroupManagement userGroup = new UserGroupManagement(driver);
 

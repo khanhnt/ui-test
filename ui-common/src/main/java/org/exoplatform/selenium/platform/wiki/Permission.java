@@ -209,6 +209,7 @@ public class Permission extends WikiBase{
 		click(button.ELEMENT_ADD_BUTTON);
 		button.save();
 		waitForMessage(MSG_PERMISSION_SAVE);
+
 		dialog.closeMessageDialog();
 		Utils.pause(1000);
 	}
@@ -298,7 +299,6 @@ public class Permission extends WikiBase{
 		if (waitForAndGetElement(bDelete, 10000, 0) != null){
 			info("--Add space permission--");
 			click(bDelete);
-
 			button.save();
 			waitForMessage(MSG_PERMISSION_SAVE);
 			dialog.closeMessageDialog();

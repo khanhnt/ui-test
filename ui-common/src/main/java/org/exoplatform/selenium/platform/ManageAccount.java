@@ -92,6 +92,7 @@ public class ManageAccount extends PlatformBase {
 		
 		button = new Button(driver);
 		dialog = new Dialog(driver);
+		
 		info("--Create a new user using \"New Staff\" portlet--");
 		type(ELEMENT_INPUT_USERNAME, username, true);
 		type(ELEMENT_INPUT_PASSWORD, password, true);

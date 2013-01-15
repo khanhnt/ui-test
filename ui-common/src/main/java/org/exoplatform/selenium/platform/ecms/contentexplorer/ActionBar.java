@@ -393,6 +393,7 @@ public class ActionBar extends EcmsBase{
 		}else if (isElementPresent(By.xpath("//*[contains(text(), '"+ elementName +"')]/../..//*[@name = 'checkbox']"))){
 			click(By.xpath("//*[contains(text(), '"+ elementName +"')]/../..//*[@name = 'checkbox']"), 2);
 		}
+		//click(ELEMENT_UI_CHECKBOX.replace("${element}", elementName), 2);
 		switch (action) {
 		case COPY:
 

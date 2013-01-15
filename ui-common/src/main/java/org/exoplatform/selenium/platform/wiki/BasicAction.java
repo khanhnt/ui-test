@@ -2,6 +2,8 @@ package org.exoplatform.selenium.platform.wiki;
 
 import static org.exoplatform.selenium.TestLogger.info;
 
+import org.exoplatform.selenium.Button;
+import org.exoplatform.selenium.Dialog;
 import org.exoplatform.selenium.ManageAlert;
 import org.exoplatform.selenium.Utils;
 import org.openqa.selenium.By;
@@ -17,8 +19,12 @@ public class BasicAction extends Permission{
 	
 	//Dialog dialog = new Dialog(driver);
 	//Button button = new Button(driver);
-	ManageAlert magAlert;
+	//ManageAlert magAlert;
 
+	Dialog dialog = new Dialog(driver);
+	Button button = new Button(driver);
+	ManageAlert magAlert = new ManageAlert(driver);
+	
 	// Wiki page
 	/*===================== Add Page ====================*/	
 

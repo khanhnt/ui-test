@@ -109,5 +109,4 @@ public class Button extends TestBase{
 		}
 		Utils.pause(500);
 	}
-
 }

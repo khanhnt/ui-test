@@ -76,7 +76,7 @@ public class WikiBase extends ManageMember {
 	public final By ELEMENT_CONTENT_WIKI_FRAME = By.xpath("//div[@class='xRichTextEditor']/iframe");
 
 	//Upload file area
-	public By ELEMENT_UPLOAD_FILE = By.xpath("//div[@class='uploadInput']/input"); 
+	public By ELEMENT_UPLOAD_FILE = By.xpath("//div[@class='uiUploadInput']/input"); 
 	//By.id("WikiUploadFile");
 	public final By ELEMENT_FRAME_UPLOAD=By.xpath("//div[@class='uiUploadInput']/iframe");
 	//("//div[@title='Upload New File']/iframe");

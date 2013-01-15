@@ -14,7 +14,9 @@ public class SocialBase extends PlatformBase {
 	
 	//SpaceManagement spaceMag = new SpaceManagement();
 
-	public final By ELEMENT_JOIN_SPACE_LINK = By.xpath("//div[@class='uiSpaceNavigationPortlet']/div/a/i[contains(@class, 'uiIconPLFMan')]");
+	//public final By ELEMENT_JOIN_SPACE_LINK = By.xpath("//div[@class='uiSpaceNavigationPortlet']/div/a/i[contains(@class, 'uiIconPLFMan')]");
+	public final By ELEMENT_JOIN_SPACE_LINK = By.xpath("//div[@class='uiSpaceNavigationPortlet']/..//div/a[contains(text(),'Join a space')]");
+	
 	// Go to My space link
 	public final By ELEMENT_MY_SPACES_LINK = By.linkText("My Spaces");
 	public final By ELEMENT_ALL_SPACE_LINK = By.linkText("All Spaces");

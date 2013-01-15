@@ -371,23 +371,25 @@ public class EcmsBase extends ManageAccount {
 		info("-- Uploading a thumbnail image --");
 		if (isTextNotPresent("Add Thumbnail Image")){
 			click(ELEMENT_OVERLOAD_THUMBNAIL);
-		}		
+		}
 		Utils.pause(1000);
-		WebElement element = waitForAndGetElement(By.xpath("//div[@class='uiUploadInput']/input"), 5000, 0, 2);
-		((JavascriptExecutor)driver).executeScript("arguments[0].style.visibility = 'visible'; arguments[0].style.height = '1px'; " +
-				"arguments[0].style.width = '1px'; arguments[0].style.opacity = 1", element);
-		((JavascriptExecutor)driver).executeScript("arguments[0].setAttribute('type', 'file');", element);
-		String path = Utils.getAbsoluteFilePath(link);
-		element.sendKeys(path);
-
+		//click(ELEMENT_CHOOSE_THUMBNAIL_IMAGE);
+		//driver.switchTo().frame(waitForAndGetElement(ELEMENT_UPLOAD_IMG_FRAME_XPATH));
+		/*WebElement element = waitForAndGetElement(By.xpath("//*[@name='file']"), DEFAULT_TIMEOUT, 1, 2);		
+		((JavascriptExecutor)driver).executeScript("arguments[0].setAttribute('id', 'MultiUploadInputFiles');", element);
+		*/
+		
+		((JavascriptExecutor)driver).executeScript("arguments[0].style.visibility = 'visible';", waitForAndGetElement(By.xpath("//*[@class = 'uiUploadInput']/div/div/input[@name='file']"), DEFAULT_TIMEOUT, 1, 2));
+		
+		type(By.xpath("//*[@class = 'uiUploadInput']/div/div/input[@name='file']"), Utils.getAbsoluteFilePath(link), false);
+				
 		info("Upload file " + Utils.getAbsoluteFilePath(link));
 		switchToParentWindow();
-	//	String links[] = link.split("/");
-	//	int length = links.length;
+		String links[] = link.split("/");
+		int length = links.length;
 		//waitForElementPresent(By.xpath("//*[contains(text(),'" + links[length-1]+ "')]"));
-	//	click(button.ELEMENT_SAVE_BUTTON);
-	//	waitForElementNotPresent(button.ELEMENT_SAVE_BUTTON);
-		button.closeWindow();
+		click(button.ELEMENT_SAVE_BUTTON);
+		waitForElementNotPresent(button.ELEMENT_SAVE_BUTTON);
 		Utils.pause(1000);
 	}
 

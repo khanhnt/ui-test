@@ -135,6 +135,7 @@ public class Wiki_PagePermission_Add extends BasicAction {
 		goToPagePermission();
 		click(ELEMENT_SELECT_USER);
 		selectUserPermission(user, 1);
+
 		click(button.ELEMENT_ADD_BUTTON);
 		button.save();
 		waitForElementNotPresent(ELEMENT_PAGE_PERMISSION_POPUP);
@@ -176,6 +177,7 @@ public class Wiki_PagePermission_Add extends BasicAction {
 		goToPagePermission();
 		click(ELEMENT_SELECT_USER);
 		selectUserPermission("James", 2);
+
 		click(button.ELEMENT_ADD_BUTTON);
 		button.save();
 		waitForElementNotPresent(ELEMENT_PAGE_PERMISSION_POPUP);
@@ -217,6 +219,7 @@ public class Wiki_PagePermission_Add extends BasicAction {
 		goToPagePermission();
 		click(ELEMENT_SELECT_USER);
 		selectUserPermission("David", 3);
+
 		click(button.ELEMENT_ADD_BUTTON);
 		button.save();
 		waitForElementNotPresent(ELEMENT_PAGE_PERMISSION_POPUP);
@@ -258,6 +261,7 @@ public class Wiki_PagePermission_Add extends BasicAction {
 		goToPagePermission();
 		click(ELEMENT_SELECT_USER);
 		selectUserPermission("james@exoplatform.com", 4);
+
 		click(button.ELEMENT_ADD_BUTTON);
 		button.save();
 		waitForElementNotPresent(ELEMENT_PAGE_PERMISSION_POPUP);
@@ -300,6 +304,7 @@ public class Wiki_PagePermission_Add extends BasicAction {
 		goToPagePermission();
 		click(ELEMENT_SELECT_USER);		
 		selectUserPermission("mary/james");
+
 		click(button.ELEMENT_ADD_BUTTON);
 		button.save();
 		waitForElementNotPresent(ELEMENT_PAGE_PERMISSION_POPUP);

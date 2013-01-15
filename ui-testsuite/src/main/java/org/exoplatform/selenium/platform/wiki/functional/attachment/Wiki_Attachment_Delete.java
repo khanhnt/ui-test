@@ -17,7 +17,7 @@ import org.testng.annotations.Test;
 public class Wiki_Attachment_Delete extends BasicAction{
 	ManageAccount magAcc;
 	Button button;
-	
+
 	@BeforeMethod
 	public void setUpBeforeTest(){
 		initSeleniumTest();
