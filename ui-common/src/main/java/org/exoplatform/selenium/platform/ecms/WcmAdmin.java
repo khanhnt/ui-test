@@ -342,6 +342,7 @@ public class WcmAdmin extends ActionBar {
 	//Add new category tree: step 3 - Add an action to the category tree to complete the creation or update
 	public void addNewCategoryTree_Step3(String actionName, String optionsLifeCycle, String nodeTargetPath){
 		Actions actions = new Actions(driver);
+
 		info("-- Add an action to the category tree --");
 		String ELEMENT_LIFE_CYCLE_LIST_OPTIONS = ".//*[@id='lifecycle']/option[contains(text(), '${option}')]";  
 		type(ELEMENT_ACTION_NAME,actionName,false);		

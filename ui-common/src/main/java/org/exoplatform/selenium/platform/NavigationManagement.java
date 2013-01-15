@@ -4,11 +4,26 @@ import static org.exoplatform.selenium.TestLogger.info;
 import org.exoplatform.selenium.platform.PageManagement;
 import java.util.Map;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 
-public class NavigationManagement extends  PageManagement{
+
+public class NavigationManagement extends PlatformBase {
+	public NavigationManagement(WebDriver dr) {
+		this.driver = dr;
+		// TODO Auto-generated constructor stub
+	}
+	
 	public  final By ELEMENT_INPUT_POPUP_SEARCH_TITLE = By.xpath("//div[@class='QuickSet']/input[@id='pageTitle']"); 
 	public  final By ELEMENT_SELECT_PAGE = By.xpath("//div[@id='UIRepeater']//table//tbody/tr/td[5]/div[@class='ActionContainer']/img");
-
+	public  final String MSG_DELETE_NODE = "Are you sure you want to delete this node?";
+	public  final String MSG_ADD_SAME_NODE = "";
+	
+	public  final String MSG_SAME_SOURCE= "The source and the destination must be different.";
+	public  final String MSG_ADD_SAME_PAGE = "This page name already exists";
+	//Portal site screen
+	public final String ELEMENT_EDIT_LAYOUT = "//div[@class='Label' and text()='${navigation}']/../../td[3]//a[@class='EditLayoutIcon']";
+	public  final By ELEMENT_ACME_EDIT_NAVIGATION = By.xpath("//div[text()='acme']/../..//a[@class='EditNavIcon' and text()='Edit Navigation']");
+	
 	// Add a node for portal at portal navigation
 	public void addNodeForPortal(String currentNavigation, String currentNodeLabel, boolean useAddNodeLink, String nodeName, boolean extendedLabelMode,
 			Map<String, String> languages, String nodeLabel, String pageName, String pageTitle, boolean verifyPage, boolean verifyNode){
@@ -32,7 +47,7 @@ public class NavigationManagement extends  PageManagement{
 				click(ELEMENT_NODE_ADD_NEW);
 			}	
 		}
-		waitForTextPresent("Page Node Settings");
+		waitForTextPresent("Page Node Setting");
 		type(ELEMENT_INPUT_NAME, nodeName, true);
 
 		if (extendedLabelMode) {
@@ -62,7 +77,7 @@ public class NavigationManagement extends  PageManagement{
 			pause(500);
 			click(ELEMENT_SEARCH_SELECT_PAGE_LINK);
 			type(ELEMENT_INPUT_POPUP_SEARCH_TITLE, pageTitle, true);
-			click(ELEMENT_PAGE_MANAGEMENT_SEARCH_BUTTON);
+			click(new PageManagement().ELEMENT_PAGE_MANAGEMENT_SEARCH_BUTTON);
 			click(ELEMENT_SELECT_PAGE);
 		}
 
@@ -125,20 +140,22 @@ public class NavigationManagement extends  PageManagement{
 		String currentNodeHome = ELEMENT_NODE_LINK.replace("${nodeLabel}", nodeNameHome);	
 		String currentNodeName = ELEMENT_NODE_LINK.replace("${nodeLabel}", nodeName);
 		editNavigation(currentNavigation);
+		info("node name = " + nodeName);
+		info("current Node name = " + currentNodeName);
 		//currentNodeHome.equals(ELEMENT_NAVIGATION_NODE_AREA)
 		if (firstLevel){
 			click(currentNodeName);
 			rightClickOnElement(currentNodeName);
 			click(ELEMENT_NODE_DELETE);
-			waitForConfirmation("Are you sure to delete this node?");
-			waitForTextNotPresent(nodeName);
+			waitForConfirmation(MSG_DELETE_NODE);
+			waitForElementNotPresent(currentNodeName);
 			save();		
 		}else {
 			click(currentNodeHome);
 			click(currentNodeName);
 			rightClickOnElement(currentNodeName);
 			click(ELEMENT_NODE_DELETE);
-			waitForConfirmation("Are you sure to delete this node?");
+			waitForConfirmation(MSG_DELETE_NODE);
 			waitForTextNotPresent(nodeName);
 			save();		
 		}

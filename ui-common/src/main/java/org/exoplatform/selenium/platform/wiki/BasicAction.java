@@ -13,6 +13,7 @@ public class BasicAction extends Permission{
 	// Wiki page
 	/*===================== Add Page ====================*/	
 
+
 	/** Add a wiki page from blank
 	 * @author thuntn
 	 * @param title
@@ -26,6 +27,7 @@ public class BasicAction extends Permission{
 		boolean ca = (Boolean) (option.length > 0 ? option[0] : false);
 		String message = (String) (option.length > 1 ? option[1] : "");
 		pause(2000);
+
 		goToAddBlankPage();
 		info("--Add a wiki page from blank--");
 
@@ -92,6 +94,7 @@ public class BasicAction extends Permission{
 			driver.switchTo().defaultContent();
 		}
 		pause(1000);
+
 	}
 
 	/**
@@ -177,6 +180,7 @@ public class BasicAction extends Permission{
 		}
 	}
 
+
 	//=========== Preview wiki page  =========//
 	/**
 	 * Preview wiki page before saving
@@ -213,6 +217,7 @@ public class BasicAction extends Permission{
 		//By btnOK = By.xpath("//input[@type='button' and @value='OK']");
 		//By btnCancel = By.xpath("//input[@type='button' and @value='Cancel']");
 		By messageLocator = By.xpath("//div[@class='confirmMessage' and text()='" + message + "']");
+
 		waitForElementPresent(messageLocator);
 		if(isCancel.length > 0 && (isCancel[0] == true)) 
 			//click(btnCancel);
@@ -232,6 +237,7 @@ public class BasicAction extends Permission{
 	public void addRelatedPage(String wikiPath, String pageName){
 		//goToWikiPage(wikiPath);
 		goToPageInfo(null, wikiPath);
+
 		click(ELEMENT_ADD_MORE_RELATION_BUTTON);
 		click(By.xpath(ELEMENT_SELECTED_PAGE.replace("${relatedPage}", pageName)));
 		pause(500);
@@ -266,6 +272,7 @@ public class BasicAction extends Permission{
 
 	//////////
 	//==== Common of common functions ====//
+
 	/**
 	 * @author vuna2
 	 * @param totalPages: number of created page (int)
@@ -302,6 +309,7 @@ public class BasicAction extends Permission{
 		}
 		addBlankWikiPageInAdvance(totalPages, wikiParentPath, pageInfo[0], pageInfo[1], mode);
 		editPagePermission(user, editInfo[0], editInfo[1], editInfo[2], notDisplay);
+
 	}
 
 	/**
@@ -368,6 +376,7 @@ public class BasicAction extends Permission{
 		waitForElementNotPresent(ELEMENT_PAGE_PERMISSION_POPUP);
 	}
 
+
 	//Wiki page
 	/*================= Paragraph =================*/
 	/**
@@ -386,4 +395,5 @@ public class BasicAction extends Permission{
 		click(ELEMENT_SAVE_BUTTON_ADD_PAGE);
 		waitForElementNotPresent(ELEMENT_SAVE_BUTTON_ADD_PAGE);
 	}
+
 }

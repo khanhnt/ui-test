@@ -4,8 +4,19 @@ import static org.exoplatform.selenium.TestLogger.info;
 
 import java.util.Map;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+
 public class GroupNavigation extends PlatformBase {
+	public  String ELEMENT_GROUP_EDIT_NAVIGATION = "//div[text()='{$navigation}']/../..//a[@class='EditNavIcon' and text() = 'Edit Navigation']";
+//	public  String MSG_SAME_SOURCE = "The source and the destination must be different";
+	public  By ELEMENT_MENU_GROUP_ADMIN = By.linkText("Administration");
+	public  String ELEMENT_NODE_GROUP_LINK = "//div[@class='Node']//a[@title='{$navigation}']";
 	//Add a node for group at group navigation
+
+	public GroupNavigation(WebDriver dr){
+		driver = dr;
+	}
 	public void addNodeForGroup(String currentNavigation, String currentNodeLabel, boolean useAddNodeLink, String nodeName, boolean extendedLabelMode, 
 			Map<String, String> languages, String nodeLabel, String pageName, String pageTitle, boolean verifyPage, boolean verifyNode){
 
@@ -28,7 +39,7 @@ public class GroupNavigation extends PlatformBase {
 				click(ELEMENT_NODE_ADD_NEW);
 			}		
 		}
-		waitForTextPresent("Page Node Settings");
+		waitForTextPresent("Page Node Setting");
 		type(ELEMENT_INPUT_NAME, nodeName, true);
 
 		if (extendedLabelMode) {
@@ -64,7 +75,7 @@ public class GroupNavigation extends PlatformBase {
 		pause(1000);
 		save();
 		if (verifyNode) {
-			waitForTextNotPresent("Page Node Settings");
+			waitForTextNotPresent("Page Node Setting");
 			waitForTextPresent(nodeName);
 			save();
 			waitForTextNotPresent("Navigation Management");

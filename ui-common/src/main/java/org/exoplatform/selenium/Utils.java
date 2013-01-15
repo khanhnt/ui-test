@@ -21,6 +21,13 @@ import org.openqa.selenium.WebDriver;
  */
 public class Utils {
 	public WebDriver driver;
+	public static void pause(long timeInMillis) {
+		try {
+			Thread.sleep(timeInMillis);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
 	//
 	/**
 	 * Capture the screen of the current graphics device 
@@ -32,7 +39,7 @@ public class Utils {
 		String path;
 		BufferedImage screenCapture;
 //		Thread.sleep(3000);
-		TestBase.pause(3000);
+		pause(3000);
 		try {
 			Robot robot = new Robot();
 			Rectangle screenSize = getScreenSize();

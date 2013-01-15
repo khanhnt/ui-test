@@ -15,7 +15,11 @@ import  org.exoplatform.selenium.platform.UserGroupManagement;
  */
 public class GroupTest extends NavigationToolbar{
 	
+<<<<<<< HEAD
 	ManageAccount magAcc = new ManageAccount(driver);
+=======
+	ManageAccount magAcc = new ManageAccount(driver, actions);
+>>>>>>> FQA-499: PLF 4 - Migrate EXOGTN (common + test cases)
 	UserGroupManagement userGroup = new UserGroupManagement(driver);
 	
 	String groupName = "testgroup"	  ; 

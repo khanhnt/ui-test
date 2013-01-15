@@ -16,12 +16,13 @@
  */
 package org.exoplatform.selenium.platform.social;
 
+import  org.exoplatform.selenium.platform.ManageAccount;
+import  org.exoplatform.selenium.platform.NavigationToolbar;
+import  org.exoplatform.selenium.platform.UserGroupManagement;
+import  org.exoplatform.selenium.platform.social.SpaceManagement;
 import static org.exoplatform.selenium.TestLogger.info;
 
 import org.exoplatform.selenium.Utils;
-import org.exoplatform.selenium.platform.ManageAccount;
-import org.exoplatform.selenium.platform.NavigationToolbar;
-import org.exoplatform.selenium.platform.UserGroupManagement;
 import org.openqa.selenium.By;
 
 /**
@@ -30,9 +31,9 @@ import org.openqa.selenium.By;
  */
 public class ManageMember extends SpaceManagement {
 	
-	//ManageAccount magAcc = new ManageAccount(driver, actions);
-	ManageAccount magAcc;
-	NavigationToolbar nav = new NavigationToolbar();
+
+	ManageAccount magAcc = new ManageAccount(driver);
+	NavigationToolbar nav = new NavigationToolbar(driver);
 	UserGroupManagement userGroup = new UserGroupManagement(driver);
 
   //Go to My Spaces > Select a space > Settings

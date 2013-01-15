@@ -3,10 +3,14 @@ package org.exoplatform.selenium;
 import org.apache.log4j.Level;
 import org.testng.ITestResult;
 import org.testng.TestListenerAdapter;
+import org.exoplatform.selenium.TestBase;
 
 public class TestReportListener extends TestListenerAdapter {
 
-	private void logResult(ITestResult result) {
+	//Initial Call of Test Base
+	TestBase capture = new TestBase();
+	
+	private  void logResult(ITestResult result) {
         Level level = Level.INFO;
         String message = "";
         switch (result.getStatus()) {
@@ -38,7 +42,8 @@ public class TestReportListener extends TestListenerAdapter {
     @Override
     public void onTestFailure(ITestResult result) {
 		String sMethodName = result.getMethod().getMethodName();	
-    	Utils.captureScreen(sMethodName + ".PNG");
+
+    	capture.captureScreen(sMethodName + ".PNG");
     	logResult(result);
     }
 

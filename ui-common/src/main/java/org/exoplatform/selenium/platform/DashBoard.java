@@ -6,13 +6,15 @@ import java.util.Map;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
 
 public class DashBoard extends PlatformBase {
 	
-	NavigationToolbar nav = new NavigationToolbar();
+
+	NavigationToolbar nav = new NavigationToolbar(driver);
 	
 	/* Dashboard Page*/
 	public  String MESSAGE_DRAG_GADGETS_HERE = "Drag your gadgets here.";
@@ -20,18 +22,29 @@ public class DashBoard extends PlatformBase {
 	
 	// Getget Directory form
 	public  By ELEMENT_GADGET_URI_INPUT = By.xpath("//input[@id='url']");
-	public  By ELEMENT_ADD_GADGET_BUTTON = By.xpath("//img[@title='Add Gadget']");
 
+	public String MSG_DELETE_GADGET = "Are you sure to delete this gadget?";
+	public String ELEMENT_DELETE_GADGET_ICON = "//span[text()='{$gadget}']/preceding::span[@title='Delete Gadget']";
+	public By ELEMENT_GADGET_URL_INPUT = By.xpath("//input[@id='url']");
+    public By ELEMENT_ADD_GADGET_BUTTON = By.xpath("//img[@title='Add Gadget']");
 	/*------------- Data for Dashboard tab --------------------------------*/
 	public final String ELEMENT_DASHBOARD_NEW_ICON = "//div[@id='UITabPaneDashboard']/a[@class='AddDashboard']";
-	public final String ELEMENT_DASHBOARD_NEW_INPUT = "//div[@id='UITabPaneDashboard']//div[contains(@class, 'UITab SelectedTab')]/input";
+	public final String ELEMENT_DASHBOARD_NEW_INPUT = "//div[@id='UITabPaneDashboard']//div[contains(@class, 'UITab SelectedTab')]/span";
+	public final String ELEMENT_DASHBOARD_INPUT = "//input[@name='{$tab}']";
 	public final String ELEMENT_DASHBOARD_SELECTED_PAGE_WITH_SPECIFIED_NAME = "//div[@id='UITabPaneDashboard']//span[text()='${dashboardName}']";
-	public final String ELEMENT_DASHBOARD_SELECTED = "//div[contains(@class, 'SelectedTab')]//span";
-	public final String ELEMENT_DASHBOARD_SELECTED_DELETE = "//div[contains(@class, 'SelectedTab')]//a[@class='CloseIcon']";
-	public final String ELEMENT_DASHBOARD_HOME_TAB = "div[@class='UITab SelectedTab']";
-	public final String ELEMENT_TAB_LINK = "//div[@id='UITabPaneDashboard']//span[text()='${tabName}']";
+	public  final String ELEMENT_DASHBOARD_SELECTED = "//div[contains(@class, 'SelectedTab')]//span";
+	public  final String ELEMENT_DASHBOARD_SELECTED_DELETE = "//div[contains(@class, 'SelectedTab')]//a[@class='CloseIcon']";
+	public  final String ELEMENT_DASHBOARD_HOME_TAB = "div[@class='UITab SelectedTab']";
+	public  final String ELEMENT_TAB_LINK = "//div[@id='UITabPaneDashboard']//span[text()='${tabName}']";
+	public  final By ELEMENT_CLOSE_DASHBOARD = By.xpath("//div[@id='UIDashboard']//a[@title='Close Window']");
+	public  final String ELEMENT_TAB_NAME = "//span[text()='{$tab}']";
+	public  final String MSG_DELETE_TAB = "Really want to remove this dashboard?";
+
 	/*------------ End of data for Dashboard tab --------------------------*/
 
+	public DashBoard(WebDriver dr){
+		driver = dr;
+	}
 	//Add new page on Dashboard
 	public void addNewTabOnDashboard(String displayName, boolean verify) {
 		info("--Add new page on Dashboard--");
@@ -40,7 +53,7 @@ public class DashBoard extends PlatformBase {
 		WebElement element = waitForAndGetElement(ELEMENT_DASHBOARD_NEW_INPUT);
 		element.sendKeys(Keys.RETURN);
 		if (verify) {
-			waitForAndGetElement("//span[text()='" + displayName + "']");
+			waitForAndGetElement(ELEMENT_TAB_LINK.replace("{$tab}", displayName));
 		}
 	}
 
@@ -55,7 +68,7 @@ public class DashBoard extends PlatformBase {
 			Assert.assertTrue(element.isSelected());
 			select(ELEMENT_SELECT_LANGUAGE, language);
 		}else {
-			uncheck(ELEMENT_CHECKBOX_EXTENDED_LABEL_MODE);
+			uncheck(ELEMENT_CHECKBOX_EXTENDED_LABEL_MODE,false);
 			type(ELEMENT_INPUT_PAGE_DISPLAY_NAME, displayName, true);
 		}
 		click(ELEMENT_PAGE_EDITOR_NEXT_STEP);
@@ -74,7 +87,7 @@ public class DashBoard extends PlatformBase {
 		click(ELEMENT_PAGE_FINISH_BUTTON);
 		waitForTextNotPresent("Page Editor");
 		if (verify) {
-			waitForAndGetElement("//span[text()='" + nodeName + "']");
+			waitForAndGetElement(ELEMENT_TAB_NAME.replace("{$tab}", nodeName));
 		}
 	}
 
@@ -83,43 +96,43 @@ public class DashBoard extends PlatformBase {
 		Actions actions = new Actions(driver);
 		info("--Edit page name on dashboard--");
 		WebElement element;
-		element = waitForAndGetElement("//a[@class='Tablabel' and text()='" + currentName + "']");
+		element = waitForAndGetElement(ELEMENT_TAB_NAME.replace("{$tab}", currentName));
 		actions.moveToElement(element).click(element).build().perform();
 
 		doubleClickOnElement(ELEMENT_DASHBOARD_SELECTED);
 
-		type(ELEMENT_DASHBOARD_NEW_INPUT, newName, true);
-		WebElement elementbis = waitForAndGetElement(ELEMENT_DASHBOARD_NEW_INPUT);
+		type(ELEMENT_DASHBOARD_INPUT.replace("{$tab}", currentName), newName, true);
+		WebElement elementbis = waitForAndGetElement(ELEMENT_DASHBOARD_INPUT);
 		elementbis.sendKeys(Keys.RETURN);
 
-		waitForAndGetElement("//span[text()='" + newName + "']");
-		waitForElementNotPresent("//span[text()='" + currentName + "']");
+		waitForAndGetElement(ELEMENT_TAB_NAME.replace("{$tab}", newName));
+		waitForElementNotPresent(ELEMENT_TAB_NAME.replace("{$tab}", currentName));
 	}
 
 	//Delete a tab
 	public void deleteTabOnDashboard(String currentName, boolean confirm){
-		Actions actions = new Actions(driver);
-		info("--Delete selected page on dashboard--");
 
+		info("--Delete selected page on dashboard--");
+		Actions actions = new Actions(driver);
 		if(confirm){ 
 			WebElement element;
-			element = waitForAndGetElement("//a[@class='Tablabel' and text()='" + currentName + "']");
+			element = waitForAndGetElement(ELEMENT_TAB_NAME.replace("{$tab}", currentName));
 			actions.moveToElement(element).click(element).build().perform();
 			click(ELEMENT_DASHBOARD_SELECTED_DELETE);
 		} else {
 			click(ELEMENT_DASHBOARD_SELECTED_DELETE);
 		}	
-		waitForConfirmation("Are you sure to remove this dashboard?");
-		waitForElementNotPresent("//span[text()='" + currentName + "']");
+		waitForConfirmation(MSG_DELETE_TAB);
+		waitForElementNotPresent(ELEMENT_TAB_NAME.replace("{$tab}", currentName));
 	}
 
 	public void deleteGadgetOnDashboard(String gadgetTitleDisplay)
 	{
-		String action = "Delete Gadget";
-		By deleteGadgetIcon = By.xpath("//span[text()='"+gadgetTitleDisplay+"']/preceding::span[@title='"+action+"']");
+		By deleteGadgetIcon = By.xpath(ELEMENT_DELETE_GADGET_ICON.replace("{$gadget}", gadgetTitleDisplay));
 		waitForAndGetElement(deleteGadgetIcon);
 		click(deleteGadgetIcon);
-		waitForConfirmation("Are you sure to delete this gadget?");
+		waitForConfirmation(MSG_DELETE_GADGET);
 		waitForTextNotPresent(gadgetTitleDisplay);
 	}
+	
 }

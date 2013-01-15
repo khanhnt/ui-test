@@ -92,6 +92,7 @@ public class SocialBase extends PlatformBase {
 	 * Common functions for Social
 	 */
 	// Go to My Space Page
+
 	/**
 	 * Migrate to PLF 4
 	 * <li> Update by @author vuna2 </li>

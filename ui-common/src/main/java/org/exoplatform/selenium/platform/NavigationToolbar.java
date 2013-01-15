@@ -8,7 +8,20 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 
 public class NavigationToolbar extends PlatformBase {
+	public String TEXT_CHANGE_LANGUAGE="Interface Language Setting";
+	public String ELEMENT_LANGUAGE_LINK = "//a[text()='{$language}']"; 
+	public String ELEMENT_REGISTER_TEXT = "Register New Account";
 
+	public NavigationToolbar(WebDriver dr){
+		driver = dr;
+	}
+
+	//Go to Page Creation Wizard
+	public void goToPageCreationWinzard(){
+		mouseOver(ELEMENT_MENU_EDIT_LINK,true);
+		mouseOver(ELEMENT_MENU_PAGE_LINK,true);
+		click(ELEMENT_MENU_ADD_PAGE_LINK);	
+	}
 	//Go to portal sites
 	public void goToPortalSites() {
 		info("--Go to Portal Site Management--");
@@ -128,8 +141,9 @@ public class NavigationToolbar extends PlatformBase {
 
 	//Go to register page in public mode
 	public void goToRegisterPageInPublicMode(WebDriver driverTest){
-		String registerPageLink = baseUrl.concat("/portal/intranet/Register");
+
+		String registerPageLink = DEFAULT_BASEURL.concat("/portal/intranet/Register");
 		driverTest.get(registerPageLink);
-		waitForTextPresent("Create a New Account");
+		waitForTextPresent(ELEMENT_REGISTER_TEXT);
 	}
 }

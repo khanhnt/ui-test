@@ -5,6 +5,7 @@ import org.exoplatform.selenium.platform.ecms.ContentTemplate;
 import org.exoplatform.selenium.platform.ecms.ContextMenu;
 
 import org.exoplatform.selenium.platform.ManageAccount;
+import org.exoplatform.selenium.platform.PlatformBase;
 import org.openqa.selenium.By;
 import org.openqa.selenium.ElementNotVisibleException;
 import org.openqa.selenium.StaleElementReferenceException;
@@ -12,16 +13,16 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 
-public class EcmsBase extends ManageAccount {
+public class EcmsBase extends PlatformBase {
 	
 	public EcmsBase(WebDriver dr) {
-		super(dr);
+		driver = dr;
 		// TODO Auto-generated constructor stub
 	}
 
 	ContentTemplate contentTemp = new ContentTemplate(driver);
 	ContextMenu contMenu = new ContextMenu(driver);
-	
+	ManageAccount account = new ManageAccount(driver);
 	/*
 	 * Portal Acme - http://localhost:8080/portal/acme
 	 * */
@@ -40,7 +41,6 @@ public class EcmsBase extends ManageAccount {
 
 	//Add new Page
 	public final By ELEMENT_NEWPAGE_NAME_TEXTBOX = By.id("pageName");	
-	public final By ELEMENT_NEWPAGE_SAVE_BUTTON = By.xpath("//a[@title='Finish']");
 	public final By ELEMENT_NEWPAGE_LAYOUT_OPTION = By.xpath("//div[@class='DropDownSelectLabel']") ;
 
 	//Page Creation Wizard -> Page Configs
@@ -166,7 +166,7 @@ public class EcmsBase extends ManageAccount {
 		//	mouseOver(ELEMENT_ACCOUNT_NAME_LINK, true);
 		//	mouseOver(ELEMENT_SIGN_OUT_LINK, true);
 		//click(ELEMENT_SIGN_OUT_LINK);
-		signOut();
+		account.signOut();
 		driver.get(baseUrl);
 	}
 
@@ -191,13 +191,6 @@ public class EcmsBase extends ManageAccount {
 		mouseOver(ELEMENT_LINK_SETUP,true);
 		mouseOver(ELEMENT_MENU_CONTENT_LINK,true);
 		click(ELEMENT_MENU_SITE_EXPLORER);
-	}
-
-	//Go to Page Creation Wizard
-	public void goToPageCreationWinzard(){
-		mouseOver(ELEMENT_MENU_EDIT_LINK,true);
-		mouseOver(ELEMENT_MENU_PAGE_LINK,true);
-		click(ELEMENT_MENU_ADD_PAGE_LINK);	
 	}
 
 	//go to a node

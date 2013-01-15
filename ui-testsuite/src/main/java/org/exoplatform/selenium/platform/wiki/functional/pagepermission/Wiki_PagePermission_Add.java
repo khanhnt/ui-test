@@ -1,6 +1,7 @@
 package org.exoplatform.selenium.platform.wiki.functional.pagepermission;
 
 import org.exoplatform.selenium.platform.ManageAccount;
+import org.exoplatform.selenium.platform.ManageApplications;
 import org.exoplatform.selenium.platform.wiki.BasicAction;
 import static org.exoplatform.selenium.TestLogger.info;
 import org.openqa.selenium.By;
@@ -16,6 +17,7 @@ import org.testng.annotations.Test;
 public class Wiki_PagePermission_Add extends BasicAction {
 
 	ManageAccount magAc;
+	ManageApplications app;
 
 	public String DATA_USER_ADMIN = "john";
 	public String DATA_PASS_ADMIN = "gtn";
@@ -26,6 +28,7 @@ public class Wiki_PagePermission_Add extends BasicAction {
 		driver.get(baseUrl);
 		driver.manage().window().maximize();
 		magAc = new ManageAccount(driver);
+		app = new ManageApplications(driver);
 		magAc.signIn(DATA_USER_ADMIN, DATA_PASS_ADMIN);	
 		goToWiki();
 	}
@@ -133,7 +136,7 @@ public class Wiki_PagePermission_Add extends BasicAction {
 		goToPagePermission();
 		click(ELEMENT_SELECT_USER);
 		selectUserPermission(user, 1, 2);
-		click(ELEMENT_ADD_BUTTON);
+		click(app.ELEMENT_ADD_BUTTON);
 		save();
 		waitForElementNotPresent(ELEMENT_PAGE_PERMISSION_POPUP);
 
@@ -174,7 +177,7 @@ public class Wiki_PagePermission_Add extends BasicAction {
 		goToPagePermission();
 		click(ELEMENT_SELECT_USER);
 		selectUserPermission("Jack", 2, 2);
-		click(ELEMENT_ADD_BUTTON);
+		click(app.ELEMENT_ADD_BUTTON);
 		save();
 		waitForElementNotPresent(ELEMENT_PAGE_PERMISSION_POPUP);
 
@@ -215,7 +218,7 @@ public class Wiki_PagePermission_Add extends BasicAction {
 		goToPagePermission();
 		click(ELEMENT_SELECT_USER);
 		selectUserPermission("Miller", 3, 2);
-		click(ELEMENT_ADD_BUTTON);
+		click(app.ELEMENT_ADD_BUTTON);
 		save();
 		waitForElementNotPresent(ELEMENT_PAGE_PERMISSION_POPUP);
 
@@ -256,7 +259,7 @@ public class Wiki_PagePermission_Add extends BasicAction {
 		goToPagePermission();
 		click(ELEMENT_SELECT_USER);
 		selectUserPermission("jack.miller@acme.exoplatform.com", 4, 2);
-		click(ELEMENT_ADD_BUTTON);
+		click(app.ELEMENT_ADD_BUTTON);
 		save();
 		waitForElementNotPresent(ELEMENT_PAGE_PERMISSION_POPUP);
 
@@ -298,7 +301,7 @@ public class Wiki_PagePermission_Add extends BasicAction {
 		goToPagePermission();
 		click(ELEMENT_SELECT_USER);		
 		selectUserPermission("demo/james", 1, 2);
-		click(ELEMENT_ADD_BUTTON);
+		click(app.ELEMENT_ADD_BUTTON);
 		save();
 		waitForElementNotPresent(ELEMENT_PAGE_PERMISSION_POPUP);
 

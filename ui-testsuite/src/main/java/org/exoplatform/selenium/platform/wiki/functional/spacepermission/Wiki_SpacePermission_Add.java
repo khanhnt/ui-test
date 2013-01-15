@@ -5,6 +5,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.exoplatform.selenium.platform.ManageAccount;
+import org.exoplatform.selenium.platform.ManageApplications;
 import org.exoplatform.selenium.platform.social.ManageMember;
 import org.exoplatform.selenium.platform.wiki.BasicAction;
 
@@ -25,6 +26,7 @@ import static org.exoplatform.selenium.TestLogger.info;
 public class Wiki_SpacePermission_Add extends BasicAction {
 
 	ManageAccount magAc;
+	ManageApplications app;
 	
 	String DATA_USER_ADMIN = "john";
 	String DATA_PASS = "gtn";
@@ -35,6 +37,7 @@ public class Wiki_SpacePermission_Add extends BasicAction {
 		driver.get(baseUrl);
 		driver.manage().window().maximize();
 		magAc = new ManageAccount(driver);
+		app = new ManageApplications(driver);
 		magAc.signIn(DATA_USER_ADMIN, DATA_PASS);
 	}
 
@@ -439,7 +442,7 @@ public class Wiki_SpacePermission_Add extends BasicAction {
 		deleteSpacePermission("any");
 		click(ELEMENT_SELECT_USER);
 		selectUserPermission(selectUserPermission, type);
-		click(ELEMENT_ADD_BUTTON);
+		click(app.ELEMENT_ADD_BUTTON);
 		save();
 		waitForMessage(MSG_PERMISSION_SAVE);
 		click(ELEMENT_OK_BUTTON);

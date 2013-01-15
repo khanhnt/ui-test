@@ -15,19 +15,22 @@ public class ManageAccount extends PlatformBase {
 	public final By ELEMENT_INPUT_EMAIL_PUBLIC_MODE = By.id("emailAddress");
 	public final By ELEMENT_REGISTER_ACCOUNT_LINK = By.xpath("//b[contains(text(),'Register')]");
 
-	public final String MESSAGE_SUCCESSFULLY_REGISTERED_ACCOUNT = "You have successfully registered a new account!";
-	public final String MESSAGE_DUPLICATE_ACCOUNT = "This username already exists, please enter another one.";
-	public final String MESSAGE_ALERT_PASSWORD = "Password and Confirm Password must be the same.";
-	public final String MESSAGE_INVALID_EMAIL_ADDRESS = "Your email address is invalid. Please enter another one.";
+	public  final String MESSAGE_SUCCESSFULLY_REGISTERED_ACCOUNT = "You have successfully registered a new account!";
+	public  final String MESSAGE_DUPLICATE_ACCOUNT = "This username already exists, please enter another one.";
+	public  final String MESSAGE_ALERT_PASSWORD = "Password and Confirm Password must be the same.";
+	public  final String MESSAGE_INVALID_EMAIL_ADDRESS = "Your email address is invalid. Please enter another one.";
+	public  final String MSG_SIGN_IN_FAILED ="Sign in failed. Wrong username or password.";
+	public  final String MSG_UPDATE_USER = "The user profile has been updated.";
 	
+
 	public ManageAccount(WebDriver dr){
 		driver = dr;
 	}
-	
+
 	//Sign-in function for eXoGTN
 	public void signIn(String username, String password) {
 		info("--Sign in as " + username + "--");
-		if (isElementPresent(ELEMENT_GO_TO_PORTAL) ){
+		if (waitForAndGetElement(ELEMENT_GO_TO_PORTAL,30000,0) != null ){
 			click(ELEMENT_GO_TO_PORTAL);		
 		}
 		click(ELEMENT_SIGN_IN_LINK);
@@ -59,7 +62,7 @@ public class ManageAccount extends PlatformBase {
 		type(ELEMENT_INPUT_EMAIL, email, true);
 		click(ELEMENT_CHANGE_PASSWORD_TAB);
 		waitForTextPresent("Current Password:");
-
+		
 		type(ELEMENT_INPUT_CURRENTPASSWORD, currentPassword, true);
 		type(ELEMENT_INPUT_NEW_PASSWORD_MYACCOUNT, newPassword, true);
 		type(ELEMENT_INPUT_NEW_CONFIRM_PASSWORD_MYACCOUNT, confirmNewPassword, true);
@@ -80,9 +83,9 @@ public class ManageAccount extends PlatformBase {
 		type(ELEMENT_INPUT_USERNAME, username, true);
 		type(ELEMENT_INPUT_PASSWORD, password, true);
 		type(ELEMENT_INPUT_CONFIRM_PASSWORD, confirmPassword, true);
-		type(ELEMENT_INPUT_FIRSTNAME, firstName, true);
-		type(ELEMENT_INPUT_LASTNAME, lastName, true);
-		type(ELEMENT_INPUT_EMAIL, email, true);
+		type(ELEMENT_INPUT_FIRSTNAME_ADD, firstName, true);
+		type(ELEMENT_INPUT_LASTNAME_ADD, lastName, true);
+		type(ELEMENT_INPUT_EMAIL_ADD, email, true);
 		click(ELEMENT_USER_PROFILE_TAB);
 		waitForTextPresent("Given Name:");
 		type(ELEMENT_INPUT_USER_NAME_GIVEN, userNameGiven, true);

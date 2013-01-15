@@ -1,21 +1,21 @@
 package org.exoplatform.selenium.platform.wiki;
 
 import static org.exoplatform.selenium.TestLogger.info;
-
+/**
+* Migrate to PLF 4
+* <li>Update by @author vuna2</li>
+*/
 import org.exoplatform.selenium.Utils;
-import org.exoplatform.selenium.platform.ManageAccount;
-import org.exoplatform.selenium.platform.UserGroupManagement;
-import org.exoplatform.selenium.platform.social.ManageMember;
+import  org.exoplatform.selenium.platform.ManageAccount;
+import org.exoplatform.selenium.platform.ManageApplications;
+import  org.exoplatform.selenium.platform.social.ManageMember;
+import  org.exoplatform.selenium.platform.UserGroupManagement;
 import org.openqa.selenium.By;
 import org.openqa.selenium.ElementNotVisibleException;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 
-/**
-* Migrate to PLF 4
-* <li>Update by @author vuna2</li>
-*/
 /* @author: Thuntn
  * @date: 14/11/2012
  */
@@ -23,6 +23,7 @@ public class WikiBase extends ManageMember {
 
 	ManageAccount magAcc;
 	UserGroupManagement userGroup;
+	ManageApplications app;
 
 	/*-----------------Page control area-------------------*/
 
@@ -38,10 +39,13 @@ public class WikiBase extends ManageMember {
 
 	//Edit menu
 	public final By ELEMENT_EDIT_PAGE_LINK= By.xpath("//*[@id='UIWikiPageControlArea_PageToolBar']//li/div[contains(text(), 'Edit')]");
+
 	public final By ELEMENT_MINOR_EDIT_BUTTON = By.xpath(".//*[@id='UISubmitToolBarUpper']/a[2]");
 
 	//More menu
 	public final By ELEMENT_MORE_LINK = By.xpath("//*[@id='UIWikiPageControlArea_PageToolBar']//div[contains(text(), 'More')]");
+
+			//("//*[@id='UIWikiPageControlArea_PageToolBar_More_']");
 	public final By ELEMENT_DELETE_LINK = By.linkText("Delete Page");
 	public final By ELEMENT_WATCH_LINK = By.linkText("Watch");
 	public final By ELEMENT_UNWATCH_LINK = By.linkText("Stop Watching");
@@ -68,6 +72,7 @@ public class WikiBase extends ManageMember {
 	//("//a[@title='Preview']");
 	public final By ELEMENT_PREVIEW_SCREEN = By.xpath("//div[@class='popupTitle' and text()='Preview']");
 
+
 	//Richtext mode
 	public final By ELEMENT_SOURCE_EDITOR_BUTTON= By.xpath("//a[contains(text(),'Source Editor')]");
 	public final By ELEMENT_CONTENT_WIKI_FRAME = By.xpath("//div[@class='xRichTextEditor']/iframe");
@@ -93,6 +98,7 @@ public class WikiBase extends ManageMember {
 	public final String ELEMENT_VERIFY_RESULT_SEARCH = "//*[@id='UIWikiAdvanceSearchResult']//span[text()='0']/../strong[text()='${pageName}']";
 	public final String ELEMENT_VERIFY_MESSAGE = "No matching search result.";
 	
+
 	/*-------------------------Move page--------------------*/
 	public final By CLICK_MOVE_ACTION = By.xpath("//*[@id='UIWikiMovePageForm']//*[text()='Move']");
 
@@ -111,6 +117,7 @@ public class WikiBase extends ManageMember {
 	public final String ELEMENT_EDIT_PAGE_PERMISSIONS = "//*[contains(text(), '${user}')]/../..//*[@title='Edit Pages']";
 	public final String ELEMENT_VIEW_PAGE_PERMISSIONS = "//*[contains(text(), '${user}')]/../..//*[@title='View Pages']";
 	public final String ELEMENT_DELETE_PERMISSIONS = "//*[contains(text(), '${user}')]/../..//*[@class='DeleteUserIcon']";
+
 	public final By ELEMENT_PAGE_PERMISSION_POPUP = By.xpath("//span[@class='PopupTitle popupTitle' and text()='Page Permissions']");
 
 	/*----------------------Browse/Space setting/ add, edit, delete template-----------------*/
@@ -124,6 +131,7 @@ public class WikiBase extends ManageMember {
 	public final By ELEMENT_DESC_TEMPLATE_INPUT= By.id("Description");
 	public final By ELEMENT_CONTENT_TEMPLATE_INPUT= By.id("Markup");
 	public final By ELEMENT_SAVE_TEMPLATE_INPUT= By.id("UISubmitToolBarBottom_SaveTemplate_"); 
+
 	//Message
 	public final String MSG_CREATE_TEMPLATE="is created successfully.";
 	public final String MSG_DELETE_TEMPLATE="Are you sure to delete this template?";
@@ -133,6 +141,7 @@ public class WikiBase extends ManageMember {
 	public By ELEMENT_CLOSE_PREVIEW_WINDOW=By.xpath("//div[text()='Preview']/..//*[@class='uiIconClose']");
 	//	Preview template
 	public final String ELEMENT_PREVIEW_NEW_TEMPLATE="//div[text()='${TEMPLATE_TITLE}']/../..//*[@class='uiIconPreview']";
+
 	// Verify effect
 	public final String VERIFY_BOLD_EFFECT="//strong[text()='${TEMPLATE_CONTENT}']";	
 	public final String VERIFY_ITALIC_EFFECT="//em[text()='${TEMPLATE_CONTENT}']";
@@ -187,7 +196,8 @@ public class WikiBase extends ManageMember {
 
 	public final By ELEMENT_ADD_MORE_RELATION_BUTTON = By.xpath("//button[text()='Add More Relations']");
 	//By.linkText("Add More Relations");
-	//public final By ELEMENT_SELECT_BUTTON = By.linkText("Select");
+	public final By ELEMENT_SELECT_BUTTON = By.linkText("Select");
+
 	//public final By ELEMENT_SELECT_BUTTON = By.xpath(".//*[@id='UIWikiSelectPageForm']/div[3]/a[text()='Select']");
 	//public final By ELEMENT_REMOVE_RELATION_BUTTON = 
 
@@ -206,6 +216,7 @@ public class WikiBase extends ManageMember {
 	/*------------------------My spaces/space----------------------------------*/
 	public final String ELEMENT_SPACE_WIKI = "//a[text()='${spaceName}']/..//a[text()='Wiki']";
 	public final By ELEMENT_TITLE_WIKI_HOME = By.xpath("//*[@id='titleInfo' and text()='Wiki Home']");
+
 	public final By ELEMENT_WIKI_TAB = By.xpath("//a[@class='ApplicationAdd' and text()='Wiki']");
 
 	/*-------------------------Go to wiki home---------------------------*/
@@ -232,6 +243,7 @@ public class WikiBase extends ManageMember {
 
 	//================== PLF4/Common function for Wiki ==================//
 	//////
+
 	/**
 	 * @author vuna2
 	 */
@@ -240,7 +252,6 @@ public class WikiBase extends ManageMember {
 		click(ELEMENT_INTRANET_HOME_PAGE);
 		waitForTextPresent("Join a space");
 	}
-
 	/**
 	 * Go to Wiki
 	 * @author hakt
@@ -252,6 +263,7 @@ public class WikiBase extends ManageMember {
 	public void goToWiki(){
 		info("--Go to Wiki--");
 		pause(1000);
+
 		click(ELEMENT_WIKI_LINK);
 		waitForTextPresent("Wiki Home");	
 	}
@@ -266,6 +278,7 @@ public class WikiBase extends ManageMember {
 	}
 
 	/**
+
 	 * Migrate to PLF 4
 	 * <li>Update by @author vuna2</li> 
 	 * Go to add blank wiki page
@@ -278,6 +291,7 @@ public class WikiBase extends ManageMember {
 		mouseOverAndClick(ELEMENT_ADD_PAGE_LINK);
 		mouseOverAndClick(ELEMENT_BLANK_PAGE_LINK);
 	}
+
 
 	/** Go to Delete Page
 	 * @author HangNTT
@@ -314,6 +328,7 @@ public class WikiBase extends ManageMember {
 		String bExpandIcon = "//a[@data-original-title='{$node}']"; 
 		String[] nodes = wikiPath.split("/");
 		int length = nodes.length -1;
+
 		for (int index = 0;index < length;index++)
 		{ 	
 			String node = nodes[index];
@@ -383,6 +398,7 @@ public class WikiBase extends ManageMember {
 		waitForElementPresent(ELEMENT_VERIFY_AFTER_MOVE_PAGE);
 	}
 
+
 	/** 
 	 * Migrate to PLF 4
 	 * <li>Update by @author vuna2</li>
@@ -412,6 +428,7 @@ public class WikiBase extends ManageMember {
 		click(ELEMENT_PERMISSION_LINK);
 		pause(1000);
 		waitForElementPresent(ELEMENT_SELECT_USER);
+
 	}
 
 	/**
@@ -507,6 +524,7 @@ public class WikiBase extends ManageMember {
 		try{
 			//WebElement element = waitForAndGetElementNotDisplay(ELEMENT_UPLOAD_FILE);
 			WebElement element = waitForAndGetElement(ELEMENT_UPLOAD_FILE, 5000, 0, notDisplay);
+
 			element.sendKeys(path);
 
 		} catch (StaleElementReferenceException e) {
@@ -575,6 +593,7 @@ public class WikiBase extends ManageMember {
 	}
 
 	/////////	
+
 	/**function: select a user when set permission for a element
 	 * @author lientm
 	 * @param element: id of element need set permission
@@ -621,7 +640,7 @@ public class WikiBase extends ManageMember {
 				click(ELEMENT_USER, notDisplay);
 			}
 		}	
-		click(ELEMENT_ADD_BUTTON);
+		click(app.ELEMENT_ADD_BUTTON);
 		pause(1000);
 		waitForElementNotPresent(ELEMENT_SEARCH_ICON);
 	}
@@ -634,6 +653,7 @@ public class WikiBase extends ManageMember {
 	public void selectGroupPermission( String grouppath){
 		userGroup = new UserGroupManagement(driver);
 		/*//By ELEMENT_SELECT_GROUP = By.xpath(ELEMENT_SELECT_GROUP_ICON.replace("${element}", element));
+
 		waitForElementPresent(ELEMENT_SELECT_GROUP);
 		click(ELEMENT_SELECT_GROUP);*/
 		waitForElementPresent(ELEMENT_SELECT_GROUP_POPUP);
@@ -650,6 +670,7 @@ public class WikiBase extends ManageMember {
 	public void selectGroupMembership(String groupPath, String membership){
 		userGroup = new UserGroupManagement(driver);
 		/*By ELEMENT_SELECT_ROLE = By.xpath(ELEMENT_SELECT_ROLE_ICON.replace("${element}", element));
+
 		waitForElementPresent(ELEMENT_SELECT_ROLE);
 		click(ELEMENT_SELECT_ROLE);*/
 		waitForElementPresent(ELEMENT_SELECT_ROLE_POPUP);

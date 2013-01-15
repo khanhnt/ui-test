@@ -4,45 +4,53 @@ import static org.exoplatform.selenium.TestLogger.info;
 import org.exoplatform.selenium.platform.NavigationToolbar;
 import java.util.Map;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 
 public class ManageApplications extends PlatformBase {
 	
-	NavigationToolbar nav = new NavigationToolbar();
+	NavigationToolbar nav = new NavigationToolbar(driver);
 	
 	/* Manage Application Page */
 	public By ELEMENT_IMPORT_APPLICATION = By.xpath("//div[text()='Import Applications']");
 	public By ELEMENT_CATEGORIES_AREA_TITLE = By.xpath("//div[text()='Categories']");
 
 	//Gadget
-	public By ELEMENT_GADGET_LINK = By.xpath("//a[contains(text(),'Gadgets')]");
-	public By ELEMENT_ADD_REMOTE_GADGET_LINK = By.xpath("//div[text()='Add a Remote Gadget']");
-	public By ELEMENT_URL_TEXBOX = By.id("url");
-	public By ELEMENT_ADD_BUTTON = By.linkText("Add");
-	
 	
 	//Application Registry portlet -> Edit Portlet
-	public By ELEMENT_APPS_REG_PORTLET = By.className("PortletLayoutDecorator");
-	public By ELEMENT_SHOW_IMPORT_CHECKBOX = By.xpath("//input[@id='showImport']");
-	public By SHOW_IMPORT_CHECKED = By.xpath("//input[@id='showImport' and @value='true']");
 	public By SHOW_IMPORT_UNCHECK = By.xpath("//input[@id='showImport' and @value='false']");
-	public By ELEMENT_ACCESS_PERMISSION_TAB = By.xpath("//div[text()='Access Permission']");
+	
+	public  By ELEMENT_GADGET_LINK = By.xpath("//a[contains(text(),'Gadget')]");
+	public  By ELEMENT_ADD_REMOTE_GADGET_LINK = By.xpath("//div[text()='Add a remote gadget']");
+	public  By ELEMENT_URL_TEXBOX = By.id("url");
+	public  By ELEMENT_ADD_BUTTON = By.xpath("//button[text()='Add']");
+	public  String ELEMENT_GADGET_ICON = "//a[@title='{$gadget}']";
+	public  String ELEMENT_GADGET_DELETE_ICON = "//a[@title='{$gadget}']/..//a[@title='Delete Gadget']";
+	
+	//Application Registry portlet -> Edit Portlet
+	public  By ELEMENT_APPS_REG_PORTLET = By.className("PortletLayoutDecorator");
+	public  By ELEMENT_SHOW_IMPORT_CHECKBOX = By.xpath("//input[@id='showImport']");
+	public  By SHOW_IMPORT_CHECKED = By.xpath("//input[@id='showImport' and @checked='']");
+	public  By ELEMENT_ACCESS_PERMISSION_TAB = By.xpath("//div[text()='Access Permission']");
 	
 	
 	//Category
-	public final By ELEMENT_ADD_NEW_CATEGORY = By.xpath("//div[@id = 'UIApplicationOrganizer']//div//div[@class = 'IconControl AddCategoryIcon']");
-	public final By ELEMENT_FIELD_CATEGORY_NAME = By.id("name");
-	public final By ELEMENT_FIELD_DISPLAY_NAME = By.id("displayName");
-	public final By ELEMENT_FIELD_DESCRIPTION = By.id("description");
-	public final By ELEMENT_CATEGORY_REMOVE_ICON = By.xpath("//div[@id='UIApplicationOrganizer']//div[@class='TabRepeat ClearFix']/a[@class='ControlIcon DeleteIcon']");
-	public final String ELEMENT_CATEGORY_EDIT_ICON = "//div[@id='UIApplicationOrganizer']//div[@class='TabRepeat ClearFix']/a[contains(@title,'${categoryName}')]/../a[@class='ControlIcon EditIcon']";
-	public final String MESSAGE_EMPTY_CATEGORY = "This category is empty. Click the (+) button to add an application.";
-	public final String MESSAGE_CONFIRM_DELETE_CATEGORY = "Are you sure to delete this category and all its applications?";
-	public final String ELEMENT_CATEGORY_NAME = "//a[@title='${categoryName}']";
-	public final By ELEMENT_CATEGORIES_FORM = By.xpath("//div[text()='Categories']"); 
-	public final String IMPORT_APPLICATION_CONFIRMATION="This will automatically import all gadgets and portlets into new categories.";
-	
+	public  final By ELEMENT_ADD_NEW_CATEGORY = By.xpath("//div[@id = 'UIApplicationOrganizer']//div//div[@class = 'IconControl AddCategoryIcon']");
+	public  final By ELEMENT_FIELD_CATEGORY_NAME = By.id("name");
+	public  final By ELEMENT_FIELD_DISPLAY_NAME = By.id("displayName");
+	public  final By ELEMENT_FIELD_DESCRIPTION = By.id("description");
+	public  final By ELEMENT_CATEGORY_REMOVE_ICON = By.xpath("//div[@id='UIApplicationOrganizer']//div[@class='TabRepeat ClearFix']/a[@class='ControlIcon DeleteIcon']");
+	public  final String ELEMENT_CATEGORY_EDIT_ICON = "//div[@id='UIApplicationOrganizer']//div[@class='TabRepeat ClearFix']/a[contains(@title,'${categoryName}')]/../a[@class='ControlIcon EditIcon']";
+	public  final String MESSAGE_EMPTY_CATEGORY = "This category is empty. Click the (+) button to add an application.";
+	public  final String MESSAGE_CONFIRM_DELETE_CATEGORY = "Are you sure to delete this category and all applications on it?";
+	public  final String ELEMENT_CATEGORY_NAME = "//a[@title='${categoryName}']";
+	public  final By ELEMENT_CATEGORIES_FORM = By.xpath("//div[text()='Categories']"); 
+	public  final String IMPORT_APPLICATION_CONFIRMATION="This will automatically import all gadgets and portlets into new categories.";
+
+	public ManageApplications(WebDriver dr){
+		driver = dr;
+	}
 	// Gadget functions
 	public void addRemoteGadget (String Url) {
 		for (int i =0;; i++)
@@ -61,12 +69,13 @@ public class ManageApplications extends PlatformBase {
 		}
 	}
 
-	public void deleteGadget (String gadgetName) {
-		waitForElementPresent(By.xpath("//a[@title='"+gadgetName+"']"));
-		click(By.xpath("//a[@title='"+gadgetName+"']/following::a[@title='Delete Gadget']"));
+
+	public  void deleteGadget (String gadgetName) {
+		waitForElementPresent(ELEMENT_GADGET_ICON.replace("{$gadget}", gadgetName));
+		click(By.xpath(ELEMENT_GADGET_DELETE_ICON.replace("{$gadget}",gadgetName)));
 		waitForConfirmation("Are you sure to delete this gadget?");
 		pause(1000);
-		waitForElementNotPresent(By.xpath("//a[@title='"+gadgetName+"']"));
+		waitForElementNotPresent(ELEMENT_GADGET_ICON.replace("{$gadget}", gadgetName));
 		info("'"+gadgetName+"' is deleted successfully");
 	}
 
@@ -78,12 +87,12 @@ public class ManageApplications extends PlatformBase {
 		info("-- Add a new category --");
 		String ELEMENT_CURRENT_CATEGORY_NAME = ELEMENT_CATEGORY_NAME.replace("${categoryName}", categoryName);
 		click(ELEMENT_ADD_NEW_CATEGORY);
-		waitForTextPresent("Category Name:");
+		waitForTextPresent("Category name:");
 		type(ELEMENT_FIELD_CATEGORY_NAME, categoryName, true);
 		type(ELEMENT_FIELD_DISPLAY_NAME, displayName, true);
 		type(ELEMENT_TEXTAREA_DESCRIPTION, categoryDescription, true);
 		click(ELEMENT_PERMISSION_SETTING_TAB);
-		waitForTextPresent("Permission Settings");
+		waitForTextPresent("Make it public");
 		if (publicMode){
 			check(ELEMENT_CHECKBOX_PUBLIC_MODE);
 			waitForElementNotPresent(ELEMENT_ADD_PERMISSION_BUTTON);
@@ -132,7 +141,7 @@ public class ManageApplications extends PlatformBase {
 	public void deleteCategoryAtManageApplications(String categoryName, boolean verify){
 		info("--Delete category (" + categoryName + ")--");
 		//		String ELEMENT_CURRENT_CATEGORY_NAME = ELEMENT_CATEGORY_NAME.replace("${categoryName}", categoryName);
-		By ELEMENT_CURRENT_CATEGORY_NAME = By.xpath("//a[contains(text(),'"+categoryName+"')]") ;
+		By ELEMENT_CURRENT_CATEGORY_NAME = By.xpath(ELEMENT_CATEGORY_NAME.replace("${category}", categoryName)) ;
 		click(ELEMENT_CURRENT_CATEGORY_NAME);
 		pause(500);
 		click(ELEMENT_CATEGORY_REMOVE_ICON);
@@ -160,7 +169,7 @@ public class ManageApplications extends PlatformBase {
 		if (checked) {
 			if (!"true".equalsIgnoreCase(status)) check(ELEMNT_PUBLIC_OPTION);
 		} else {
-			if ("true".equalsIgnoreCase(status)) click(ELEMNT_PUBLIC_OPTION);
+			if ("true".equalsIgnoreCase(status)) uncheck(ELEMNT_PUBLIC_OPTION);
 		}
 	}
 

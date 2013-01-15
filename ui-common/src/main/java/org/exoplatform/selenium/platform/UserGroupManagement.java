@@ -7,15 +7,27 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 
+import org.openqa.selenium.StaleElementReferenceException;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
+
 public class UserGroupManagement extends PlatformBase {
+	public  final String MESSAGE_DUPLICATE_USERS = "User \"${username}\" has already the same membership ";
+	public  final String MESSAGE_DUPLICATE_GROUPS = "in the group \"${groupName}\", please select an other membership.";
+	public  final String ELEMENT_USER_INGROUP_DELETE_ICON = "//div[@id='UIGridUser']//div[text()='${username}']/../..//img[@class='DeleteUserIcon']";
+	public  final String GROUP_PLATFORM_ADMIN = "Platform/Administration";
+	public  final String MSG_DELETE_GROUP = "Are you sure you want to delete this group?";
+	public  final String ELEMENT_SELECT_USER_CHECK = "//div[@title='{$user}']/../..//input";
+	public  final String MSG_DELETE_MEMBERSHIP = "Are you sure to delete this membership?";
+	public  final String MSG_DELETE_MANDATORY_MEMBERSHIP = "You can not delete this membership because it is mandatory";
+	public  final By ELEMENT_EDIT_MEMBER= By.xpath("//i[@class='uiIconEdit']");
+	public  final By ELEMENT_SELECT_MEMBERSHIP = By.xpath("//select[@name='membership']");
+	public  final String ELEMENT_MEMBERSHIP_TEXT = "//td/div[@title='{$user}']/following::td/div[@title='{$membership}']";
 	
 	public UserGroupManagement(WebDriver dr){
 		driver = dr;
 	}
 	
-	public  final String MESSAGE_DUPLICATE_USERS = "User \"${username}\" has already the same membership ";
-	public  final String MESSAGE_DUPLICATE_GROUPS = "in the group \"${groupName}\", please select another one.";
-	public  final String ELEMENT_USER_INGROUP_DELETE_ICON = "//div[@id='UIGridUser']//div[text()='${username}']/../..//img[@class='DeleteUserIcon']";
 
 	//User Management -> Edit User form
 	public  final String ELEMENT_USER_MEMBERSHIP_TAB = "//div[text()='User Membership' and @class='MiddleTab']";
@@ -108,7 +120,7 @@ public class UserGroupManagement extends PlatformBase {
 			click(ELEMENT_GROUP_SEARCH_USER_ICON);
 			waitForTextPresent("Select User");
 			for (String user : users) {
-				check("//input[@name='" + user + "']");
+				check(By.id(user));
 			}
 			click(ELEMENT_GROUP_SEARCH_POPUP_ADD_ICON);
 			pause(500);
@@ -194,7 +206,7 @@ public class UserGroupManagement extends PlatformBase {
 		int waitTime= wait.length > 0 ? wait[0]: DEFAULT_TIMEOUT;
 		click(ELEMENT_GROUP_REMOVE_ICON);
 
-		waitForConfirmation("Are you sure to delete this group?");
+		waitForConfirmation(MSG_DELETE_GROUP);
 		if (verify) {
 			waitForElementNotPresent("//a[@title='"+ groupName +"']",waitTime);
 		}
@@ -266,7 +278,7 @@ public class UserGroupManagement extends PlatformBase {
 		String deleteIcon = ELEMENT_MEMBERSHIP_DELETE_ICON.replace("${membership}", membershipName);
 		info("--Deleting membership--");
 		click(deleteIcon);
-		waitForConfirmation("Are you sure to delete this membership?");
+		waitForConfirmation(MSG_DELETE_MEMBERSHIP);
 		if (!verifyMembership){
 			waitForTextNotPresent(membershipName);
 		}
@@ -282,5 +294,23 @@ public class UserGroupManagement extends PlatformBase {
 		click(By.xpath("//img[@title='Select Membership']"));
 		selectGroup(groupPath);	
 		click(By.linkText(membership));
+	}
+	public  void check(Object locator) {
+		Actions actions = new Actions(driver);
+		try {
+			WebElement element = waitForAndGetHidenElement(locator);
+
+			if (!element.isSelected()) {
+				actions.click(element).perform();
+			} else {
+				Assert.fail("Element " + locator + " is already checked.");
+			}
+		} catch (StaleElementReferenceException e) {
+			checkCycling(e, DEFAULT_TIMEOUT/WAIT_INTERVAL);
+			pause(WAIT_INTERVAL);
+			check(locator);
+		} finally {
+			loopCount = 0;
+		}
 	}
 }

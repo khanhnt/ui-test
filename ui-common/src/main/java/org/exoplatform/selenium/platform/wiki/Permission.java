@@ -1,7 +1,8 @@
 package org.exoplatform.selenium.platform.wiki;
 
-import static org.exoplatform.selenium.TestLogger.info;
+import static org.exoplatform.selenium.TestLogger.*;
 import org.exoplatform.selenium.platform.ManageAccount;
+import org.exoplatform.selenium.platform.ManageApplications;
 import org.exoplatform.selenium.platform.social.ManageMember;
 import org.openqa.selenium.By;
 
@@ -13,6 +14,7 @@ import org.openqa.selenium.By;
 public class Permission extends WikiBase{
 
 	ManageAccount magAc;
+	ManageApplications app;
 
 	public final String ELEMENT_PERMISSION = "//*[@id='UIPermissionGrid']//*[contains(text(),'${user}')]";
 
@@ -56,7 +58,7 @@ public class Permission extends WikiBase{
 			break;
 			}		
 			pause(1000);
-			click(ELEMENT_ADD_BUTTON);
+			click(app.ELEMENT_ADD_BUTTON);
 			save();
 		}
 	}
@@ -198,7 +200,7 @@ public class Permission extends WikiBase{
 		selectGroupMembership(groupUser[0], groupUser[1]);
 		break;
 		}
-		click(ELEMENT_ADD_BUTTON);
+		click(app.ELEMENT_ADD_BUTTON);
 		save();
 		waitForMessage(MSG_PERMISSION_SAVE);
 		closeMessageDialog();

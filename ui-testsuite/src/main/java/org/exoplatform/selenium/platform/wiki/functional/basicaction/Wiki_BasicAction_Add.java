@@ -20,6 +20,7 @@ import static org.exoplatform.selenium.TestLogger.info;
 import org.exoplatform.selenium.platform.ManageAccount;
 import org.exoplatform.selenium.platform.wiki.Template;
 import org.openqa.selenium.By;
+
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -33,6 +34,7 @@ import org.testng.annotations.Test;
  */
 public class Wiki_BasicAction_Add extends Template{
 
+
 	ManageAccount magAcc;
 
 	@BeforeMethod
@@ -41,6 +43,7 @@ public class Wiki_BasicAction_Add extends Template{
 		driver.get(baseUrl);
 		driver.manage().window().maximize();
 		magAcc = new ManageAccount(driver);
+
 		magAcc.signIn("john", "gtn");
 	}
 
@@ -66,6 +69,7 @@ public class Wiki_BasicAction_Add extends Template{
 		//Reset data
 		goToWikiPage("Wiki Home/"+title);
 		deleteCurrentWikiPage();
+
 	}
 
 	/**
@@ -85,6 +89,7 @@ public class Wiki_BasicAction_Add extends Template{
 		//Reset data
 		goToWikiPage("Wiki Home/"+title);
 		deleteCurrentWikiPage();
+
 	}
 
 	/**
@@ -94,6 +99,7 @@ public class Wiki_BasicAction_Add extends Template{
 	 * Add new page when title is blank
 	 */
 	@Test(groups={"pending"})
+
 	public void test03_AddNewPageWithBlankTitle(){
 		String title = "";
 		String content = "TestCase 003 Content";
@@ -104,6 +110,7 @@ public class Wiki_BasicAction_Add extends Template{
 		goToWiki();
 		addBlankWikiPage(title, content, mode, false, errorMessage);
 	}
+
 
 	/**
 	 * Test Case ID 004
@@ -122,6 +129,7 @@ public class Wiki_BasicAction_Add extends Template{
 		deleteCurrentWikiPage();
 	}
 	
+
 	/**
 	 * Test Case ID 005
 	 * Add new page has the same title with existing page
@@ -145,6 +153,7 @@ public class Wiki_BasicAction_Add extends Template{
 		//Reset data
 		goToWikiPage("Wiki Home/"+title);
 		deleteCurrentWikiPage();
+
 	}
 
 	/**
@@ -158,6 +167,7 @@ public class Wiki_BasicAction_Add extends Template{
 		String[] userGroupR = {"any"};
 		By ELEMEN_USER = By.xpath("//div[@class='Id' and contains(text(),'" + userGroup[0] + "')]");
 		//("//div[@class='Id' and @title='" + userGroup[0] + "']");
+
 		//Add view permission for James
 		goToWiki();
 		deleteSpacePermission(userGroupR[0]);
@@ -178,6 +188,7 @@ public class Wiki_BasicAction_Add extends Template{
 		addSpacePermission(0, userGroupR);
 		//check(By.id("EDITPAGE" + userGroupR[0]));
 		click(By.id("EDITPAGE" + userGroupR[0]), 2);
+
 		save();
 		waitForMessage(MSG_PERMISSION_SAVE);
 		closeMessageDialog();
@@ -406,4 +417,5 @@ public class Wiki_BasicAction_Add extends Template{
 		goToWikiPage("Wiki Home/"+title);
 		deleteCurrentWikiPage();
 	}
+
 }

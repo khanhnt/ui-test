@@ -6,13 +6,14 @@ import  org.exoplatform.selenium.platform.NavigationManagement;
 import java.util.Map;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 
 public class PageManagement extends PlatformBase {
-	
-	NavigationToolbar nav = new NavigationToolbar();
-	NavigationManagement navMag = new NavigationManagement();
+
+	NavigationToolbar nav = new NavigationToolbar(driver);
+	NavigationManagement navMag = new NavigationManagement(driver);
 	
 	/*
 	 * Page Management
@@ -20,34 +21,45 @@ public class PageManagement extends PlatformBase {
 	public String ELEMENT_ADD_PAGE_BUTTON = "//a[text()='Add New Page']";
 	public String ELEMENT_INPUT_SEARCH_TITLE = "//input[@id='pageTitle']";
 	public String ELEMENT_PAGE_MANAGEMENT_SEARCH_BUTTON = "//form[@id='UIPageSearchForm']/div[2]/a[@class='SearchIcon']";
-	public String ELEMENT_PAGE_EDIT_ICON = "//div[@id='UIVirtualList']//table//tr/td/div[contains(@title, '${page}')]/../../td[5]//img[@class='EditInfoIcon']";
-	public String ELEMENT_PAGE_DELETE_ICON = "//div[@id='UIVirtualList']//table//tr/td/div[contains(@title, '${page}')]/../../td[5]//img[@class='DeleteIcon']";
+
+	public String ELEMENT_PAGE_EDIT_ICON = "//div[@id='UIVirtualList']//table//tr/td/div[contains(@title, '${page}')]/../..//i[@class='uiIconEditInfo']";
+	public String ELEMENT_PAGE_DELETE_ICON = "//div[@id='UIVirtualList']//table//tr/td/div[contains(@title, '${page}')]/../..//i[@class='uiIconDelete']";
 
 	//Add New Page Form (shown after click [Add New Page] button in Page Management)
 	public By ELEMENT_PAGE_NAME_INPUT = By.xpath("//input[@id='name']");
 	public By ELEMENT_PAGE_TITLE_INPUT = By.xpath("//input[@id='title']");
 	public String ELEMENT_SELECT_OWNER_TYPE = "//select[@name='ownerType']";
 	public By ELEMENT_OWNER_ID_INTRANET = By.xpath("//input[@id='ownerId' and @value='intranet']");
+
+	public static By ELEMENT_OWNER_ID_GROUP = By.xpath("//select[@name='ownerId']");
 		
 	//Message
-	public String MESSAGE_DELETE_PAGE = "Are you sure to delete this page?";
+	public  String MESSAGE_DELETE_PAGE = "Do you want to delete this page?";
 	
+	public PageManagement(){
+	}
+	
+	public PageManagement(WebDriver dr){
+		driver = dr;
+	}
 	//Add a new page in PageManagement
 	public void addNewPageAtManagePages(PageType type, String pageName, String pageTitle, boolean publicMode, 
 			Map<String, String> permissions, String groupId, String membership ){
 
 		click(ELEMENT_ADD_PAGE_BUTTON);
-		waitForTextPresent("Page Settings");	
+		waitForTextPresent("Page Setting");	
 		switch (type){
 		case PORTAL:
 			select(ELEMENT_SELECT_OWNER_TYPE, "portal");
 			break;
 		case GROUP:	
 			select(ELEMENT_SELECT_OWNER_TYPE, "group");
+			waitForElementPresent(ELEMENT_OWNER_ID_GROUP);
 			break;
 		default:
 			break;
 		}
+		
 		type(ELEMENT_PAGE_NAME_INPUT, pageName, true);
 		type(ELEMENT_PAGE_TITLE_INPUT, pageTitle, true);		
 

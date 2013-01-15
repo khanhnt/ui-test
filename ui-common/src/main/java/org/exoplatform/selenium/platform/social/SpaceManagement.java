@@ -17,9 +17,9 @@
 package org.exoplatform.selenium.platform.social;
 
 import static org.exoplatform.selenium.TestLogger.info;
+import org.exoplatform.selenium.platform.UserGroupManagement;
 
 import org.exoplatform.selenium.Utils;
-import org.exoplatform.selenium.platform.UserGroupManagement;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -50,6 +50,7 @@ public class SpaceManagement extends SocialBase {
 
 	public final By     ELEMENT_USER_GROUP_TAB          = By.xpath("//*[text()='Invite users from group']");
 			//("//div[contains(@class,'MiddleTab') and text()='Invite users from group']");
+
 
 	public final By     ELEMENT_USER_GROUP_CHECKBOX     = By.xpath("//*[@id='useExistingGroup']");
 
@@ -92,6 +93,11 @@ public class SpaceManagement extends SocialBase {
 	 * @param action : Action name 
 	 * @param spaceName : Space name
 	 */
+	/*public void doAction(String action, String spaceName){
+		By actionLink = By.xpath("//a[text()='" + spaceName + "']/../../../div/button[text()='" + action + "']");
+				//("//a[text()='" + spaceName + "']/ancestor::div[contains(@class,'ContentBox')]//a[text()='" + action + "']");
+	public void doAction(String action, String spaceName){
+		By actionLink = By.xpath("//a[text()='" + spaceName + "']/ancestor::div[contains(@class,'ContentBox')]//a[text()='" + action + "']");
 	/*public void doAction(String action, String spaceName){
 		By actionLink = By.xpath("//a[text()='" + spaceName + "']/../../../div/button[text()='" + action + "']");
 				//("//a[text()='" + spaceName + "']/ancestor::div[contains(@class,'ContentBox')]//a[text()='" + action + "']");

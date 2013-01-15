@@ -1,5 +1,9 @@
 package org.exoplatform.selenium.platform;
 
+<<<<<<< HEAD
+=======
+import org.openqa.selenium.interactions.Actions;
+>>>>>>> FQA-499: PLF 4 - Migrate EXOGTN (common + test cases)
 import org.testng.annotations.AfterGroups;
 import org.testng.annotations.BeforeGroups;
 import org.testng.annotations.Test;
@@ -20,8 +24,14 @@ public class LoginTest extends TestBase{
 	public void beforeTest()  {
 		initSeleniumTest();
 		driver.get(baseUrl);
+<<<<<<< HEAD
 		driver.manage().window().maximize();	
 		magAcc = new ManageAccount(driver);
+=======
+		actions = new Actions(driver);
+		driver.manage().window().maximize();	
+		magAcc = new ManageAccount(driver, actions);
+>>>>>>> FQA-499: PLF 4 - Migrate EXOGTN (common + test cases)
 	}
 
 	@AfterGroups(groups = {"platform"})

@@ -13,6 +13,7 @@ public class SiteExplorer extends ActionBar {
 	
 	public SiteExplorer(WebDriver dr) {
 		super(dr);
+
 		// TODO Auto-generated constructor stub
 	}
 
