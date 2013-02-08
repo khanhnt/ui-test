@@ -384,11 +384,12 @@ public class TestBase {
 		}
 		try {
 			WebElement element = waitForAndGetElement(locator, DEFAULT_TIMEOUT, 0, notDisplay);
-			if(element.isEnabled())
-				actions.click(element).perform();
-			else {
-				debug("Element is not enabled");
-				click(locator);
+			if (element != null)
+				if(element.isEnabled())
+					actions.click(element).perform();
+				else {
+					debug("Element is not enabled");
+					click(locator);
 			}
 		} catch (StaleElementReferenceException e) {
 			checkCycling(e, DEFAULT_TIMEOUT/WAIT_INTERVAL);
@@ -451,24 +452,25 @@ public class TestBase {
 		}
 	}
 
-	public void mouseOver(Object locator, boolean safeToSERE) {
+	public void mouseOver(Object locator, boolean safeToSERE, WebDriver...dr) {
 
-		Actions actions = new Actions(driver);
+		Actions actions = new Actions(dr[0]);
 		WebElement element;
 		try {
 			if (safeToSERE) {
 				for (int i = 1; i < ACTION_REPEAT; i++){
 					element = waitForAndGetElement(locator, 5000, 0);
+					info("link users: " + i + ": " + element);
 					if (element == null){
 						pause(WAIT_INTERVAL);
 					} else {
-						actions.moveToElement(element).perform();
+						actions.moveToElement(element).build().perform();
 						break;
 					}
 				}
 			} else {
 				element = waitForAndGetElement(locator);
-				actions.moveToElement(element).perform();
+				actions.moveToElement(element).build().perform();
 			}
 		} catch (StaleElementReferenceException e) {
 			checkCycling(e, DEFAULT_TIMEOUT/WAIT_INTERVAL);

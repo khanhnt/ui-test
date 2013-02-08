@@ -68,9 +68,9 @@ public class PlatformBase extends TestBase {
 	/* End Edit*/
 
 	/* Setting Icon */
-	public final String ELEMENT_LINK_SETUP ="//img[@alt='Setup']";
+	public final String ELEMENT_LINK_SETUP ="//i[@class='uiIconPLF24x24Setup']";
 	//Users
-	public final String ELEMENT_LINK_USERS ="//a[text()='Users']";
+	public final By ELEMENT_LINK_USERS = By.xpath(".//*[@id='UISetupPlatformToolBarPortlet']/ul/li[1]/a//i[@class='uiIconFile']");
 	public final String ELEMENT_LINK_ADD_USERS="//a[text()='Add Users']";
 	//Application
 	public By ELEMENT_APPLICATIONS_LINK = By.linkText("Applications");
@@ -123,8 +123,8 @@ public class PlatformBase extends TestBase {
 	public final String ELEMENT_GROUP_AND_ROLE_LINK = "//a[contains(text(),'Groups and Roles')]";
 
 	//Sign-out
-	public  final String ELEMENT_ACCOUNT_NAME_LINK = "//*[@id='UserNavigationTabsContainer']/a";
-	public  final String ELEMENT_SIGN_OUT_LINK = "//a[@class='LogoutIcon']";
+	public  final String ELEMENT_ACCOUNT_NAME_LINK = "//*[@id='UIUserPlatformToolBarPortlet']/a";
+	public  final String ELEMENT_SIGN_OUT_LINK = "//i[@class='uiIconPLFLogout']";
 
 	/* Username link - END*/
 
@@ -445,6 +445,12 @@ public class PlatformBase extends TestBase {
 			pause(500);
 			verifyLocation(verification, navigationList, page);
 		}
+	}
+	
+	public void goToPage(Object locator){
+		WebElement element = waitForAndGetHidenElement(locator);
+		String links = element.getAttribute("href");
+		driver.get(links);
 	}
 
 	private String makeLink(String node) {

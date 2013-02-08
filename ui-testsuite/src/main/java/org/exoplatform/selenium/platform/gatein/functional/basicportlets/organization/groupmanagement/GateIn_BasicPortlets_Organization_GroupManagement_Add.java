@@ -43,6 +43,7 @@ public class GateIn_BasicPortlets_Organization_GroupManagement_Add extends Platf
 		driver.manage().window().maximize();
 		account = new ManageAccount(driver);
 		navigation = new NavigationToolbar(driver);
+		userGroup = new UserGroupManagement(driver);
 	}
 
 	// Add new group with valid value

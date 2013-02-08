@@ -64,7 +64,7 @@ public class NavigationToolbar extends PlatformBase {
 	//Go to User management page
 	public void goToNewStaff() {
 		//info("Go to New Staff");
-		goToPage(ELEMENT_SEARCH_ICON_REGISTER, ELEMENT_LINK_SETUP, ELEMENT_LINK_USERS, ELEMENT_LINK_ADD_USERS);
+		//goToPage(ELEMENT_SEARCH_ICON_REGISTER, ELEMENT_LINK_SETUP, ELEMENT_LINK_USERS, ELEMENT_LINK_ADD_USERS);
 	}
 
 	//Go to My Account
@@ -91,7 +91,7 @@ public class NavigationToolbar extends PlatformBase {
 		pause(500);
 	}
 
-	//Go to add page locator with Editor
+	/*//Go to add page locator with Editor
 	public void goToAddPageEditor(){
 		Actions actions = new Actions(driver);
 		waitForAndGetElement(By.xpath(ELEMENT_LINK_EDITOR));
@@ -103,21 +103,22 @@ public class NavigationToolbar extends PlatformBase {
 		actions.moveToElement(element).click(element).build().perform();
 		pause(500);
 	}
-
+*/
 	public void goToUsersAndGroupsManagement() {
 		info("--Go to Users and groups management--");
-		goToPage(ELEMENT_LINK_SETUP, ELEMENT_LINK_SETUP, ELEMENT_LINK_USERS, ELEMENT_GROUP_AND_ROLE_LINK);
+		
+		goToPage(ELEMENT_GROUP_AND_ROLE_LINK);
 	}
 
 	//Go to Portal Application Registry
-	public void goToApplicationRegistry() {
+	/*public void goToApplicationRegistry() {
 		info("--Go to Portal Application Registry--");
 		mouseOver(ELEMENT_LINK_SETUP, false);
 		pause(500);
 		waitForElementPresent(ELEMENT_APPLICATIONS_LINK);
 		click(ELEMENT_APPLICATIONS_LINK);
 		pause(500);
-	}
+	}*/
 
 	public void goToEditPageEditor () {
 		info("----Go to Edit page editor----");
