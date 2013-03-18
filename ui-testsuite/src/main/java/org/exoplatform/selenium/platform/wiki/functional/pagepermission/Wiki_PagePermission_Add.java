@@ -1,5 +1,6 @@
 package org.exoplatform.selenium.platform.wiki.functional.pagepermission;
 
+import org.exoplatform.selenium.Button;
 import org.exoplatform.selenium.platform.ManageAccount;
 import org.exoplatform.selenium.platform.wiki.BasicAction;
 import static org.exoplatform.selenium.TestLogger.info;
@@ -16,16 +17,17 @@ import org.testng.annotations.Test;
 public class Wiki_PagePermission_Add extends BasicAction {
 
 	ManageAccount magAc;
-
+	Button button;
+	
 	public String DATA_USER_ADMIN = "john";
-	public String DATA_PASS_ADMIN = "gtn";
+	public String DATA_PASS_ADMIN = "gtngtn";
 
 	@BeforeMethod
 	public void beforeTest(){
 		initSeleniumTest();
 		driver.get(baseUrl);
-		driver.manage().window().maximize();
 		magAc = new ManageAccount(driver);
+		button = new Button(driver);
 		magAc.signIn(DATA_USER_ADMIN, DATA_PASS_ADMIN);	
 		goToWiki();
 	}
@@ -48,7 +50,7 @@ public class Wiki_PagePermission_Add extends BasicAction {
 		String content = "KS_Wiki_PagePermission_Add_Page_Content_01";
 		String new_content = "KS_Wiki_PagePermission_Add_Page_Content_new_01";
 		By element_page = By.linkText(title);
-		String user = "demo";
+		String user = "james";
 		String[] userGroup = {user};
 
 		info("Add a wiki page");
@@ -85,7 +87,7 @@ public class Wiki_PagePermission_Add extends BasicAction {
 		String content = "KS_Wiki_PagePermission_Add_Page_Content_02";
 		String new_content = "KS_Wiki_PagePermission_Add_Page_Content_new_02";
 		By element_page = By.linkText(title);
-		String user = "demo";
+		String user = "james";
 		String[] userGroup = {user};
 
 		info("Add a wiki page");
@@ -94,7 +96,7 @@ public class Wiki_PagePermission_Add extends BasicAction {
 		info("Add user has permission default by selecting directly");
 		deletePagePermission("any");
 		waitForElementNotPresent(ELEMENT_PAGE_PERMISSION_POPUP);
-		addPagePermission(1, userGroup, 2);
+		addPagePermission(1, userGroup);
 		waitForElementNotPresent(ELEMENT_PAGE_PERMISSION_POPUP);
 
 		checkAndEditPagePermission(user, 2);
@@ -122,7 +124,7 @@ public class Wiki_PagePermission_Add extends BasicAction {
 		String content = "KS_Wiki_PagePermission_Add_Page_Content_03";
 		String new_content = "KS_Wiki_PagePermission_Add_Page_Content_new_03";
 		By element_page = By.linkText(title);
-		String user = "demo";
+		String user = "james";
 
 		info("Add a wiki page");
 		addBlankWikiPage(title, content, 0);
@@ -132,9 +134,9 @@ public class Wiki_PagePermission_Add extends BasicAction {
 		waitForElementNotPresent(ELEMENT_PAGE_PERMISSION_POPUP);
 		goToPagePermission();
 		click(ELEMENT_SELECT_USER);
-		selectUserPermission(user, 1, 2);
-		click(ELEMENT_ADD_BUTTON);
-		save();
+		selectUserPermission(user, 1);
+		click(button.ELEMENT_ADD_BUTTON);
+		button.save();
 		waitForElementNotPresent(ELEMENT_PAGE_PERMISSION_POPUP);
 
 		info("Set edit page permission for user");
@@ -163,7 +165,7 @@ public class Wiki_PagePermission_Add extends BasicAction {
 		String content = "KS_Wiki_PagePermission_Add_Page_Content_04";
 		String new_content = "KS_Wiki_PagePermission_Add_Page_Content_new_04";
 		By element_page = By.linkText(title);
-		String user = "demo";
+		String user = "james";
 
 		info("Add a wiki page");
 		addBlankWikiPage(title, content, 0);
@@ -173,9 +175,9 @@ public class Wiki_PagePermission_Add extends BasicAction {
 		waitForElementNotPresent(ELEMENT_PAGE_PERMISSION_POPUP);
 		goToPagePermission();
 		click(ELEMENT_SELECT_USER);
-		selectUserPermission("Jack", 2, 2);
-		click(ELEMENT_ADD_BUTTON);
-		save();
+		selectUserPermission("James", 2);
+		click(button.ELEMENT_ADD_BUTTON);
+		button.save();
 		waitForElementNotPresent(ELEMENT_PAGE_PERMISSION_POPUP);
 
 		info("Set edit page permission for user");
@@ -204,7 +206,7 @@ public class Wiki_PagePermission_Add extends BasicAction {
 		String content = "KS_Wiki_PagePermission_Add_Page_Content_05";
 		String new_content = "KS_Wiki_PagePermission_Add_Page_Content_new_05";
 		By element_page = By.linkText(title);
-		String user = "demo";
+		String user = "james";
 
 		info("Add a wiki page");
 		addBlankWikiPage(title, content, 0);
@@ -214,9 +216,9 @@ public class Wiki_PagePermission_Add extends BasicAction {
 		waitForElementNotPresent(ELEMENT_PAGE_PERMISSION_POPUP);
 		goToPagePermission();
 		click(ELEMENT_SELECT_USER);
-		selectUserPermission("Miller", 3, 2);
-		click(ELEMENT_ADD_BUTTON);
-		save();
+		selectUserPermission("David", 3);
+		click(button.ELEMENT_ADD_BUTTON);
+		button.save();
 		waitForElementNotPresent(ELEMENT_PAGE_PERMISSION_POPUP);
 
 		info("Set edit page permission for user");
@@ -245,7 +247,7 @@ public class Wiki_PagePermission_Add extends BasicAction {
 		String content = "KS_Wiki_PagePermission_Add_Page_Content_06";
 		String new_content = "KS_Wiki_PagePermission_Add_Page_Content_new_06";
 		By element_page = By.linkText(title);
-		String user = "demo";
+		String user = "james";
 
 		info("Add a wiki page");
 		addBlankWikiPage(title, content, 0);
@@ -255,9 +257,9 @@ public class Wiki_PagePermission_Add extends BasicAction {
 		waitForElementNotPresent(ELEMENT_PAGE_PERMISSION_POPUP);
 		goToPagePermission();
 		click(ELEMENT_SELECT_USER);
-		selectUserPermission("jack.miller@acme.exoplatform.com", 4, 2);
-		click(ELEMENT_ADD_BUTTON);
-		save();
+		selectUserPermission("james@exoplatform.com", 4);
+		click(button.ELEMENT_ADD_BUTTON);
+		button.save();
 		waitForElementNotPresent(ELEMENT_PAGE_PERMISSION_POPUP);
 
 		info("Set edit page permission for user");
@@ -277,7 +279,7 @@ public class Wiki_PagePermission_Add extends BasicAction {
 
 	/* case07: Add permission for multi-user at the same time
 	 * add page
-	 * set permission for multi-user have view/edit permission by search email
+	 * set permission for multi-user have view/edit permission
 	 * check user can view/edit page
 	 */
 	@Test
@@ -286,8 +288,8 @@ public class Wiki_PagePermission_Add extends BasicAction {
 		String content = "KS_Wiki_PagePermission_Add_Page_Content_07";
 		String new_content = "KS_Wiki_PagePermission_Add_Page_Content_new_07";
 		By element_page = By.linkText(title);
-		String user1 = "demo";
-		String user2 = "james";
+		String user1 = "james";
+		String user2 = "mary";
 
 		info("Add a wiki page");
 		addBlankWikiPage(title, content, 0);
@@ -297,9 +299,9 @@ public class Wiki_PagePermission_Add extends BasicAction {
 		waitForElementNotPresent(ELEMENT_PAGE_PERMISSION_POPUP);
 		goToPagePermission();
 		click(ELEMENT_SELECT_USER);		
-		selectUserPermission("demo/james", 1, 2);
-		click(ELEMENT_ADD_BUTTON);
-		save();
+		selectUserPermission("mary/james");
+		click(button.ELEMENT_ADD_BUTTON);
+		button.save();
 		waitForElementNotPresent(ELEMENT_PAGE_PERMISSION_POPUP);
 
 		info("Set edit page permission for users");
@@ -307,12 +309,12 @@ public class Wiki_PagePermission_Add extends BasicAction {
 		checkAndEditPagePermission(user2, 2);
 		magAc.signOut();
 
-		info("Check user demo can view/edit wiki page");
+		info("Check user james can view/edit wiki page");
 		magAc.signIn(user1, DATA_PASS_ADMIN);
 		checkViewEditPage(element_page, content, new_content);
 		magAc.signOut();
 
-		info("Check user james can view/edit wiki page");
+		info("Check user mary can view/edit wiki page");
 		magAc.signIn(user2, DATA_PASS_ADMIN);
 		checkViewEditPage(element_page, new_content, content);
 		magAc.signOut();
@@ -334,7 +336,7 @@ public class Wiki_PagePermission_Add extends BasicAction {
 		String content = "KS_Wiki_PagePermission_Add_Page_Content_08";
 		String new_content = "KS_Wiki_PagePermission_Add_Page_Content_new_08";
 		By element_page = By.linkText(title);
-		String group = "*:/organization/management/human-resources";
+		String group = "*:/platform/web-contributors";
 		String[] userGroup = {group};
 
 		info("Add a wiki page");
@@ -371,8 +373,8 @@ public class Wiki_PagePermission_Add extends BasicAction {
 		String content = "KS_Wiki_PagePermission_Add_Page_Content_09";
 		String new_content = "KS_Wiki_PagePermission_Add_Page_Content_new_09";
 		By element_page = By.linkText(title);
-		String group = "*:/organization/management/human-resources";
-		String[] userGroup = {"Organization/Management/Human Resources"};
+		String group = "*:/platform/web-contributors";
+		String[] userGroup = {"Platform/Content Management"};
 
 		info("Add a wiki page");
 		addBlankWikiPage(title, content, 0);
@@ -428,7 +430,7 @@ public class Wiki_PagePermission_Add extends BasicAction {
 		checkViewEditPage(element_page, content, new_content);
 		magAc.signOut();
 
-		info("Check user Mary belong to group but does not have membership that can view/edit wikipage");
+		info("Check user Mary belong to group but does not have membership that can not view/edit wikipage");
 		magAc.signIn("mary", DATA_PASS_ADMIN);
 		goToWiki();
 		waitForElementNotPresent(element_page);
@@ -471,7 +473,7 @@ public class Wiki_PagePermission_Add extends BasicAction {
 		checkViewEditPage(element_page, content, new_content);
 		magAc.signOut();
 
-		info("Check user Mary belong to group but does not have membership that can view/edit wikipage");
+		info("Check user Mary belong to group but does not have membership that can not view/edit wikipage");
 		magAc.signIn("mary", DATA_PASS_ADMIN);
 		goToWiki();
 		waitForElementNotPresent(element_page);

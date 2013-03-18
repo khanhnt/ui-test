@@ -2,11 +2,17 @@ package org.exoplatform.selenium.platform;
 
 import static org.exoplatform.selenium.TestLogger.info;
 import java.util.Map;
+
+import org.exoplatform.selenium.Dialog;
+import org.exoplatform.selenium.ManageAlert;
 import org.exoplatform.selenium.platform.NavigationToolbar;
 
 public class PortalManagement extends PlatformBase {
 
-	NavigationToolbar nav = new NavigationToolbar();
+
+	NavigationToolbar nav = new NavigationToolbar(driver);
+	Dialog dialog = new Dialog(driver);
+	ManageAlert alt = new ManageAlert(driver);
 	
 	//Add new portal
 	public void addNewPortal(String portalName, String portalLocale, String portalSkin, String portalSession, 
@@ -33,7 +39,7 @@ public class PortalManagement extends PlatformBase {
 		}
 		click(ELEMENT_EDIT_PERMISSION_SETTING);
 		setEditPermissions(editGroupId, editMembership);
-		save();
+		button.save();
 	}
 
 	//Edit a portal
@@ -65,7 +71,7 @@ public class PortalManagement extends PlatformBase {
 		}
 		click(ELEMENT_EDIT_PERMISSION_SETTING);
 		setEditPermissions(editGroupId, editMembership);
-		save();
+		button.save();
 	}
 
 	//Delete a portal	
@@ -73,7 +79,7 @@ public class PortalManagement extends PlatformBase {
 		String portalDeleteIcon = ELEMENT_PORTAL_DELETE_ICON.replace("${portalName}", portalName);
 		info("--Delete portal (" + portalName + ")--");		
 		click(portalDeleteIcon);
-		waitForConfirmation("Are you sure to delete this portal?");
+		alt.waitForConfirmation("Are you sure to delete this portal?");
 		//info("--Verify portal is deleted--");
 		//		pause(30000);
 		waitForTextNotPresent(portalName, 180000);

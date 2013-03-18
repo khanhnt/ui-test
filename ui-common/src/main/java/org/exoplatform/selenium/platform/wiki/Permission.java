@@ -1,6 +1,10 @@
 package org.exoplatform.selenium.platform.wiki;
 
 import static org.exoplatform.selenium.TestLogger.info;
+
+import org.exoplatform.selenium.Button;
+import org.exoplatform.selenium.Dialog;
+import org.exoplatform.selenium.Utils;
 import org.exoplatform.selenium.platform.ManageAccount;
 import org.exoplatform.selenium.platform.social.ManageMember;
 import org.openqa.selenium.By;
@@ -11,9 +15,11 @@ import org.openqa.selenium.By;
  *
  */
 public class Permission extends WikiBase{
-
-	ManageAccount magAc;
-
+	
+	//ManageAccount magAc = new ManageAccount(driver);
+	Dialog dialog;
+	//Button button = new Button(driver);
+	
 	public final String ELEMENT_PERMISSION = "//*[@id='UIPermissionGrid']//*[contains(text(),'${user}')]";
 
 	/////
@@ -29,13 +35,8 @@ public class Permission extends WikiBase{
 	 * @param userGroup: array of string
 	 */
 	public void addPagePermission(int option, String[] userGroup, Integer... type){
-		int notDisplay = 0;
-		if (type.length > 0){
-			if (!(type[0] instanceof Integer)) {
-				throw new IllegalArgumentException("-- Argument should be an Integer --");
-			}
-			notDisplay = (Integer)type[0];
-		}
+		button = new Button(driver);
+		
 		info("--Add page permission for an user--");
 
 		goToPagePermission();
@@ -46,18 +47,18 @@ public class Permission extends WikiBase{
 
 			case 0: type(ELEMENT_SELECT_INPUT,userGroup[0],true); break;
 			case 1: click(ELEMENT_SELECT_USER);
-			selectUserPermission(userGroup[0], 1, notDisplay); break;
+			selectUserPermission(userGroup[0], type); break;
 			case 2: click(ELEMENT_SELECT_GROUP);
 			selectGroupPermission(userGroup[0]); break;
 			default: if (userGroup[1] !=null) {
 				click(ELEMENT_SELECT_MEMBERSHIP);
-				selectGroupMembership( userGroup[0], userGroup[1]);
+				selectGroupMembership(userGroup[0], userGroup[1]);
 			}
 			break;
 			}		
-			pause(1000);
-			click(ELEMENT_ADD_BUTTON);
-			save();
+			Utils.pause(1000);
+			click(button.ELEMENT_ADD_BUTTON);
+			button.save();
 		}
 	}
 
@@ -67,6 +68,8 @@ public class Permission extends WikiBase{
 	 * @param edit: true , then this user/group have edit permission and vice versa
 	 */
 	public void editPagePermission(String user, boolean viewPage, boolean edit, Object... option){
+		button = new Button(driver);
+		
 		boolean deletePermission = (Boolean) (option.length > 0 ? option[0] : false);
 		int notDisplay = (Integer) (option.length > 1 ? option[1] : 0);
 		
@@ -102,8 +105,8 @@ public class Permission extends WikiBase{
 			click(DELETE_PERMISSION);
 			waitForElementNotPresent(DELETE_PERMISSION);
 		}
-		save();
-		pause(1000);
+		button.save();
+		Utils.pause(1000);
 	}
 	
 	/** Delete permission for an user
@@ -112,17 +115,19 @@ public class Permission extends WikiBase{
 	 * 
 	 */
 	public void deletePagePermission(String user){
+		button = new Button(driver);	
 		By Delete = By.xpath(ELEMENT_DELETE_PERMISSION.replace("{$user}", user));
 
 		goToPagePermission();
 
 		info("--Delete permission--");
-		click(Delete);
-
+		if (isElementPresent(Delete)){
+			click(Delete);
+		}
 		waitForElementNotPresent(Delete);
-		save();
+		button.save();
 
-		pause(2000);
+		Utils.pause(2000);
 	}
 
 	/**
@@ -132,7 +137,7 @@ public class Permission extends WikiBase{
 	 * @param elementPage: Link to a Wiki page
 	 */
 	public void addEditPagePermission(ManageMember.userType userType, String user, By elementPage){
-		magAc = new ManageAccount(driver);
+		magAcc = new ManageAccount(driver);
 		info("Add edit page permission for " + user);
 		//magAc.signIn(DATA_USER_ADMIN, DATA_PASS_ADMIN);
 		userSignIn(userType);
@@ -140,7 +145,7 @@ public class Permission extends WikiBase{
 		click(elementPage);
 		editPagePermission(user, true, true, false, 2);
 		waitForElementNotPresent(ELEMENT_PAGE_PERMISSION_POPUP);
-		magAc.signOut();	
+		magAcc.signOut();	
 	}
 
 	/**
@@ -150,7 +155,7 @@ public class Permission extends WikiBase{
 	 * @param user: user that we want to set a permission
 	 */
 	public void removePagePermission(ManageMember.userType userType, By elementPage, String user){
-		magAc = new ManageAccount(driver);
+		magAcc = new ManageAccount(driver);
 		info("remove view/edit page permission");
 		//magAc.signIn(DATA_USER_ADMIN, DATA_PASS_ADMIN);
 		userSignIn(userType);
@@ -158,7 +163,7 @@ public class Permission extends WikiBase{
 		click(elementPage);
 		editPagePermission(user, false, false, false, 2);
 		waitForElementNotPresent(ELEMENT_PAGE_PERMISSION_POPUP);
-		magAc.signOut();
+		magAcc.signOut();
 	}
 
 	/*================== Space Permissions ===================*/
@@ -172,6 +177,9 @@ public class Permission extends WikiBase{
 	 * @param groupUser: array of string
 	 */
 	public void addSpacePermission(int option, String[] groupUser, Integer...type){
+		button = new Button(driver);
+		dialog = new Dialog(driver);
+		
 		int notDisplay = 0;
 		if (type.length > 0){
 			if (!(type[0] instanceof Integer)) {
@@ -198,11 +206,11 @@ public class Permission extends WikiBase{
 		selectGroupMembership(groupUser[0], groupUser[1]);
 		break;
 		}
-		click(ELEMENT_ADD_BUTTON);
-		save();
+		click(button.ELEMENT_ADD_BUTTON);
+		button.save();
 		waitForMessage(MSG_PERMISSION_SAVE);
-		closeMessageDialog();
-		pause(1000);
+		dialog.closeMessageDialog();
+		Utils.pause(1000);
 	}
 
 	/** Edit a space permission for an user, or a group
@@ -215,6 +223,8 @@ public class Permission extends WikiBase{
 	 */
 	public void editSpacePermission(String userGroup,boolean view,boolean edit, boolean adminPage, 
 			boolean adminSpace, Integer...type ){
+		button = new Button(driver);
+		dialog = new Dialog(driver);
 		//By bEditPage = By.xpath(ELEMENT_EDIT_PAGE_CHECK.replace("{$user}", userGroup));
 		By bEditPage = By.xpath(ELEMENT_EDIT_PAGE_PERMISSIONS.replace("${user}", userGroup));
 		By bAdminPage = By.xpath(ELEMENT_ADMIN_PAGE_CHECK.replace("{$user}", userGroup));		
@@ -235,42 +245,42 @@ public class Permission extends WikiBase{
 		info("--Add space permission--");
 
 		if (view){
-			if(!waitForAndGetElement(bViewSpace, 3000, 0, notDisplay).isSelected()){
+			if(!waitForAndGetElement(bViewSpace, DEFAULT_TIMEOUT, 1, notDisplay).isSelected()){
 				click(bViewSpace, notDisplay);
 			}
 		}else{
-			if(waitForAndGetElement(bViewSpace, 3000, 0, notDisplay).isSelected())
+			if(waitForAndGetElement(bViewSpace, DEFAULT_TIMEOUT, 1, notDisplay).isSelected())
 				click(bViewSpace, notDisplay);
 		}
 		if (edit){
-			if(!waitForAndGetElement(bEditPage, 3000, 0, notDisplay).isSelected()){
+			if(!waitForAndGetElement(bEditPage, DEFAULT_TIMEOUT, 1, notDisplay).isSelected()){
 				click(bEditPage, notDisplay);
 			}
 		}else{
-			if(waitForAndGetElement(bEditPage, 3000, 0, notDisplay).isSelected())
+			if(waitForAndGetElement(bEditPage, DEFAULT_TIMEOUT, 1, notDisplay).isSelected())
 				click(bEditPage, notDisplay);
 		}
 		if (adminPage){
-			if(!waitForAndGetElement(bAdminPage, 3000, 0, notDisplay).isSelected()){
+			if(!waitForAndGetElement(bAdminPage, DEFAULT_TIMEOUT, 1, notDisplay).isSelected()){
 				click(bAdminPage, notDisplay);
 			}
 		}else{
-			if(waitForAndGetElement(bAdminPage, 3000, 0, notDisplay).isSelected())
+			if(waitForAndGetElement(bAdminPage, DEFAULT_TIMEOUT, 1, notDisplay).isSelected())
 				click(bAdminPage, notDisplay);
 		}
 
 		if (adminSpace){
-			if(!waitForAndGetElement(bAdminSpace, 3000, 0, notDisplay).isSelected()){
+			if(!waitForAndGetElement(bAdminSpace, DEFAULT_TIMEOUT, 1, notDisplay).isSelected()){
 				click(bAdminSpace, notDisplay);
 			}
 		}else{
-			if(waitForAndGetElement(bAdminSpace, 3000, 0, notDisplay).isSelected())
+			if(waitForAndGetElement(bAdminSpace, DEFAULT_TIMEOUT, 1, notDisplay).isSelected())
 				click(bAdminSpace, notDisplay);
 		}
 
-		save();
+		button.save();
 		waitForMessage(MSG_PERMISSION_SAVE);
-		closeMessageDialog();
+		dialog.closeMessageDialog();
 		waitForTextNotPresent(MSG_PERMISSION_SAVE);
 	}
 
@@ -280,18 +290,21 @@ public class Permission extends WikiBase{
 	 * 
 	 */
 	public void deleteSpacePermission(String userGroup){
+		button = new Button(driver);
+		dialog = new Dialog(driver);
 		By bDelete = By.xpath(ELEMENT_DELETE_PERMISSION.replace("{$user}", userGroup));
 
 		goToSpacePermission();
+		if (waitForAndGetElement(bDelete, 10000, 0) != null){
+			info("--Add space permission--");
+			click(bDelete);
 
-		info("--Add space permission--");
-		click(bDelete);
-
-		save();
-		waitForMessage(MSG_PERMISSION_SAVE);
-		closeMessageDialog();
+			button.save();
+			waitForMessage(MSG_PERMISSION_SAVE);
+			dialog.closeMessageDialog();
+		}
 		waitForElementNotPresent(bDelete);
-		pause(1000);
+		Utils.pause(1000);
 	}
 
 	//////////
@@ -302,6 +315,8 @@ public class Permission extends WikiBase{
 	 * @param username
 	 */
 	public void verifyPermissions(boolean[] pageOrSpace, boolean[] type, String username, Integer... optional){	
+		button = new Button(driver);
+		dialog = new Dialog(driver);
 		int notDisplay = 0;
 		if (optional.length > 0){
 			if (!(optional[0] instanceof Integer)) {
@@ -347,11 +362,11 @@ public class Permission extends WikiBase{
 			info("Message: Check admin space is un-checked");
 			waitForAndGetElement(ELEMENT_ADMIN_SPACE_CHECK.replace("${user}", username), 3000, 0, notDisplay).isSelected();
 		}
-		save();
-		pause(1000);
+		button.save();
+		Utils.pause(1000);
 		if (isTextPresent(MSG_PERMISSION_SAVE)){
 			//waitForMessage(MSG_PERMISSION_SAVE);
-			closeMessageDialog();
+			dialog.closeMessageDialog();
 			waitForTextNotPresent(MSG_PERMISSION_SAVE);
 		}
 	}
@@ -396,7 +411,7 @@ public class Permission extends WikiBase{
 	 * @param content
 	 */
 	public void checkEditPage(userType user, By elementPage, String content){
-		magAc = new ManageAccount(driver);
+		magAcc = new ManageAccount(driver);
 		info("Check user can view page but does not have edit page");
 		//magAc.signIn(user, DATA_PASS_ADMIN);
 		userSignIn(user);
@@ -404,7 +419,7 @@ public class Permission extends WikiBase{
 		click(elementPage);
 		waitForTextPresent(content);
 		waitForElementNotPresent(ELEMENT_EDIT_PAGE_LINK);
-		magAc.signOut();
+		magAcc.signOut();
 	}
 	
 	/**
@@ -412,12 +427,13 @@ public class Permission extends WikiBase{
 	 * @param user
 	 */
 	public void checkUserNotInPagePermission(String user){
+		button = new Button(driver);	
 		By element_permission = By.xpath(ELEMENT_PERMISSION.replace("${user}", user));
 
 		info("Check user/group permission is not listed in page permission list");
 		goToPagePermission();
 		waitForElementNotPresent(element_permission);
-		close();
+		button.close();
 		waitForElementNotPresent(ELEMENT_PAGE_PERMISSION_POPUP);
 	}
 }

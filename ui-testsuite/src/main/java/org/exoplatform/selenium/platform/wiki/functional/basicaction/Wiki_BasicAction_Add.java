@@ -17,6 +17,9 @@
 package org.exoplatform.selenium.platform.wiki.functional.basicaction;
 
 import static org.exoplatform.selenium.TestLogger.info;
+
+import org.exoplatform.selenium.Button;
+import org.exoplatform.selenium.Dialog;
 import org.exoplatform.selenium.platform.ManageAccount;
 import org.exoplatform.selenium.platform.wiki.Template;
 import org.openqa.selenium.By;
@@ -34,6 +37,8 @@ import org.testng.annotations.Test;
 public class Wiki_BasicAction_Add extends Template{
 
 	ManageAccount magAcc;
+	Dialog dialog;
+	Button button;	
 
 	@BeforeMethod
 	public void beforeMethod(){
@@ -41,7 +46,9 @@ public class Wiki_BasicAction_Add extends Template{
 		driver.get(baseUrl);
 		driver.manage().window().maximize();
 		magAcc = new ManageAccount(driver);
-		magAcc.signIn("john", "gtn");
+		dialog = new Dialog(driver);
+		button = new Button(driver);
+		magAcc.signIn("john", "gtngtn");
 	}
 
 	@AfterMethod
@@ -93,16 +100,16 @@ public class Wiki_BasicAction_Add extends Template{
 	 * Test Case ID 003
 	 * Add new page when title is blank
 	 */
-	@Test(groups={"pending"})
+	//@Test(groups={"later"})
 	public void test03_AddNewPageWithBlankTitle(){
-		String title = "";
+		//String title = "";
 		String content = "TestCase 003 Content";
 		int mode = 0;
 		String errorMessage = "You are about to save an Untitled page.";
-				//"The page title is required.";
+		//"The page title is required.";
 		//Create new page with a blank template
 		goToWiki();
-		addBlankWikiPage(title, content, mode, false, errorMessage);
+		addBlankWikiPage(null, content, mode, false, errorMessage); //need modify follow plf4
 	}
 
 	/**
@@ -121,7 +128,7 @@ public class Wiki_BasicAction_Add extends Template{
 		goToWikiPage("Wiki Home/"+title);
 		deleteCurrentWikiPage();
 	}
-	
+
 	/**
 	 * Test Case ID 005
 	 * Add new page has the same title with existing page
@@ -140,8 +147,8 @@ public class Wiki_BasicAction_Add extends Template{
 		addBlankWikiPage(title, content, mode, false, errorMessage);
 		//cancel();
 		//waitForWikiConfirmation("Are you sure to leave this page?");
-		click(ELEMENT_CANCEL_BUTTON_ADD_PAGE);
-		
+		//click(ELEMENT_CANCEL_BUTTON_ADD_PAGE);
+
 		//Reset data
 		goToWikiPage("Wiki Home/"+title);
 		deleteCurrentWikiPage();
@@ -166,21 +173,21 @@ public class Wiki_BasicAction_Add extends Template{
 
 		//Verify that James can't add new page
 		magAcc.signOut();
-		magAcc.signIn("james","gtn");
+		magAcc.signIn("james","gtngtn");
 		goToWiki();
 		waitForElementNotPresent(ELEMENT_ADD_PAGE_LINK);
 
 		//Reset data
 		magAcc.signOut();
-		magAcc.signIn("john","gtn");
+		magAcc.signIn("john","gtngtn");
 		goToWiki();
 		deleteSpacePermission(userGroup[0]);
 		addSpacePermission(0, userGroupR);
 		//check(By.id("EDITPAGE" + userGroupR[0]));
 		click(By.id("EDITPAGE" + userGroupR[0]), 2);
-		save();
+		button.save();
 		waitForMessage(MSG_PERMISSION_SAVE);
-		closeMessageDialog();
+		dialog.closeMessageDialog();
 		waitForTextNotPresent(MSG_PERMISSION_SAVE);
 	}
 
@@ -201,13 +208,20 @@ public class Wiki_BasicAction_Add extends Template{
 		waitForElementPresent(uiWikiPageTitlePreview);
 		waitForElementPresent(wikiContent);
 
-		click(ELEMENT_CLOSE_WINDOW);
+		//click(button.ELEMENT_CLOSE_WINDOW);
+		button.closeWindow();
+		waitForElementNotPresent(wikiContent);
+		click(ELEMENT_CANCEL_BUTTON_ADD_PAGE);
+		waitForElementNotPresent(ELEMENT_CANCEL_BUTTON_ADD_PAGE);
 	}
 
 	/**
 	 * Test Case ID 008
 	 * Cancel creating new wiki page
+	 * --Update PLF4: button OK on confirm message is not working
+	 * ==> FIXED (@vuna)
 	 */ 
+	//@Test(groups={"later"})
 	@Test
 	public void test08_CancelAddNewPage(){
 		String title = "TestCase 008";
@@ -215,10 +229,11 @@ public class Wiki_BasicAction_Add extends Template{
 		int mode = 0;   
 		//Cancel creating a new wiki page
 		goToWiki();
-		addBlankWikiPage(title, content, mode, false);
-		
+		addBlankWikiPage(title, content, mode, true);
+		waitForTextNotPresent(title);
+
 		//Reset data
-		deleteCurrentWikiPage();
+		//deleteCurrentWikiPage();
 	}
 
 	/**
@@ -386,7 +401,7 @@ public class Wiki_BasicAction_Add extends Template{
 		goToWikiPage("Wiki Home/"+title);
 		deleteCurrentWikiPage();
 	}
-	
+
 	/**
 	 * Test Case ID 022
 	 * Create new page with Link effect

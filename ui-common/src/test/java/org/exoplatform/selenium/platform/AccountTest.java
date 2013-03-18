@@ -1,9 +1,11 @@
 package org.exoplatform.selenium.platform;
 
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
+import org.exoplatform.selenium.Utils;
 import  org.exoplatform.selenium.platform.ManageAccount;
 import  org.exoplatform.selenium.platform.NavigationToolbar;
 import  org.exoplatform.selenium.platform.UserGroupManagement;
@@ -15,6 +17,11 @@ import  org.exoplatform.selenium.platform.UserGroupManagement;
  */
 public class AccountTest extends NavigationToolbar{
 	
+	public AccountTest(WebDriver dr) {
+		super(dr);
+		// TODO Auto-generated constructor stub
+	}
+
 	ManageAccount magAcc = new ManageAccount(driver);
 	UserGroupManagement userGroup = new UserGroupManagement(driver);
 	
@@ -35,7 +42,7 @@ public class AccountTest extends NavigationToolbar{
 		driver = new FirefoxDriver();
     	baseUrl = "http://localhost:8080";
     	driver.get(baseUrl + "/portal/intranet/");
-    	pause(3000);
+    	Utils.pause(3000);
 		
 	}
 
@@ -48,14 +55,14 @@ public class AccountTest extends NavigationToolbar{
 	public void testAccountAddNewUser(){
 		System.out.println("--Create new user account--");
 		magAcc.signIn("root", "gtn");
-		pause(2000);
+		Utils.pause(2000);
 		goToNewStaff();
-		pause(2000);
+		Utils.pause(2000);
 		magAcc.addNewUserAccount(username,password,confirmPassword,firstName,
 				lastName,email,userNameGiven,language,verify);
-		pause(3000);
+		Utils.pause(3000);
 		magAcc.signOut()  ;
-		pause(1000);
+		Utils.pause(1000);
 		
 	}
 	
@@ -63,28 +70,28 @@ public class AccountTest extends NavigationToolbar{
 	public void testSearchUser(){
 		System.out.println("--Search user --");
 		magAcc.signIn("root", "gtn");
-		pause(1000);
+		Utils.pause(1000);
 		goToUsersAndGroupsManagement();
-		pause(1000);
+		Utils.pause(1000);
 		userGroup.searchUser(username, searchOption);
-		pause(1000);	
+		Utils.pause(1000);	
 		magAcc.signOut()  ;
-		pause(1000);
+		Utils.pause(1000);
 	}
 	
 	@Test(groups={"paltform", "AccountTest"})
 	public void testEditUserEmail(){
 		System.out.println("--Edit a user email--");
 		magAcc.signIn("root", "gtn");
-		pause(1000);
+		Utils.pause(1000);
 		goToUsersAndGroupsManagement();
 		userGroup.editUser(username);
 		type(ELEMENT_INPUT_EMAIL, "exotestaccountedit@localhost.com", true);
-	    save();
+	    button.save();
 	    waitForMessage("The user profile has been updated.");
 	    waitForTextPresent("exotestaccountedit@localhost.com");
 	    magAcc.signOut()  ;
-		pause(1000);
+		Utils.pause(1000);
 		
 	}
 	
@@ -92,13 +99,13 @@ public class AccountTest extends NavigationToolbar{
 	public void testDeleteUser(){
 		System.out.println("--Delete a user account--");
 		magAcc.signIn("root", "gtn");
-		pause(1000);
+		Utils.pause(1000);
 		goToUsersAndGroupsManagement();
-		pause(1000);
+		Utils.pause(1000);
 		userGroup.deleteUser(username);
-		pause(1000);
+		Utils.pause(1000);
 		magAcc.signOut()  ;
-		pause(1000);
+		Utils.pause(1000);
 	}
 	
 }

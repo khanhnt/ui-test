@@ -13,25 +13,22 @@ import org.exoplatform.selenium.platform.ManageAccount;
  * @author thaopth
  * Date: 07/12/2012
  */
-
 public class Wiki_BasicAction_Edit extends BasicAction {
 	ManageAccount magAcc;
 	
 	public String admin = "john";
-	public String pass = "gtn";
+	public String pass = "gtngtn";
 
 	@BeforeMethod
 	public void beforeMethods(){
 		initSeleniumTest();
 		driver.get(baseUrl);
-		driver.manage().window().maximize();
 		magAcc = new ManageAccount(driver);
 		magAcc.signIn(admin, pass);
 	}
 
 	@AfterMethod
 	public void afterMethods(){
-		info("-- Finished: test case --");
 		//signOut();
 		driver.quit();
 	}
@@ -51,8 +48,9 @@ public class Wiki_BasicAction_Edit extends BasicAction {
 		addBlankWikiPage(DATA_WIKI_TITLE, DATA_WIKI_CONTENT, 0);
 
 		editWikiPage(DATA_WIKI_TITLE, DATA_WIKI_CONTENT_EDITED, 0);
-
+		
 		deleteCurrentWikiPage();
+		waitForTextNotPresent(DATA_WIKI_TITLE);
 	}
 	
 	/*
@@ -66,8 +64,7 @@ public class Wiki_BasicAction_Edit extends BasicAction {
 		String DATA_WIKI_TITLE2 = "wikipage02b";
 		String DATA_WIKI_CONTENT1 = "Cotent of wiki page 02a";
 		String DATA_WIKI_CONTENT2 = "Content of wiki page 02b";
-		String DATA_WARNING_MESSAGE = "The page title already exists. Please select another one.";
-		
+
 		goToWiki();
 
 		addBlankWikiPage(DATA_WIKI_TITLE1, DATA_WIKI_CONTENT1, 0);
@@ -75,7 +72,7 @@ public class Wiki_BasicAction_Edit extends BasicAction {
 		goToWikiPage("Wiki Home");
 
 		addBlankWikiPage(DATA_WIKI_TITLE2, DATA_WIKI_CONTENT2, 0);
-
+		click(By.linkText(DATA_WIKI_TITLE2));
 		info("--Edit a wiki page 2--");
 
 		click(ELEMENT_EDIT_PAGE_LINK);
@@ -85,7 +82,7 @@ public class Wiki_BasicAction_Edit extends BasicAction {
 		//save();
 		click(ELEMENT_SAVE_BUTTON_ADD_PAGE);
 
-		waitForTextPresent(DATA_WARNING_MESSAGE);
+		waitForTextPresent(MESSAGE_PAGE_ALREADY_EXISTS);
 
 		//click(ELEMENT_OK_BUTTON);
 		click(ELEMENT_OK_BUTTON_WIKI_PAGE);
@@ -95,12 +92,12 @@ public class Wiki_BasicAction_Edit extends BasicAction {
 		goToWiki();
 
 		goToWikiPage(DATA_WIKI_TITLE1);
-
 		deleteCurrentWikiPage();
-
+		waitForTextNotPresent(DATA_WIKI_TITLE1);
+		
 		goToWikiPage(DATA_WIKI_TITLE2);
-
-		deleteCurrentWikiPage();							
+		deleteCurrentWikiPage();
+		waitForTextNotPresent(DATA_WIKI_TITLE1);
 	}
 	
 	/* 
@@ -108,19 +105,21 @@ public class Wiki_BasicAction_Edit extends BasicAction {
 	 * == ==
 	 * KS/wiki/basic action/edit
 	 * Edit paragraph when the level of header is equal to  paragraph below
+	 * Date: 25/02/2013: Lientm: Edit icon paragraph does not work fine, it is difficult to click its
+	 * => FIXED (@vuna)
 	 */
-	@Test(groups={"pending"})
+	//@Test(groups={"pending"})
+	@Test
 	public void test03_EditParagraphWhenTheLevelOfHearIsEqualToParagraphBelow () {
 		
 		String DATA_WIKI_TITLE = "Test edit wiki with paragraph1";
-		String DATA_WIKI_CONTENT = "= paragraph1 = \n = paragraph2=";
-		String DATA_PARAGRAPH1_NEW = "= test edit paragraph=";
+		String DATA_WIKI_CONTENT = "= paragraph1 = \n = paragraph2 =";
+		String DATA_PARAGRAPH1_NEW = "= test edit paragraph =";
 
 		goToWiki();
-
 		addBlankWikiPage(DATA_WIKI_TITLE, DATA_WIKI_CONTENT, 0, false);
 
-		editParagraph("paragraph1",DATA_PARAGRAPH1_NEW);
+		editParagraph("paragraph1", DATA_PARAGRAPH1_NEW);
 	
 		waitForElementPresent(By.xpath("//span[text()='test edit paragraph']"));
 		
@@ -133,8 +132,10 @@ public class Wiki_BasicAction_Edit extends BasicAction {
 	 * == ==
 	 * KS/wiki/basic action/edit
 	 * Case 04: Edit paragraph when the level of header is greater than paragraph below
+	 * Date: 25/02/2013: Lientm: Edit icon paragraph does not work fine, it is difficult to click its
 	 */
-	@Test(groups={"pending"})
+	//@Test(groups={"pending"})
+	@Test
 	public void test04_EditParagraphWhenTheLevelOfHeaderGreaterThanParagraphBelow () {
 		String DATA_WIKI_TITLE = "Test edit wiki with paragraph1";
 		String DATA_WIKI_CONTENT = "= level1 = \n == level2 ==";
@@ -144,7 +145,7 @@ public class Wiki_BasicAction_Edit extends BasicAction {
 
 		addBlankWikiPage(DATA_WIKI_TITLE, DATA_WIKI_CONTENT, 0);
 
-		editParagraph("level2",DATA_PARAGRAPH2_NEW);
+		editParagraph("level2", DATA_PARAGRAPH2_NEW);
 	
 		waitForElementPresent(By.xpath("//span[text()='test edit paragraph level2']"));
 		

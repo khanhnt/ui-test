@@ -21,9 +21,8 @@ public class Wiki_SpacePermission_Others extends BasicAction {
 	public void setUpBeforeTest(){
 		initSeleniumTest();
 		driver.get(baseUrl);
-		driver.manage().window().maximize();
 		magAc = new ManageAccount(driver);
-		magAc.signIn("john", "gtn");
+		magAc.signIn("john", "gtngtn");
 	}
 	
 	/* case01: Check when user/group does not admin page permission
@@ -100,7 +99,7 @@ public class Wiki_SpacePermission_Others extends BasicAction {
 		 
 		//waitForElementNotPresent(ELEMENT_BROWSE_LINK);
 		mouseOverAndClick(ELEMENT_BROWSE_LINK);
-		waitForElementNotPresent(ELEMENT_SPACE_SETTING_LINK);
+		waitForElementNotPresent(ELEMENT_WIKI_SETTING_LINK);
 
 		userSignIn(userType.ADMIN);
 		
@@ -179,7 +178,8 @@ public class Wiki_SpacePermission_Others extends BasicAction {
 	 * add permission for space
 	 * Check permission for user/group does not permission to view page
 	 */
-	@Test(groups={"pending"})
+	//@Test(groups={"pending"})
+	@Test
 	public void test04_CheckWhenUserOrGroupDoesNotPermissionToViewPage() {
 
 		String VERIFY_MESSAGE = "Page Not Found";
@@ -190,9 +190,10 @@ public class Wiki_SpacePermission_Others extends BasicAction {
 
 		editSpacePermission("any", false, false, false, false, 2);
 
-		userSignIn(userType.DEVELOPER);
+		userSignIn(userType.AUTHOR);
 		
-		goToWiki();
+		//goToWiki();
+		click(ELEMENT_WIKI_LINK);
 
 		waitForTextPresent(VERIFY_MESSAGE);
 

@@ -1,5 +1,6 @@
 package org.exoplatform.selenium.platform.wiki.functional.template;
 
+import org.exoplatform.selenium.ManageAlert;
 import org.exoplatform.selenium.platform.ManageAccount;
 import org.exoplatform.selenium.platform.wiki.Template;
 
@@ -16,14 +17,15 @@ import org.testng.annotations.Test;
 public class Wiki_Template_Delete extends Template{
 
 	ManageAccount magAc;
+	ManageAlert magAlert;
 	
 	@BeforeMethod
 	public void setUpBeforeTest(){
 		initSeleniumTest();
 		driver.get(baseUrl);
-		driver.manage().window().maximize();
 		magAc = new ManageAccount(driver);
-		magAc.signIn("john", "gtn"); 
+		magAlert = new ManageAlert(driver);
+		magAc.signIn("john", "gtngtn"); 
 		goToWiki();
 	}
 
@@ -52,7 +54,7 @@ public class Wiki_Template_Delete extends Template{
 
 		click(ELEMENT_DELETE_TEMPLATE_ICON.replace("{$template}", DATA_TEMPLATE_TITLE));
 
-		acceptAlert();
+		magAlert.acceptAlert();
 
 		waitForElementNotPresent(ELEMENT_NEW_TEMPLATE_LINK.replace("${TEMPLATE_TITLE}", DATA_TEMPLATE_TITLE));
 	}
@@ -78,7 +80,7 @@ public class Wiki_Template_Delete extends Template{
 
 		click(ELEMENT_DELETE_TEMPLATE_ICON.replace("{$template}", DATA_TEMPLATE_TITLE));
 
-		cancelAlert();
+		magAlert.cancelAlert();
 
 		waitForElementPresent(ELEMENT_NEW_TEMPLATE_LINK.replace("${TEMPLATE_TITLE}", DATA_TEMPLATE_TITLE));
 

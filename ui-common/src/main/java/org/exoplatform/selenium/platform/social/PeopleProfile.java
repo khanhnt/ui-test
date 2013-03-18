@@ -2,6 +2,8 @@ package org.exoplatform.selenium.platform.social;
 
 import static org.exoplatform.selenium.TestLogger.info;
 
+import org.exoplatform.selenium.Button;
+import org.exoplatform.selenium.Utils;
 import org.exoplatform.selenium.platform.PlatformBase;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
@@ -19,6 +21,9 @@ import org.openqa.selenium.By;
  */
 
 public class PeopleProfile extends PlatformBase {
+
+	Button button = new Button(driver);
+	
 	// Go to Account Name link > My Profile	
 	// Edit user in My Profile
 	// Basic information
@@ -69,8 +74,8 @@ public class PeopleProfile extends PlatformBase {
 		type(ELEMENT_INPUT_FIRSTNAME, firstName, true);
 		type(ELEMENT_INPUT_LASTNAME, lastName, true);
 		type(ELEMENT_INPUT_EMAIL, email, true);
-		save();
-		waitForElementNotPresent(ELEMENT_SAVE_BUTTON);
+		button.save();
+		waitForElementNotPresent(button.ELEMENT_SAVE_BUTTON);
 	}
 
 	/**
@@ -119,8 +124,8 @@ public class PeopleProfile extends PlatformBase {
 			click(ELEMENT_ADD_URLS_EXTEND_BUTTON);
 			click(ELEMENT_REMOVE_BUTTON);
 		}
-		save();
-		waitForElementNotPresent(ELEMENT_SAVE_BUTTON);
+		button.save();
+		waitForElementNotPresent(button.ELEMENT_SAVE_BUTTON);
 	}
 	
 	/**
@@ -142,9 +147,9 @@ public class PeopleProfile extends PlatformBase {
 		click(ELEMENT_REMOVE_EXTEND_EXPERIENCE_BUTTON);
 		Alert alert = driver.switchTo().alert();
 		alert.accept();
-		pause(500);
-		save();
-		waitForElementNotPresent(ELEMENT_SAVE_BUTTON);
+		Utils.pause(500);
+		button.save();
+		waitForElementNotPresent(button.ELEMENT_SAVE_BUTTON);
 	}
 
 }

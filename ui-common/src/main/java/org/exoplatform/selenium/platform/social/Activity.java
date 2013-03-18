@@ -2,6 +2,8 @@ package org.exoplatform.selenium.platform.social;
 
 import static org.exoplatform.selenium.TestLogger.info;
 
+import org.exoplatform.selenium.Dialog;
+import org.exoplatform.selenium.ManageAlert;
 import org.exoplatform.selenium.Utils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -26,6 +28,9 @@ import org.openqa.selenium.interactions.Actions;
 
 public class Activity extends SocialBase {
 
+	Dialog dialog = new Dialog(driver);
+	ManageAlert magAlert = new ManageAlert(driver);
+	
 	//=====Element on space home page=======stash@{1}
 	// Go to My Spaces > Select a space
 	//Or Go to My Activity Stream
@@ -92,7 +97,7 @@ public class Activity extends SocialBase {
 
 			type(ELEMENT_UPLOAD_IMG_ID, Utils.getAbsoluteFilePath(uploadFileLink), false);
 
-			pause(500);
+			Utils.pause(500);
 
 			switchToParentWindow();	
 
@@ -100,7 +105,7 @@ public class Activity extends SocialBase {
 
 			click(By.xpath("//a[text()='"+uploadFileName+"']"));
 
-			pause(500);
+			Utils.pause(500);
 
 			click(ELEMENT_SELECT_BUTTON);
 
@@ -110,7 +115,7 @@ public class Activity extends SocialBase {
 		{
 			click(By.xpath("//a[text()='"+selectFileName+"']"));
 
-			pause(500);
+			Utils.pause(500);
 
 			click(ELEMENT_SELECT_BUTTON);
 
@@ -190,11 +195,11 @@ public class Activity extends SocialBase {
 
 		click(By.id(deleteActivityIconID));
 
-		waitForConfirmation("Are you sure to delete this activity?");
+		magAlert.waitForConfirmation("Are you sure to delete this activity?");
 
 		waitForElementNotPresent(ELEMENT_DELETE_ACTIVITY);
 
-		pause(1000);
+		Utils.pause(1000);
 	}
 
 
@@ -237,7 +242,7 @@ public class Activity extends SocialBase {
 
 		waitForTextPresent(contentOfComment);
 
-		pause(1000);
+		Utils.pause(1000);
 	}
 
 	/**
@@ -253,11 +258,11 @@ public class Activity extends SocialBase {
 
 		click(ELEMENT_DELETE_COMMENT_BUTTON);
 
-		waitForConfirmation("Are you sure to delete this comment?");
+		magAlert.waitForConfirmation("Are you sure to delete this comment?");
 
 		waitForElementNotPresent(ELEMENT_DELETE_COMMENT_BUTTON);
 
-		pause(1000);
+		Utils.pause(1000);
 	}
 
 	/**
@@ -358,7 +363,7 @@ public class Activity extends SocialBase {
 			addComment(activityText, content);
 			click(ELEMENT_COMMENT.replace("${activityText}", activityText) + "/../div[@class='DefaultActivityIcon']/a[1]");
 		}
-		pause(1000);
+		Utils.pause(1000);
 	}
 
 	/**
@@ -380,7 +385,7 @@ public class Activity extends SocialBase {
 			click(ELEMENT_SHOW_HIDE_ALL_COMMENTS);
 			waitForElementNotPresent(ELEMENT_SHOW_HIDE_ALL_COMMENTS);
 		}
-		pause(1000);
+		Utils.pause(1000);
 	}
 
 }

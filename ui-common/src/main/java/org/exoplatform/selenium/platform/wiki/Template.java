@@ -1,6 +1,10 @@
 package org.exoplatform.selenium.platform.wiki;
 
 import static org.exoplatform.selenium.TestLogger.info;
+
+import org.exoplatform.selenium.Dialog;
+import org.exoplatform.selenium.ManageAlert;
+import org.exoplatform.selenium.Utils;
 import org.openqa.selenium.By;
 
 /**
@@ -10,6 +14,9 @@ import org.openqa.selenium.By;
  */
 public class Template extends BasicAction{
 
+	//Dialog dialog = new Dialog(driver);
+	//Button button = new Button(driver);
+	
 	/** Add a wiki page from template
 	 * @author thuntn
 	 * @param title
@@ -24,7 +31,7 @@ public class Template extends BasicAction{
 		goToAddTemplateWikiPage();	
 		info("--Add a wiki page from template--");
 		click(eTemplate, 2);
-		click(ELEMENT_SELECT_BUTTON);
+		click(button.ELEMENT_SELECT_BUTTON);
 		if (mode == 1){ 
 
 			addWikiPageRichText(title, null);
@@ -45,19 +52,20 @@ public class Template extends BasicAction{
 	 * @param content
 	 */
 	public void addTemplate(String title, String description, String content){
+		dialog = new Dialog(driver);
 		if (isElementNotPresent(ELEMENT_TEMPLATE_LINK)){
 			goToTemplateManagement();
 		}
 		info("--Add a wiki page template--");
 		click(ELEMENT_ADD_TEMPLATE_LINK);
 		type(ELEMENT_TITLE_TEMPLATE_INPUT,title,true);
-		pause(1000);
+		Utils.pause(1000);
 		type(ELEMENT_DESC_TEMPLATE_INPUT,description,true);
-		pause(1000);
+		Utils.pause(1000);
 		type(ELEMENT_CONTENT_TEMPLATE_INPUT,content,true);
 		click(ELEMENT_SAVE_TEMPLATE_INPUT);
 		waitForMessage(MSG_CREATE_TEMPLATE);
-		closeMessageDialog();
+		dialog.closeMessageDialog();
 		waitForElementNotPresent(ELEMENT_SAVE_TEMPLATE_INPUT);
 	}
 	
@@ -92,16 +100,13 @@ public class Template extends BasicAction{
 	 * @param title
 	 */
 	public void deleteTemplate(String title){
-
+		magAlert = new ManageAlert(driver);
 		goToTemplateManagement();
-
 		info("--Delete a wiki page template--");
-
 		click(ELEMENT_DELETE_TEMPLATE_ICON.replace("{$template}", title));
-
-		waitForConfirmation(MSG_DELETE_TEMPLATE);
-
+		magAlert.waitForConfirmation(MSG_DELETE_TEMPLATE);
 		waitForElementNotPresent(ELEMENT_DELETE_TEMPLATE_ICON.replace("{$template}", title));
+		Utils.pause(500);
 	}
 	
 	/** Search for templates
@@ -111,5 +116,6 @@ public class Template extends BasicAction{
 	public void searchTemplate(String keyword){
 		type(ELEMENT_SEARCH_TEMPLATE_INPUT, keyword, true);
 		click(ELEMENT_SEARCH_BUTTON);
+		Utils.pause(1000);
 	}
 }

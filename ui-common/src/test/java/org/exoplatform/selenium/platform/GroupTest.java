@@ -1,9 +1,11 @@
 package org.exoplatform.selenium.platform;
 
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
+import org.exoplatform.selenium.Utils;
 import  org.exoplatform.selenium.platform.ManageAccount;
 import  org.exoplatform.selenium.platform.NavigationToolbar;
 import  org.exoplatform.selenium.platform.UserGroupManagement;
@@ -15,6 +17,11 @@ import  org.exoplatform.selenium.platform.UserGroupManagement;
  */
 public class GroupTest extends NavigationToolbar{
 	
+	public GroupTest(WebDriver dr) {
+		super(dr);
+		// TODO Auto-generated constructor stub
+	}
+
 	ManageAccount magAcc = new ManageAccount(driver);
 	UserGroupManagement userGroup = new UserGroupManagement(driver);
 	
@@ -32,7 +39,7 @@ public class GroupTest extends NavigationToolbar{
 		driver = new FirefoxDriver();
     	baseUrl = "http://localhost:8080";
     	driver.get(baseUrl + "/portal/intranet/");
-    	pause(3000);
+    	Utils.pause(3000);
 		
 	}
 
@@ -45,14 +52,14 @@ public class GroupTest extends NavigationToolbar{
 	public void testAddNewGroup(){
 		System.out.println("--Create a new group--");
 		magAcc.signIn("root", "gtn");
-		pause(1000);
+		Utils.pause(1000);
 		goToUsersAndGroupsManagement();
-		pause(1000);
+		Utils.pause(1000);
 		userGroup.chooseGroupTab();
-		pause(1000);
+		Utils.pause(1000);
 		userGroup.addGroup(groupName, groupLabel, groupDesc,verify);
 		magAcc.signOut();
-		pause(1000);
+		Utils.pause(1000);
 		
 	}
 	
@@ -60,35 +67,35 @@ public class GroupTest extends NavigationToolbar{
 	public void testSelectAndEditGroup(){
 		System.out.println("--Edit a new group--");
 		magAcc.signIn("root", "gtn");
-		pause(1000);
+		Utils.pause(1000);
 		goToUsersAndGroupsManagement();
-		pause(1000);
+		Utils.pause(1000);
 		userGroup.chooseGroupTab();
-		pause(1000);
+		Utils.pause(1000);
 		userGroup.selectGroup(groupName);
 		userGroup.editGroup(groupName, true);
 		type(ELEMENT_INPUT_LABEL, "", true);
 		type(ELEMENT_TEXTAREA_DESCRIPTION, "edit a group description", true);
-		save();
-		pause(1000);
+		button.save();
+		Utils.pause(1000);
 		magAcc.signOut();
-		pause(1000);
+		Utils.pause(1000);
 	}
 	
 	@Test(groups={"platform", "add new group"})
 	public void testAddUserIntoGroup(){
 		System.out.println("--Add user to a group--");
 		magAcc.signIn("root", "gtn");
-		pause(1000);
+		Utils.pause(1000);
 		goToUsersAndGroupsManagement();
-		pause(1000);
+		Utils.pause(1000);
 		userGroup.chooseGroupTab();
-		pause(1000);
+		Utils.pause(1000);
 		userGroup.selectGroup(groupName);
 		userGroup.addUsersToGroup(userName, memberShip, select, verify);
-		pause(1000);
+		Utils.pause(1000);
 		magAcc.signOut();
-		pause(1000);
+		Utils.pause(1000);
 		
 	}
 	
@@ -97,15 +104,15 @@ public class GroupTest extends NavigationToolbar{
 	public void testDeleteGroup(){
 		System.out.println("--Delete a new group--");
 		magAcc.signIn("root", "gtn");
-		pause(1000);
+		Utils.pause(1000);
 		goToUsersAndGroupsManagement();
-		pause(1000);
+		Utils.pause(1000);
 		userGroup.chooseGroupTab();
-		pause(1000);
+		Utils.pause(1000);
 		userGroup.selectGroup(groupName);
 		userGroup.deleteGroup(groupName, true);
-		pause(3000);
+		Utils.pause(3000);
 		magAcc.signOut();
-		pause(1000);		
+		Utils.pause(1000);		
 	}
 }

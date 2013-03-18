@@ -20,18 +20,18 @@ public class Wiki_BasicAction_Intergration extends BasicAction {
 	public void setUpBeforeTest(){
 		initSeleniumTest();
 		driver.get(baseUrl);
-		driver.manage().window().maximize();
 		magAcc = new ManageAccount(driver);
-		magAcc.signIn("john", "gtn");
+		magAcc.signIn("john", "gtngtn");
 	}
 
 	/**
 	 * Migrate to PLF 4
 	 * == Pending: Cannot Edit a Wiki page in Space ==
-	 * 
+	 * ==> FIXED (@vuna)
 	 * */
 	//Check links between page from different spaces
-	@Test(groups={"pending"})
+	//@Test(groups={"pending"})
+	@Test
 	public void test01_CheckLinksBetweenPageFormDifferentSpaces() {
 
 		String PAGE_NAME1 = "wiki1";
@@ -61,6 +61,8 @@ public class Wiki_BasicAction_Intergration extends BasicAction {
 
 		click(ELEMENT_PAGE1_LINK);
 
+		waitForTextNotPresent(PAGE_NAME2);
+		
 		goToMySpacePage();
 
 		deleteSpace("Space1", 120000);

@@ -1,6 +1,7 @@
 package org.exoplatform.selenium.platform.wiki.functional.attachment;
 
 import static org.exoplatform.selenium.TestLogger.info;
+import org.exoplatform.selenium.Button;
 import org.exoplatform.selenium.platform.ManageAccount;
 import org.exoplatform.selenium.platform.wiki.BasicAction;
 import org.openqa.selenium.By;
@@ -19,14 +20,15 @@ import org.testng.annotations.Test;
  */
 public class Wiki_Attachment_Add extends BasicAction{
 	ManageAccount magAcc ;
+	Button button;
 	
 	@BeforeMethod
 	public void setUpBeforeTest(){
 		initSeleniumTest();
 		driver.get(baseUrl);
-		driver.manage().window().maximize();
 		magAcc = new ManageAccount(driver);
-		magAcc.signIn("john", "gtn"); 
+		button = new Button(driver);
+		magAcc.signIn("john", "gtngtn");
 		goToWiki();
 	}
 
@@ -35,8 +37,6 @@ public class Wiki_Attachment_Add extends BasicAction{
 		driver.manage().deleteAllCookies();
 		driver.quit();
 	}
-	//public static String MSG_CANCEL_CREATE_PAGE="Are you sure to leave this page?";
-	//public static By ELEMENT_OK_BUTTON=By.xpath("//input[@value='OK']");
 
 	/**
 	 * Case 01: Add image file for page
@@ -51,8 +51,8 @@ public class Wiki_Attachment_Add extends BasicAction{
 		String DATA_WIKI_PAGE_NAME="Blank_Wiki_Page_With_Image1";
 		String DATA_WIKI_PAGE_CONTENT="Blank_Wiki_Page_With_Image_Content";
 		String ATTACHMENT_NAME="Winter.jpg";
-		String ATTACHMENT_PATH="TestData/"+ATTACHMENT_NAME+"";
-		By ATTACHMENT_FILE_LINK=By.xpath("//a[text()='"+ATTACHMENT_NAME+"']");
+		String ATTACHMENT_PATH="TestData/"+ATTACHMENT_NAME;
+		By ATTACHMENT_FILE_LINK=By.xpath("//*[text()='"+ATTACHMENT_NAME+"']");
 
 		info("Attach 1 image for wiki page");
 
@@ -67,7 +67,7 @@ public class Wiki_Attachment_Add extends BasicAction{
 		//click(ELEMENT_CANCEL_BUTTON);
 		click(ELEMENT_CANCEL_BUTTON_ADD_PAGE);
 		waitForTextPresent(MESSAGE_CANCEL_CREATE_PAGE);
-		click(ELEMENT_OK_BUTTON);
+		click(button.ELEMENT_OK_BUTTON);
 	}
 
 	/**
@@ -84,7 +84,7 @@ public class Wiki_Attachment_Add extends BasicAction{
 		String DATA_WIKI_PAGE_CONTENT="Blank_Wiki_Page_With_PDFFile_Content";
 		String ATTACHMENT_NAME="KS_Wiki_Attachment_pdffile.pdf";
 		String ATTACHMENT_PATH="TestData/"+ATTACHMENT_NAME+"";
-		By ATTACHMENT_FILE_LINK=By.xpath("//a[text()='"+ATTACHMENT_NAME+"']");
+		By ATTACHMENT_FILE_LINK=By.xpath("//*[text()='"+ATTACHMENT_NAME+"']");
 
 		info("Attach pdf for wiki page");
 		goToAddBlankPage();
@@ -97,7 +97,7 @@ public class Wiki_Attachment_Add extends BasicAction{
 		click(ELEMENT_CANCEL_BUTTON_ADD_PAGE);
 		//click(ELEMENT_CANCEL_BUTTON);
 		waitForTextPresent(MESSAGE_CANCEL_CREATE_PAGE);
-		click(ELEMENT_OK_BUTTON);
+		click(button.ELEMENT_OK_BUTTON);
 	}
 
 
@@ -115,7 +115,7 @@ public class Wiki_Attachment_Add extends BasicAction{
 		String DATA_WIKI_PAGE_CONTENT="Blank_Wiki_Page_With_txt_File_Content";
 		String ATTACHMENT_NAME="KS_WiKi_Attachment_TxtFile.txt";
 		String ATTACHMENT_PATH="TestData/"+ATTACHMENT_NAME+"";
-		By ATTACHMENT_FILE_LINK=By.xpath("//a[text()='"+ATTACHMENT_NAME+"']");
+		By ATTACHMENT_FILE_LINK=By.xpath("//*[text()='"+ATTACHMENT_NAME+"']");
 
 		info("Attach txt file for wiki page");
 		goToAddBlankPage();
@@ -128,7 +128,7 @@ public class Wiki_Attachment_Add extends BasicAction{
 		click(ELEMENT_CANCEL_BUTTON_ADD_PAGE);
 		//click(ELEMENT_CANCEL_BUTTON);
 		waitForTextPresent(MESSAGE_CANCEL_CREATE_PAGE);
-		click(ELEMENT_OK_BUTTON);
+		click(button.ELEMENT_OK_BUTTON);
 	}
 
 	/**
@@ -145,7 +145,7 @@ public class Wiki_Attachment_Add extends BasicAction{
 		String DATA_WIKI_PAGE_CONTENT="Blank_Wiki_Page_With_Office_File_Content";
 		String ATTACHMENT_NAME="KS_Wiki_Attachment_Office_file.doc";
 		String ATTACHMENT_PATH="TestData/"+ATTACHMENT_NAME+"";
-		By ATTACHMENT_FILE_LINK=By.xpath("//a[text()='"+ATTACHMENT_NAME+"']");
+		By ATTACHMENT_FILE_LINK=By.xpath("//*[text()='"+ATTACHMENT_NAME+"']");
 
 		info("Attach Office file for wiki page");
 		goToAddBlankPage();
@@ -158,7 +158,7 @@ public class Wiki_Attachment_Add extends BasicAction{
 		click(ELEMENT_CANCEL_BUTTON_ADD_PAGE);
 		//click(ELEMENT_CANCEL_BUTTON);
 		waitForTextPresent(MESSAGE_CANCEL_CREATE_PAGE);
-		click(ELEMENT_OK_BUTTON);
+		click(button.ELEMENT_OK_BUTTON);
 	}
 
 	/**
@@ -175,7 +175,7 @@ public class Wiki_Attachment_Add extends BasicAction{
 		String DATA_WIKI_PAGE_CONTENT="Blank_Wiki_Page_With_mp3_File_Content";
 		String ATTACHMENT_NAME="KS_Wiki_Attachment_AllMyLove.mp3";
 		String ATTACHMENT_PATH="TestData/"+ATTACHMENT_NAME+"";
-		By ATTACHMENT_FILE_LINK=By.xpath("//a[text()='"+ATTACHMENT_NAME+"']");
+		By ATTACHMENT_FILE_LINK=By.xpath("//*[text()='"+ATTACHMENT_NAME+"']");
 
 		info("Attach mp3 file for wiki page");
 		goToAddBlankPage();
@@ -188,6 +188,6 @@ public class Wiki_Attachment_Add extends BasicAction{
 		click(ELEMENT_CANCEL_BUTTON_ADD_PAGE);
 		//click(ELEMENT_CANCEL_BUTTON);
 		waitForTextPresent(MESSAGE_CANCEL_CREATE_PAGE);
-		click(ELEMENT_OK_BUTTON);
+		click(button.ELEMENT_OK_BUTTON);
 	}
 }

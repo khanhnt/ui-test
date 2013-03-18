@@ -19,23 +19,23 @@ public class TestLogger {
 		logger.log(level, logMessage);
 	}
 
-    public static void trace(String message) {
-        log(message, Level.TRACE);
-    }
-    
-    public static void debug(String message) {
-        log(message, Level.DEBUG);
-    }
+	public static void trace(String message) {
+		log(message, Level.TRACE);
+	}
 
-    public static void info(String message) {
-        log(message, Level.INFO);
-    }
+	public static void debug(String message) {
+		log(message, Level.DEBUG);
+	}
 
-    public static void warn(String message) {
-        log(message, Level.WARN);
-    }
+	public static void info(String message) {
+		log(message, Level.INFO);
+	}
 
-    public static void error(String message) {
-        log(message, Level.ERROR);
-    }
+	public static void warn(String message) {
+		log(message, Level.WARN);
+	}
+
+	public static void error(String message) {
+		log(message, Level.ERROR);
+	}
 }

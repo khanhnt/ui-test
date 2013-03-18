@@ -1,5 +1,6 @@
 package org.exoplatform.selenium;
 
+import org.exoplatform.selenium.platform.ManageAccount;
 import org.exoplatform.selenium.platform.ecms.EcmsBase;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterMethod;
@@ -46,10 +47,13 @@ public class LogSeleniumTest extends EcmsBase{
 	public static final String ELEMENT_LOCK_OPTION_XPATH = "//a[contains(text(),'Lock')]";
 	public static final String ELEMENT_UNLOCK_OPTION_XPATH = "//a[contains(text(),'Unlock')]";
 	
+	ManageAccount magAcc;
+	
 	 @BeforeMethod
 	  public void beforeMethods() throws Exception {
 	   initSeleniumTest();
-	    driver.get(baseUrl);
+	   driver.get(baseUrl);
+	   magAcc = new ManageAccount(driver);
 	  }
 
 	  @AfterMethod
@@ -74,9 +78,9 @@ public class LogSeleniumTest extends EcmsBase{
 		warn("warnig message");
 		info("testing message");
 		//login
-		loginEcms(ELEMENT_USER, ELEMENT_PASS);
+		magAcc.signIn(ELEMENT_USER, ELEMENT_PASS);
 		//create new content folder
 		assert false;
-		logoutEcms();
+		//logoutEcms();
 	}
 }

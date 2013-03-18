@@ -19,9 +19,8 @@ public class Wiki_SpacePermission_Edit extends Permission {
 	public void setUpBeforeTest(){
 		initSeleniumTest();
 		driver.get(baseUrl);
-		driver.manage().window().maximize();
 		magAc = new ManageAccount(driver);
-		magAc.signIn("john", "gtn");
+		magAc.signIn("john", "gtngtn");
 	}
 
 	//Edit permission for space
@@ -43,13 +42,13 @@ public class Wiki_SpacePermission_Edit extends Permission {
 	@Test
 	public void test02_EditPermissionForSpaceIsBlank() {
 
-		String[] user2= {"demo"};
+		String[] user2= {"james"};
 
 		goToWiki();
 
 		addSpacePermission(0, user2);
 
-		editSpacePermission("demo", false, false, false, false, 2);
+		editSpacePermission("james", false, false, false, false, 2);
 	}
 
 	@AfterMethod

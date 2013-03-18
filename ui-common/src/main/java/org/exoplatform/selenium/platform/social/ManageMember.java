@@ -21,7 +21,6 @@ import static org.exoplatform.selenium.TestLogger.info;
 import org.exoplatform.selenium.Utils;
 import org.exoplatform.selenium.platform.ManageAccount;
 import org.exoplatform.selenium.platform.NavigationToolbar;
-import org.exoplatform.selenium.platform.UserGroupManagement;
 import org.openqa.selenium.By;
 
 /**
@@ -30,10 +29,9 @@ import org.openqa.selenium.By;
  */
 public class ManageMember extends SpaceManagement {
 	
-	//ManageAccount magAcc = new ManageAccount(driver, actions);
-	ManageAccount magAcc;
-	NavigationToolbar nav = new NavigationToolbar();
-	UserGroupManagement userGroup = new UserGroupManagement(driver);
+	ManageAccount magAcc = new ManageAccount(driver);
+	NavigationToolbar nav = new NavigationToolbar(driver);
+	//UserGroupManagement userGroup = new UserGroupManagement(driver);
 
   //Go to My Spaces > Select a space > Settings
   //Member Tab 
@@ -138,7 +136,7 @@ public class ManageMember extends SpaceManagement {
     
     for (int i = 0; i < len; i++) {
       waitForElementPresent(By.xpath(ELEMENT_INVITED_TABLE + "//td[contains(text(),'" + userArr[i].trim() + "')]"));
-      pause(500);
+      Utils.pause(500);
     }
     
   }
@@ -259,7 +257,7 @@ public class ManageMember extends SpaceManagement {
 	  goToAllSpaces();
 	  doAction("Join", spaceName);
 	  waitForElementPresent(By.xpath("//*[@class='spaceTitle']/text()['(Member)']/../a[text()='"+ spaceName +"']"), iTimeout);
-	  pause(1000);
+	  Utils.pause(1000);
   }
   
   /**
@@ -281,7 +279,7 @@ public class ManageMember extends SpaceManagement {
 	  goToAllSpaces();
 	  doAction("Join", spaceName);
 	  waitForElementPresent(By.xpath("//*[@class='TitleContent']/text()['(Member)']/../a[text()='"+ spaceName +"']"), iTimeout);
-	  pause(1000);
+	  Utils.pause(1000);
 	  click(By.xpath("//*[@id='UIManageAllSpaces']//*[text()= '"+ spaceName +"']"));
 	  verifyUserJoinedSpace(user);
   }
@@ -319,7 +317,7 @@ public class ManageMember extends SpaceManagement {
 		default:
 			break;
 		}
-		pause(1000);
+		Utils.pause(1000);
 	}
 
 	/**
@@ -474,7 +472,7 @@ public class ManageMember extends SpaceManagement {
 		gotoEditSpace(spaceName);
 		goToMembers();
 		removeMember(memberName);
-		pause(500);
+		Utils.pause(500);
 	}
 	
 	/**
@@ -516,7 +514,7 @@ public class ManageMember extends SpaceManagement {
 		}
 		userSignIn(manager);
 		addUserToSpace(spaceName, userRoot, userName);
-		pause(500);
+		Utils.pause(500);
 	}
 	
 	/**
@@ -536,12 +534,12 @@ public class ManageMember extends SpaceManagement {
 		}else if (advanceSpace){
 			addNewSpace(spaceName, spaceDescription, advanceParam[0], advanceParam[1], advanceParam[2], advanceParam[3]);
 		}
-		pause(1000);
+		Utils.pause(1000);
 		nav.goToUsersAndGroupsManagement();
 		userGroup.chooseGroupTab();
 		userGroup.selectGroup("Spaces/"+spaceName);
 		userGroup.addUsersToGroup(username, membership, false, true);
-		pause(1000);
+		Utils.pause(1000);
 	}
 	
 	/**
@@ -810,7 +808,7 @@ public class ManageMember extends SpaceManagement {
 		userSignIn(user);
 		goToRequestsPeding();
 		click(ELEMENT_CANCEL_LINK.replace("${spaceName}", spaceName));
-		pause(500);
+		Utils.pause(500);
 		//goToAllSpaces();
 		click(ELEMENT_ALL_SPACE_LINK);
 		waitForElementPresent(ELEMENT_SEND_REQUEST_LINK.replace("${spaceName}", spaceName));
@@ -856,7 +854,7 @@ public class ManageMember extends SpaceManagement {
 		}
 		userSignIn(user);
 		goToAllSpaces();
-		pause(500);
+		Utils.pause(500);
 	}
 	
 	/**
@@ -892,26 +890,26 @@ public class ManageMember extends SpaceManagement {
 	 */
 	public void userSignIn(userType user){
 		magAcc = new ManageAccount(driver);
-		if (isElementNotPresent(ELEMENT_SIGN_IN_LINK) && isElementNotPresent(ELEMENT_GO_TO_PORTAL) ){
+		if (isElementNotPresent(ELEMENT_INPUT_USERNAME)){
 			magAcc.signOut();
 		}else{
 			info("-- User.logIn: " + user);
 		}
 		switch (user) {
 		case ROOT:
-			magAcc.signIn("root", "gtn");
+			magAcc.signIn("root", "gtngtn");
 			break;
 		case ADMIN:
-			magAcc.signIn("john", "gtn");
+			magAcc.signIn("john", "gtngtn");
 			break;	
 		case AUTHOR:
-			magAcc.signIn("james", "gtn");
+			magAcc.signIn("james", "gtngtn");
 			break;
 		case DEVELOPER:
-			magAcc.signIn("demo", "gtn");
+			magAcc.signIn("jack", "gtngtn");
 			break;
 		case PUBLISHER:
-			magAcc.signIn("mary", "gtn");
+			magAcc.signIn("mary", "gtngtn");
 			break;
 		default:
 			break;

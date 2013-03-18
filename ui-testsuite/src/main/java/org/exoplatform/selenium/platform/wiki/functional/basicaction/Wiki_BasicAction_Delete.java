@@ -20,9 +20,8 @@ public class Wiki_BasicAction_Delete extends BasicAction {
 	public void setUpBeforeTest(){
 		initSeleniumTest();
 		driver.get(baseUrl);
-		driver.manage().window().maximize();
 		magAcc = new ManageAccount(driver);
-		magAcc.signIn("john", "gtn");
+		magAcc.signIn("john", "gtngtn");
 	}
 
 	@AfterMethod

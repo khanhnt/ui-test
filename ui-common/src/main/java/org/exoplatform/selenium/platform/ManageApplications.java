@@ -1,6 +1,11 @@
 package org.exoplatform.selenium.platform;
 
 import static org.exoplatform.selenium.TestLogger.info;
+
+import org.exoplatform.selenium.Button;
+import org.exoplatform.selenium.Dialog;
+import org.exoplatform.selenium.ManageAlert;
+import org.exoplatform.selenium.Utils;
 import org.exoplatform.selenium.platform.NavigationToolbar;
 import java.util.Map;
 import org.openqa.selenium.By;
@@ -8,8 +13,11 @@ import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 
 public class ManageApplications extends PlatformBase {
-	
-	NavigationToolbar nav = new NavigationToolbar();
+
+	NavigationToolbar nav = new NavigationToolbar(driver);
+	Dialog dialog = new Dialog(driver);
+	Button button = new Button(driver);
+	ManageAlert alt = new ManageAlert(driver);
 	
 	/* Manage Application Page */
 	public By ELEMENT_IMPORT_APPLICATION = By.xpath("//div[text()='Import Applications']");
@@ -64,8 +72,8 @@ public class ManageApplications extends PlatformBase {
 	public void deleteGadget (String gadgetName) {
 		waitForElementPresent(By.xpath("//a[@title='"+gadgetName+"']"));
 		click(By.xpath("//a[@title='"+gadgetName+"']/following::a[@title='Delete Gadget']"));
-		waitForConfirmation("Are you sure to delete this gadget?");
-		pause(1000);
+		alt.waitForConfirmation("Are you sure to delete this gadget?");
+		Utils.pause(1000);
 		waitForElementNotPresent(By.xpath("//a[@title='"+gadgetName+"']"));
 		info("'"+gadgetName+"' is deleted successfully");
 	}
@@ -92,7 +100,7 @@ public class ManageApplications extends PlatformBase {
 				setViewPermissions(key, permissions.get(key));
 			}
 		}
-		save();	
+		button.save();	
 		if (verify) {
 			waitForTextPresent(MESSAGE_EMPTY_CATEGORY);
 			waitForAndGetElement(ELEMENT_CURRENT_CATEGORY_NAME);
@@ -121,7 +129,7 @@ public class ManageApplications extends PlatformBase {
 				setViewPermissions(key, permissions.get(key));
 			}
 		}
-		save();
+		button.save();
 		if (verify) {
 			waitForTextPresent(MESSAGE_EMPTY_CATEGORY);
 			waitForAndGetElement(ELEMENT_EDIT_CATEGORY_NAME);
@@ -134,13 +142,13 @@ public class ManageApplications extends PlatformBase {
 		//		String ELEMENT_CURRENT_CATEGORY_NAME = ELEMENT_CATEGORY_NAME.replace("${categoryName}", categoryName);
 		By ELEMENT_CURRENT_CATEGORY_NAME = By.xpath("//a[contains(text(),'"+categoryName+"')]") ;
 		click(ELEMENT_CURRENT_CATEGORY_NAME);
-		pause(500);
+		Utils.pause(500);
 		click(ELEMENT_CATEGORY_REMOVE_ICON);
-		waitForConfirmation(MESSAGE_CONFIRM_DELETE_CATEGORY);
+		alt.waitForConfirmation(MESSAGE_CONFIRM_DELETE_CATEGORY);
 		if (verify) {
 			waitForElementNotPresent(ELEMENT_CURRENT_CATEGORY_NAME);
 		}
-		pause(500);
+		Utils.pause(500);
 	}
 
 	//Select a category
@@ -149,7 +157,7 @@ public class ManageApplications extends PlatformBase {
 		String ELEMENT_CURRENT_CATEGORY_NAME = ELEMENT_CATEGORY_NAME.replace("${categoryName}", categoryName);
 		waitForAndGetElement(ELEMENT_CURRENT_CATEGORY_NAME);
 		click(ELEMENT_CURRENT_CATEGORY_NAME);
-		pause(500);
+		Utils.pause(500);
 	}
 
 	public void makeItPublic(boolean checked){
@@ -206,8 +214,8 @@ public class ManageApplications extends PlatformBase {
 		click(CATEGORY_XPATH);
 		waitForElementPresent(DELETE_APP_ICON);
 		click(DELETE_APP_ICON);
-		waitForConfirmation("Are you sure to delete this application?");
-		pause(1000);
+		alt.waitForConfirmation("Are you sure to delete this application?");
+		Utils.pause(1000);
 		waitForTextNotPresent(applicationName);
 		info("'"+applicationName+"' is deleted successfully");
 	}
@@ -239,10 +247,10 @@ public class ManageApplications extends PlatformBase {
 		{
 			if (status.equalsIgnoreCase("true")) click(ELEMENT_SHOW_IMPORT_CHECKBOX);
 		}
-		save();
-		close();
-		click(ELEMENT_FINISH_ICON);
-		pause(1000);
+		button.save();
+		button.close();
+		click(button.ELEMENT_FINISH_ICON);
+		Utils.pause(1000);
 
 		//Verify after changing show import
 		if (checkShowImport)
@@ -257,7 +265,7 @@ public class ManageApplications extends PlatformBase {
 	
 	public void importApplication () {
 		click(ELEMENT_IMPORT_APPLICATION);
-		waitForConfirmation(IMPORT_APPLICATION_CONFIRMATION);
-		pause(1000);
+		alt.waitForConfirmation(IMPORT_APPLICATION_CONFIRMATION);
+		Utils.pause(1000);
 	}
 }

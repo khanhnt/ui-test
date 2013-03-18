@@ -1,6 +1,8 @@
 package org.exoplatform.selenium.platform.social;
 
 import static org.exoplatform.selenium.TestLogger.*;
+
+import org.exoplatform.selenium.Utils;
 import org.openqa.selenium.By;
 
 /**
@@ -142,7 +144,7 @@ public class PeopleConnection extends SocialBase {
 		
 		waitForElementNotPresent(ELEMENT_REMOVE_CONNECTION_BUTTON);
 		
-		pause(1000);
+		Utils.pause(1000);
 	}
 	
 	/**

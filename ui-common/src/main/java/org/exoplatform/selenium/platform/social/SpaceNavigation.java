@@ -3,6 +3,11 @@ package org.exoplatform.selenium.platform.social;
 import static org.exoplatform.selenium.TestLogger.debug;
 import static org.exoplatform.selenium.TestLogger.info;
 import java.util.Map;
+
+import org.exoplatform.selenium.Button;
+import org.exoplatform.selenium.Dialog;
+import org.exoplatform.selenium.ManageAlert;
+import org.exoplatform.selenium.Utils;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 
@@ -12,6 +17,10 @@ import org.testng.Assert;
  */
 public class SpaceNavigation extends SocialBase{
 
+	Button button = new Button(driver);
+	Dialog dialog = new Dialog(driver);
+	ManageAlert magAlert = new ManageAlert(driver);
+	
 	// Go to My Spaces > Select a space > Settings
 	// Navigations Tab
 	public final By UP_LEVEL = By.xpath("//a[@title='Up Level']");
@@ -59,11 +68,11 @@ public class SpaceNavigation extends SocialBase{
 	{
 		//Click add node button
 		click(ADD_NODE_BUTTON);
-		pause(1000);
+		Utils.pause(1000);
 		//Input node name
 		waitForElementPresent(NODE_NAME);
 		type(NODE_NAME, nodeNameInput, true);
-		pause(500);
+		Utils.pause(500);
 		//Input node label
 		waitForElementPresent(NODE_LABEL);
 		type(NODE_LABEL, nodeLabelInput, true);
@@ -76,9 +85,9 @@ public class SpaceNavigation extends SocialBase{
 		//Click create page
 		waitForElementPresent(CREATE_PAGE_BUTTON);
 		click(CREATE_PAGE_BUTTON);
-		save();
-		pause(1000);
-		save();
+		button.save();
+		Utils.pause(1000);
+		button.save();
 	}
 	/**
 	 * Updated by thaopth
@@ -111,7 +120,7 @@ public class SpaceNavigation extends SocialBase{
 		} else{
 
 			click(currentNode);
-			pause(500);
+			Utils.pause(500);
 			info("--Click riggt click--");
 			rightClickOnElement(currentNode);
 			if (currentNode.equals(ELEMENT_NAVIGATION_HOME_NODE)) {
@@ -126,7 +135,7 @@ public class SpaceNavigation extends SocialBase{
 		if (extendedLabelMode) {
 			for (String language : languages.keySet()) {
 				select(ELEMENT_SELECT_LANGUAGE, language);
-				pause(500);
+				Utils.pause(500);
 			}
 		} else {
 			uncheck(ELEMENT_CHECKBOX_EXTENDED_LABEL_MODE);
@@ -149,7 +158,7 @@ public class SpaceNavigation extends SocialBase{
 		//info("-- Select Page --");
 		
 		click(ELEMENT_SEARCH_SELECT_PAGE_BUTTON);
-		pause(1000);
+		Utils.pause(1000);
 
 		type(By.xpath("//div[@class='QuickSet']/input[@id='pageTitle']"), pageTitle, true);
 		
@@ -159,12 +168,12 @@ public class SpaceNavigation extends SocialBase{
 	}
 
 		info("-- Save add node for portal --");
-		pause(1000);
-		save();
+		Utils.pause(1000);
+		button.save();
 		if (verifyNode) {
 			waitForTextNotPresent("Page Node Settings");
 			waitForTextPresent(nodeName);
-			save();
+			button.save();
 			waitForTextPresent(nodeName);
 		}
 	}
@@ -192,7 +201,7 @@ public class SpaceNavigation extends SocialBase{
 		if (extendedLabelMode) {
 			for (String language : languages.keySet()) {
 				select(ELEMENT_SELECT_LANGUAGE, language);
-				pause(500);
+				Utils.pause(500);
 			}
 		} else {
 			uncheck(ELEMENT_CHECKBOX_EXTENDED_LABEL_MODE);
@@ -204,10 +213,10 @@ public class SpaceNavigation extends SocialBase{
 		type(ELEMENT_INPUT_PAGE_NAME, pageName, true);
 		type(ELEMENT_INPUT_PAGE_TITLE, pageTitle, true);
 		click(ELEMENT_CREATE_PAGE_LINK);
-		pause(1000);
-		save();
-		pause(1000);
-		save();
+		Utils.pause(1000);
+		button.save();
+		Utils.pause(1000);
+		button.save();
 		waitForTextNotPresent(nodeName);
 	}
 
@@ -222,17 +231,17 @@ public class SpaceNavigation extends SocialBase{
 			click(currentNodeName);
 			rightClickOnElement(currentNodeName);
 			click(ELEMENT_DELETE_NODE);
-			waitForConfirmation("Are you sure to delete this node?");
+			magAlert.waitForConfirmation("Are you sure to delete this node?");
 			waitForTextNotPresent(nodeName);
-			save();		
+			button.save();		
 		}else {
 			click(currentNodeHome);
 			click(currentNodeName);
 			rightClickOnElement(currentNodeName);
 			click(ELEMENT_DELETE_NODE);
-			waitForConfirmation("Are you sure to delete this node?");
+			magAlert.waitForConfirmation("Are you sure to delete this node?");
 			waitForTextNotPresent(nodeName);
-			save();		
+			button.save();		
 		}
 		waitForTextNotPresent(nodeName);
 	}
@@ -252,7 +261,7 @@ public class SpaceNavigation extends SocialBase{
 				click((ELEMENT_CUT_NODE_LINK));
 				return;
 			}
-			pause(WAIT_INTERVAL);
+			Utils.pause(WAIT_INTERVAL);
 		}
 	}
 
@@ -267,7 +276,7 @@ public class SpaceNavigation extends SocialBase{
 				click((ELEMENT_COPY_NODE_LINK));
 				return;
 			}
-			pause(WAIT_INTERVAL);
+			Utils.pause(WAIT_INTERVAL);
 	}
 	}
 	
@@ -282,7 +291,7 @@ public class SpaceNavigation extends SocialBase{
 				click((ELEMENT_PASTE_NODE_LINK));
 				return;
 			}
-			pause(WAIT_INTERVAL);
+			Utils.pause(WAIT_INTERVAL);
 		}
 	}
 

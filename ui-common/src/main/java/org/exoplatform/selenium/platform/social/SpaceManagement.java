@@ -18,6 +18,9 @@ package org.exoplatform.selenium.platform.social;
 
 import static org.exoplatform.selenium.TestLogger.info;
 
+import org.exoplatform.selenium.Button;
+import org.exoplatform.selenium.Dialog;
+import org.exoplatform.selenium.ManageAlert;
 import org.exoplatform.selenium.Utils;
 import org.exoplatform.selenium.platform.UserGroupManagement;
 import org.openqa.selenium.By;
@@ -31,6 +34,9 @@ import org.openqa.selenium.interactions.Actions;
 public class SpaceManagement extends SocialBase {
 	
 	UserGroupManagement userGroup = new UserGroupManagement(driver);
+	Dialog dialog = new Dialog(driver);
+	Button button = new Button(driver);
+	ManageAlert magAlert = new ManageAlert(driver);
 	
 	//Go to My Spaces	> 
 	//Add space Form
@@ -117,7 +123,7 @@ public class SpaceManagement extends SocialBase {
 		clickButton("Create");
 		waitForTextPresent(name, iTimeout);
 		//waitForElementPresent(By.xpath("//div[contains(@class,'UISpaceName')]/a[@title='" + name + "']"),iTimeout);
-		pause(1000);
+		Utils.pause(1000);
 	}
 
 	/**
@@ -192,7 +198,7 @@ public class SpaceManagement extends SocialBase {
 
 		clickButton("Create");
 		waitForTextPresent(name, iTimeout);
-		pause(1000);
+		Utils.pause(1000);
 		//waitForElementPresent(By.xpath("//div[contains(@class,'UISpaceName')]/a[@title='" + name + "']"), iTimeout);
 	}
 
@@ -216,7 +222,10 @@ public class SpaceManagement extends SocialBase {
 	public void deleteSpace(String name, int... params){
 		int iTimeout = params.length > 0 ? params[0] : DEFAULT_TIMEOUT;    
 		doAction("Delete", name);    
-		waitForConfirmation(MESSAGE_DELETE_SPACE);
+		//magAlert.waitForConfirmation(MESSAGE_DELETE_SPACE);
+		magAlert = new ManageAlert(driver);
+		magAlert.acceptAlert();
+		Utils.pause(1000);
 		waitForElementNotPresent(By.xpath("//div[@class='contentBox']/h4[@class='spaceTitle']//a[text()='" + name + "']"), iTimeout);
 		//(By.xpath("//a[text()='" + name + "']/ancestor::div[contains(@class,'ContentBox')]"),iTimeout);
 		info(name + " was deleted successfully");
@@ -242,10 +251,10 @@ public class SpaceManagement extends SocialBase {
 		}else{
 			info("-- Edit a space without changing the user's avatar --");
 		}
-		save();
+		button.save();
 		if(name == newName){
 			waitForTextPresent("Update info of space successful.");
-			closeMessageDialog();
+			dialog.closeMessageDialog();
 		}else{
 			waitForElementPresent(By.xpath("//div[contains(@class,'UISpaceName')]/a[@title='" + newName + "']"));
 		}
@@ -268,7 +277,7 @@ public class SpaceManagement extends SocialBase {
 		driver.switchTo().frame(waitForAndGetElement(ELEMENT_UPLOAD_IMG_FRAME_XPATH));
 		waitForElementPresent(ELEMENT_UPLOAD_IMG_ID);
 		type(ELEMENT_UPLOAD_IMG_ID, file, false);
-		pause(500);
+		Utils.pause(500);
 		switchToParentWindow();
 		clickButton("Confirm");    
 		click(By.xpath("//*[@id='UIAvatarUploadContent']//a[contains(text(),'Save')]"));
@@ -286,7 +295,7 @@ public class SpaceManagement extends SocialBase {
 		int timeToDeleteSpace = params.length > 0 ? params[0] : DEFAULT_TIMEOUT;;
 		goToMySpacePage();
 		deleteSpace(spaceName, timeToDeleteSpace);
-		pause(500);
+		Utils.pause(500);
 	}
 
 }

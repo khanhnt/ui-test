@@ -1,6 +1,8 @@
 package org.exoplatform.selenium.platform.social;
 
 import static org.exoplatform.selenium.TestLogger.info;
+
+import org.exoplatform.selenium.Utils;
 import org.exoplatform.selenium.platform.PlatformBase;
 import org.openqa.selenium.By;
 
@@ -11,8 +13,8 @@ import org.openqa.selenium.By;
 public class SocialBase extends PlatformBase {
 	
 	//SpaceManagement spaceMag = new SpaceManagement();
-		
-	public final By ELEMENT_JOIN_SPACE_LINK = By.xpath("//div[@class='uiSpaceNavigationPortlet']/..//div/a[contains(text(),'Join a space')]");
+
+	public final By ELEMENT_JOIN_SPACE_LINK = By.xpath("//div[@class='uiSpaceNavigationPortlet']/div/a/i[contains(@class, 'uiIconPLFMan')]");
 	// Go to My space link
 	public final By ELEMENT_MY_SPACES_LINK = By.linkText("My Spaces");
 	public final By ELEMENT_ALL_SPACE_LINK = By.linkText("All Spaces");
@@ -100,7 +102,7 @@ public class SocialBase extends PlatformBase {
 		info("--Go to My Space Page--");
 		//waitForElementPresent(ELEMENT_MY_SPACES_LINK);
 		//click(ELEMENT_MY_SPACES_LINK);
-		pause(500);
+		Utils.pause(500);
 		click(ELEMENT_JOIN_SPACE_LINK);
 		waitForTextPresent("Add New Space");
 	}
@@ -259,6 +261,7 @@ public class SocialBase extends PlatformBase {
 		By actionLink = By.xpath("//a[text()='" + spaceName + "']/../../../div/button[text()='" + action + "']");
 				//("//a[text()='" + spaceName + "']/ancestor::div[contains(@class,'ContentBox')]//a[text()='" + action + "']");
 		click(actionLink);
+		Utils.pause(1000);
 	}
 
 }

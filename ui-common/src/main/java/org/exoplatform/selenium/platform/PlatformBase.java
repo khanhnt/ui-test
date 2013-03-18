@@ -7,7 +7,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import org.exoplatform.selenium.Button;
 import org.exoplatform.selenium.TestBase;
+import org.exoplatform.selenium.Utils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.ElementNotVisibleException;
@@ -23,6 +25,9 @@ import org.testng.Assert;
 
 
 public class PlatformBase extends TestBase {
+
+	Button button = new Button(driver);
+	
 	/*
 	 * Default Page - http://localhost:8080/portal/default/
 	 * */
@@ -36,8 +41,10 @@ public class PlatformBase extends TestBase {
 	/*
 	 * Log in Form - Sign-out 
 	 */
-	public final String ELEMENT_INPUT_USERNAME = "//input[@name='username']";
-	public final String ELEMENT_INPUT_PASSWORD = "//input[@name='password']";
+	public final By ELEMENT_INPUT_USERNAME = By.name("username"); 
+			//"//input[@name='username']";
+	public final By ELEMENT_INPUT_PASSWORD = By.name("password");
+			//"//input[@name='password']";
 
 	/*
 	 * Navigation Bar /Administration Bar
@@ -67,16 +74,21 @@ public class PlatformBase extends TestBase {
 	/* End Edit*/
 
 	/* Setting Icon */
-	public final String ELEMENT_LINK_SETUP ="//img[@alt='Setup']";
+	public final String ELEMENT_LINK_SETUP = "//*[@id='UISetupPlatformToolBarPortlet']/a"; 
+			//"//img[@alt='Setup']";
 	//Users
 	public final String ELEMENT_LINK_USERS ="//a[text()='Users']";
 	public final String ELEMENT_LINK_ADD_USERS="//a[text()='Add Users']";
 	//Application
 	public By ELEMENT_APPLICATIONS_LINK = By.linkText("Applications");
 	//Content
-	public final By ELEMENT_MENU_CONTENT_LINK = By.linkText("Content");
-	public final By ELEMENT_MENU_SITE_EXPLORER = By.linkText("Sites Explorer");
-	public final By ELEMENT_LINK_CONTENT_ADMIN = By.linkText("Content administration");
+	public final By ELEMENT_MENU_CONTENT_LINK = By.xpath("//*[text()='Content']");
+			//By.linkText("Content");
+	public final By ELEMENT_MENU_SITE_EXPLORER = By.xpath("//*[text()='Sites Explorer']");
+			//By.linkText("Sites Explorer");
+	public final By ELEMENT_LINK_CONTENT_ADMIN = By.xpath("//*[text()='Content Administration']");
+			//By.linkText("Content administration");
+	
 	//Portal
 	public final String ELEMENT_LINK_PORTAL = "//a[text()='Portal']";
 	public final String ELEMENT_LINK_PAGES   = "//a[text()='Pages']";
@@ -100,7 +112,7 @@ public class PlatformBase extends TestBase {
 
 	//Add user Form - (Setting -> User -> add User)
 	//Account setting
-	public final String ELEMENT_ACCOUNT_SETTING_TAB = "//div[text()='Account Settings' and @class='MiddleTab']";
+	public final By ELEMENT_ACCOUNT_SETTING_TAB = By.xpath("//*[text()='Account Setting' and @data-toggle='tab']");
 	public final String ELEMENT_INPUT_CONFIRM_PASSWORD = "//input[@id='Confirmpassword']";
 	public final String ELEMENT_INPUT_NEW_PASSWORD = "//input[@id='newPassword']";
 	public final String ELEMENT_INPUT_NEW_CONFIRM_PASSWORD = "//input[@id='confirmPassword']";
@@ -108,28 +120,34 @@ public class PlatformBase extends TestBase {
 	public final String ELEMENT_INPUT_LASTNAME = "//input[@id='lastName']";
 	public final String ELEMENT_INPUT_EMAIL = "//input[@id='email']";
 	//User Profile
-	public final String ELEMENT_USER_PROFILE_TAB = "//div[text()='User Profile' and @class='MiddleTab']";	
-	public final String ELEMENT_INPUT_USER_NAME_GIVEN = "//input[@id='user.name.given']";
-	public final String ELEMENT_SELECT_USER_LANGUAGE = "//select[@name='user.language']";
+	public final By ELEMENT_USER_PROFILE_TAB = By.xpath("//*[text()='User Profile' and @data-toggle='tab']");
+			//"//div[text()='User Profile' and @class='MiddleTab']";	
+	public final By ELEMENT_INPUT_USER_NAME_GIVEN = By.name("user.name.given");
+		//"//input[@id='user.name.given']";
+	public final By ELEMENT_SELECT_USER_LANGUAGE = By.name("user.language");
+		//"//select[@name='user.language']";
 	//End User Profile
 	//End - Add User Form
 	//Setting -> user -> Groups and roles
 	public final String ELEMENT_GROUP_AND_ROLE_LINK = "//a[contains(text(),'Groups and Roles')]";
 
 	//Sign-out
-	public final String ELEMENT_ACCOUNT_NAME_LINK = "//a[@class='TBIcon']";
-	public final String ELEMENT_SIGN_OUT_LINK = "//a[@class='LogoutIcon']";
+	public final By ELEMENT_ACCOUNT_NAME_LINK = By.xpath("//*[@id='UIUserPlatformToolBarPortlet']/a");
+			//"//a[@class='TBIcon']";
+	public final By ELEMENT_SIGN_OUT_LINK = By.className("uiIconPLFLogout");
+			//"//a[@class='LogoutIcon']";
 	/* Username link - END*/
 
 	/*
 	 * Context menu
 	 * */
-	public final By ELEMENT_CUT_NODE = By.xpath("//a[contains(text(),'Cut')]"); 
-	public final By ELEMENT_PASTE_NODE = By.xpath(".//*[@id='NavigationNodePopupMenu']//a[@class='ItemIcon PasteNode16x16Icon']");
-	public final By ELEMENT_COPY_NODE = By.xpath("//a[contains(text(),'Copy')]");
+	public final By ELEMENT_CUT_NODE = By.className("uiIconEcmsCut"); 
+	public final By ELEMENT_PASTE_NODE = By.className("uiIconEcmsPaste"); 
+	public final By ELEMENT_COPY_NODE = By.className("uiIconEcmsCopy"); 
 	public final By ELEMENT_CLONE_NODE = By.xpath("//a[contains(text(),'Clone')]");
-	public final By ELEMENT_EDIT_NODE_PAGE = By.xpath("//a[contains(text(),'Edit Node')]");
+	public final By ELEMENT_EDIT_NODE_PAGE = By.className("uiIconEcmsEditDocument");
 	public final By ELEMENT_NODE_EDIT_PAGE = By.xpath("//div[@id='NavigationNodePopupMenu']/div[@class='UIContextMenuContainer']//a[@class='ItemIcon EditPageNode16x16Icon']");
+
 	/*
 	 * User and Group Management
 	 * */
@@ -140,7 +158,8 @@ public class PlatformBase extends TestBase {
 	public final String ELEMENT_SEARCH_ICON_USERS_MANAGEMENT = "//form[@id='UISearchForm']/div[2]/a";
 
 	//Group Management TAB
-	public final String ELEMENT_GROUP_MANAGEMENT_TAB = "//div[@class='GroupManagementIcon']/..";
+	public final By ELEMENT_GROUP_MANAGEMENT_TAB = By.xpath("//*[contains(@class, 'uiIconGroup')]");
+			//"//div[@class='GroupManagementIcon']/..";
 	public final String ELEMENT_GROUP_ADD_NEW_ICON = "//div[@id='UIOrganizationPortlet']//div[@class='TitleBar']/a[@class='TreeActionIcon AddGroupIcon']";
 	public final String ELEMENT_GROUP_REMOVE_ICON = "//div[@id='UIOrganizationPortlet']//div[@class='TitleBar']/a[@class='TreeActionIcon RemoveGroupIcon']";
 	public final String ELEMENT_GROUP_EDIT_ICON = "//div[@id='UIOrganizationPortlet']//div[@class='TitleBar']/a[@class='TreeActionIcon EditGroupIcon']";
@@ -150,10 +169,11 @@ public class PlatformBase extends TestBase {
 	public final String ELEMENT_INPUT_LABEL = "//input[@id='label']";
 	public final String ELEMENT_TEXTAREA_DESCRIPTION = "//textarea[@id='description']";
 
-	public final String ELEMENT_GROUP_SEARCH_USER_ICON = "//form[@id='UIGroupMembershipForm']/div[2]/div/table/tbody/tr[1]/td[2]/a";
+	public final By ELEMENT_GROUP_SEARCH_USER_ICON = By.xpath("//form[@id='UIGroupMembershipForm']//*[contains(@class, 'uiIconSearch')]");
+			//"//form[@id='UIGroupMembershipForm']/div[2]/div/table/tbody/tr[1]/td[2]/a";
 	public final String ELEMENT_GROUP_SEARCH_POPUP_ADD_ICON = "//form[@id='UIUserSelector']//div[@class='UIAction']//a[@class='ActionButton LightBlueStyle']";
 	public final String ELEMENT_SELECT_MEMBERSHIP = "//select[@name='membership']";
-	public final String ELEMENT_GROUP_USER_IN_TABLE = "//div[@class='UIUserInGroup']//div[@title='${username}']";
+	public final String ELEMENT_GROUP_USER_IN_TABLE = "//div[@class='UIUserInGroup']//*[@data-original-title = '${username}']";
 
 	//Membership Management
 	public final String ELEMENT_TAB_MEMBERSHIP_MANAGEMENT = "//div[@class='MembershipManagementIcon']/..";
@@ -165,7 +185,8 @@ public class PlatformBase extends TestBase {
 	/*
 	 * Manage Account
 	 * */
-	public final String ELEMENT_SIGN_IN_CONFIRM_BUTTON = "//form[@id='UIPortalComponentLogin']//div[@class='UIAction']/*";
+	public final By ELEMENT_SIGN_IN_BUTTON = By.xpath("//*[@class='loginButton']/*");
+			//"//form[@id='UIPortalComponentLogin']//div[@class='UIAction']/*";
 	public final String ELEMENT_SELECT_SEARCH_OPTION = "//select[@name='searchOption']";
 	public final String ELEMENT_USER_EDIT_ICON = "//div[@id='UIListUsersGird']/table//tr/td/div[text()='${username}']/../../td[5]//img[@class='ViewUserInfoIcon']";
 	public final String ELEMENT_SEARCH_ICON_REGISTER = "//img[@class='SearchIcon']";
@@ -207,10 +228,10 @@ public class PlatformBase extends TestBase {
 	public final String ELEMENT_PAGINATOR_TOTAL_NUMBER = "//a[@class='PagesTotalNumber']";
 	public final String ELEMENT_PAGINATOR_NEXT_ICON = "//a[@class='Icon NextPageIcon']";
 	public final String ELEMENT_PAGINATOR_SELECTED_PAGE = "//a[@class='Number PageSelected' and text()='${number}']";
-	public final String ELEMENT_MESSAGE_TEXT = "//li[@class='MessageContainer']/span[contains(@class, 'PopupIcon')]";
-	public final String ELEMENT_MESSAGE_DIALOG_CLOSE_ICON_IE = ELEMENT_MESSAGE_TEXT + "/../../../../../..//a";
-	public final String ELEMENT_MESSAGE_DIALOG_CLOSE_ICON = " //div[contains(@class, 'UIPopupWindow') and contains(@style, 'visibility: visible')]//a[contains(@class, 'uiIconClose')]";
-			//"//div[contains(@class, 'UIPopupWindow') and contains(@style, 'visibility: visible')]//span[text()='Messages']/..//a[@class='CloseButton']";
+	//public final String ELEMENT_MESSAGE_TEXT = "//li[@class='MessageContainer']/span[contains(@class, 'PopupIcon')]";
+	//public final String ELEMENT_MESSAGE_DIALOG_CLOSE_ICON_IE = ELEMENT_MESSAGE_TEXT + "/../../../../../..//a";
+	//public final String ELEMENT_MESSAGE_DIALOG_CLOSE_ICON = " //div[contains(@class, 'UIPopupWindow') and contains(@style, 'visibility: visible')]//a[contains(@class, 'uiIconClose')]";
+	//"//div[contains(@class, 'UIPopupWindow') and contains(@style, 'visibility: visible')]//span[text()='Messages']/..//a[@class='CloseButton']";
 
 	/* Add New Page Form */
 	public final String ELEMENT_CHECKBOX_MAX_WINDOWS = "//input[@id='showMaxWindow']";
@@ -249,32 +270,49 @@ public class PlatformBase extends TestBase {
 	public final String ELEMENT_NODE_DELETE = "//div[@id='NavigationNodePopupMenu']/div[@class='UIContextMenuContainer']//a[@class='ItemIcon DeleteNode16x16Icon']";
 	public final String ELEMENT_NODE_EDIT = "//div[@id='NavigationNodePopupMenu']/div[@class='UIContextMenuContainer']//a[@class='ItemIcon EditSelectedNode16x16Icon']";
 	//	public final String ELEMENT_NAVIGATION_NODE_AREA= "//div[@class='Node']"; 
+
+	//Add new Page
+	public final By ELEMENT_NEWPAGE_NAME_TEXTBOX = By.id("pageName");	
+	public final By ELEMENT_NEWPAGE_SAVE_BUTTON = By.xpath("//a[@title='Finish']");
+	public final By ELEMENT_NEWPAGE_LAYOUT_OPTION = By.xpath("//div[@class='DropDownSelectLabel']") ;
+
+	//Page Creation Wizard -> Page Configs
+	public final By ELEMENT_NEWPAGE_LAYOUT_COLUMN_PAGE_OPTION = By.linkText("Column Page Configs") ;
+	public final By ELEMENT_NEWPAGE_LAYOUT_ROW_PAGE_OPTION = By.linkText("Row Page Configs");
+	public final By ELEMENT_NEWPAGE_LAYOUT_TAB_PAGE_OPTION = By.linkText("Tabs Page Config");
+	public final By ELEMENT_NEWPAGE_LAYOUT_MIX_PAGE_OPTION = By.linkText("Mix Page Configs");
+	public final By ELEMENT_NEWPAGE_LAYOUT_DEFAULT_OPTION = By.linkText("Page Configs");
+
+	public final By ELEMENT_ADD_CONTENT_DETAIL_PORTLET = By.xpath("//div[contains(text(),'Content Detail')]");
+	public final By ELEMENT_DROP_TARGET_NO_LAYOUT = By.xpath("//div[@id='UIPage']");
+	public final By ELEMENT_DROP_TARGET_HAS_LAYOUT = By.xpath("//div[@class='UIRowContainer EmptyContainer']");
+	public final By ELEMENT_ADD_CONTENT_LIST_PORTLET = By.xpath("//div[text()='Content List']");
+	public final By ELEMENT_FRAME_CONTAIN_PORTLET = By.xpath("//div[contains(@id,'UIPortlet')]");
+	public final By ELEMENT_SELECT_CONTENT_PATH_LINK = By.xpath("//img[@class='AddIcon16x16 SelectFolderPathIcon']");
+
+	public final By ELEMENT_CONTENTS_BY_QUERY_PORTLET = By.xpath("//div[contains(text(),'Content By Query')]");
+	public final By ELEMENT_BY_QUERY_TEXTAREA = By.xpath("//textarea[@id='UICLVConfigContentByQueryTextArea']");
+	public final By ELEMENT_WORKSPACE_SELECT = By.xpath("//select[@id='UICLVConfigWorkspaceFormSelectBox']");
+	public final By ELEMENT_ACME_CATEGORY = By.xpath("//*[@id='ListRecords']/thead/tr[2]/td/a");
+	public final By ELEMENT_FLIGHT = By.xpath("//a[@title='Flight']");
+	public final By ELEMENT_SELECT_BY_CONTENT_PATH = By.xpath("//input[@id='UICLVConfigDisplayModeFormRadioBoxInput_ManualViewerMode']");
+	public final By ELEMENT_BLOCK_LAYOUT = By.xpath("//div[@class='LAYOUT-BLOCK LAYOUT-PORTLET']");
+	public final By ELEMENT_PAGE_EDIT_ABORT = By.xpath("//a[@title='Abort']");
+
+	public final By ELEMENT_SELECT_CONTENT_PATH = By.xpath("//a[@title='offices.jpg']");
+	public final By ELEMENT_ADD_TARGET = By.xpath("//img[@class='AddIcon16x16 SelectTargetPageIcon']");
+	public final By ELEMENT_HEADER_PORTLET = By.id("UICLVConfigHeaderFormStringInput");
+	public final By ELEMENT_TEMPLATE_PORTLET = By.id("UICLVConfigDisplayTemplateFormSelectBox");
+	public final By ELEMENT_ADVANCE_PORTLET = By.linkText("Advanced");
+	public final By ELEMENT_NEW_TARGET_PATH = By.xpath("//div[text()='news']/../../td/a/div[@class='Select16x16Icon']");
+	public final By ELEMENT_CONTENT_BYURL_PORTLET = By.xpath("//div[text()='Content by URL']");
+	public final By ELEMENT_NEWS_PORTLET = By.xpath("//div[text()='News']/../../../../../..");
+	public final By ELEMENT_NEW_EDIT_PORTLET = By.xpath("//div[text()='News']/../a[@class='EditIcon']");
+	public final By ELEMENT_HOMEPATH_ROOT = By.xpath("//div[@class='BreadcumbsPortlet']/div[2]/div[1]/a");
+	public final By ELEMENT_FOLDER_BROWSER = By.xpath("//div[contains(text(),'Folder Browser')]");
 	/*
 	 * END Page Management
 	 * */
-
-	/*
-	 * General
-	 * */
-	public final By ELEMENT_SAVE_CLOSE_BUTTON = By.linkText("Save & Close");
-	public final By ELEMENT_OK_BUTTON = By.xpath("//*[text()='OK']");
-			//("//a[text()='OK']");
-	public final By ELEMENT_APPLY_BUTTON = By.linkText("Apply");
-	public final By ELEMENT_SAVE_BUTTON = By.xpath("//*[text()='Save']"); 
-			//By.linkText("Save");
-	public final By ELEMENT_CANCEL_BUTTON = By.xpath("//*[text()='Cancel']"); 
-			//By.linkText("Cancel");
-	public final By ELEMENT_CLOSE_BUTTON = By.xpath("//*[text()='Close']");
-			//By.linkText("Close");
-	public final By ELEMENT_ADD_BUTTON = By.xpath("//*[text()='Add']");
-	
-	public final By ELEMENT_SELECT_BUTTON = By.xpath("//*[text()='Select']");
-	
-	public final By ELEMENT_CLOSE_WINDOW = By.className("uiIconClose"); 
-			//By.xpath("//a[@title='Close Window']");
-	public final By ELEMENT_FINISH_ICON = By.xpath("//a[@title='Finish']"); //Finish editing portlet icon
-	public final By ELEMENT_NEXT_BUTTON = By.linkText("Next");	
-	public final By ELEMENT_ABORT_BUTTON = By.linkText("//a[text()='Abort']");
 
 	/*Portlet in general*/
 	public final By ELEMENT_EDIT_PORTLET_ICON = By.xpath("//a[@title='Edit Portlet']");
@@ -300,25 +338,28 @@ public class PlatformBase extends TestBase {
 	 * */
 
 	//Content Administration / Advanced Configuration 
-	public final By ELEMENT_ADVANCED_CONFIGURATION_TAB = By.xpath("//div[@class = 'TabLabel' and @title = 'Advanced Configuration']");
-	public final By ELEMENT_MANAGE_LOCK_TAB = By.xpath("//div[@class = 'MiddleTab' and text() = 'Manage Lock']");
-	public final By ELEMENT_MANAGE_LOCKS = By.linkText("Manage Locks");
-
+	public final By ELEMENT_ADVANCED_CONFIGURATION_TAB = By.xpath("//*[text()='Advanced']");
+			//("//div[@class = 'TabLabel' and @title = 'Advanced Configuration']");
+	public final By ELEMENT_MANAGE_LOCK_TAB = By.xpath("//*[text() = 'Manage Lock']");
+			//("//div[@class = 'MiddleTab' and text() = 'Manage Lock']");
+	public final By ELEMENT_MANAGE_LOCKS = By.className("uiIconEcmsUnLockManager");
+	public final By ELEMENT_REPOSITORY_TAB = By.xpath("//*[text()='Repository']");
+	
 	//Edit In-line a SCV
 	public final By ELEMENT_PREFERENCE_TITLE=By.xpath("//span[contains(text(),'Content Detail Preferences')]");
-	public final By ELEMENT_CONTAINER_CONTENT = By.xpath("//div[@class='NavigationContainer']");
-	public final By ELEMENT_BUTTON_BACK = By.xpath("//a[@class='URLBackToButton']");
+	public final By ELEMENT_CONTAINER_CONTENT = By.xpath("//*[@class='NavigationContainer']");
+	public final By ELEMENT_BUTTON_BACK = By.xpath("//*[@class='URLBackToButton']");
 
 	//Others
 	//Content template > upload
-	public final By ELEMENT_UPLOAD_LINK_XPATH = By.xpath("//a[@title='Upload']");
+	public final By ELEMENT_UPLOAD_LINK_XPATH = By.xpath("//*[@class='actionIcon']//*[@class='uiIconEcmsUpload']");
 	public final By ELEMENT_UPLOAD_FILE_NAME_ID = By.id("name");
-	public final By ELEMENT_UPLOAD_IMG_FRAME_XPATH = By.xpath("//iframe[contains(@id,'uploadFrame')]");
+	public final By ELEMENT_UPLOAD_IMG_FRAME_XPATH = By.xpath("//iframe[contains(@id,'iFrameUpload')]");
 	public final By ELEMENT_UPLOAD_IMG_ID = By.id("file");
 
 	//Space > Wiki link
 	public final By ELEMENT_WIKI_LINK_IN_SPACE = By.xpath("//*[@id='spaceMenuTab']/li[3]/a/span[text()='Wiki']");
-	
+
 	///////////////////
 	//Set view permissions for portal
 	public void setViewPermissions(String groupId, String membership) {
@@ -328,16 +369,16 @@ public class PlatformBase extends TestBase {
 
 		info("--Setting view permission to " + groupId + ", " + membership + "--");
 		String[] groups = groupId.split("/");
-		pause(500);
+		Utils.pause(500);
 		click(ELEMENT_ADD_PERMISSION_BUTTON);
 		waitForTextPresent("Browse and select a group");
 		for (String group : groups) {
 			String groupToSelect = ELEMENT_SELECT_ACCESS_GROUP_ITEM.replace("${group}", group);
 			click(groupToSelect);
 		}
-		pause(500);
+		Utils.pause(500);
 		click(membershipToSelect);
-		pause(500);
+		Utils.pause(500);
 		waitForTextNotPresent("Permission Selector");
 		//waitForAndGetElement(selectedGroup);
 		waitForAndGetElement(selectedMembership);
@@ -352,7 +393,7 @@ public class PlatformBase extends TestBase {
 		info("--Setting edit permission to " + groupId + ", " + membership + "--");
 		String[] groups = groupId.split("/");
 		click(ELEMENT_SELECT_PERMISSION_BUTTON);
-		pause(500);
+		Utils.pause(500);
 		waitForTextPresent("Permission Selector");
 		for (String group : groups) {
 			String groupToSelect = ELEMENT_SELECT_EDIT_GROUP_ITEM.replace("${group}", group);
@@ -376,16 +417,6 @@ public class PlatformBase extends TestBase {
 		waitForTextPresent("Navigation Management");
 	}
 
-	//Close message pop-up
-	public void closeMessageDialog() {
-		info("--Closing message dialog--");
-		if (ieFlag) {
-			click(ELEMENT_MESSAGE_DIALOG_CLOSE_ICON_IE);
-		} else {
-			click(ELEMENT_MESSAGE_DIALOG_CLOSE_ICON);
-		}
-	}
-
 	//Copy value from Source and paste to Target
 	public void copyPaste(Object Source, String value, Object Target){ 	
 		Actions actions = new Actions(driver);
@@ -394,7 +425,7 @@ public class PlatformBase extends TestBase {
 		actions.doubleClick(element).perform();
 		element.sendKeys(Keys.LEFT_CONTROL + "a");
 		element.sendKeys(Keys.LEFT_CONTROL + "c");
-		pause(3000);
+		Utils.pause(3000);
 		WebElement b = waitForAndGetElement(Target);
 		b.sendKeys(Keys.LEFT_CONTROL + "v");
 	}
@@ -432,7 +463,7 @@ public class PlatformBase extends TestBase {
 		}
 
 		if (verification != null && needToBeVerified) {
-			pause(500);
+			Utils.pause(500);
 			verifyLocation(verification, navigationList, page);
 		}
 	}
@@ -450,13 +481,13 @@ public class PlatformBase extends TestBase {
 		info("verifyLocation, element: " + locator);
 		int seconds = 0;
 		if (isElementNotPresent(locator)) {
-			pause(1000);
+			Utils.pause(1000);
 		}
 		for (; isElementNotPresent(locator); seconds++) {
 			if (seconds >= (DEFAULT_TIMEOUT/WAIT_INTERVAL) ) {
 				Assert.fail("Timeout at goToPage");
 			}
-			pause(500);
+			Utils.pause(500);
 			try {
 				for (String node : navigation) {
 					if (ieFlag) {
@@ -483,7 +514,7 @@ public class PlatformBase extends TestBase {
 
 		if (waitForAndGetElement(page1, 5000, 0) != null){
 			click(page1);
-			pause(500);
+			Utils.pause(500);
 			int totalPages = isElementPresent(ELEMENT_PAGINATOR_TOTAL_NUMBER) ? Integer.valueOf(getText(ELEMENT_PAGINATOR_TOTAL_NUMBER)) : 1;
 			int i = 1;
 			while (isElementNotPresent(locator)) {
@@ -494,7 +525,7 @@ public class PlatformBase extends TestBase {
 				}
 				click(ELEMENT_PAGINATOR_NEXT_ICON);
 				waitForAndGetElement(ELEMENT_PAGINATOR_SELECTED_PAGE.replace("${number}", String.valueOf((++i))));
-				pause(500);
+				Utils.pause(500);
 			}
 		}
 	}
@@ -503,7 +534,7 @@ public class PlatformBase extends TestBase {
 		String page1 = ELEMENT_PAGINATOR_PAGE_LINK.replace("${number}", "1");
 
 		click(page1);
-		pause(500);
+		Utils.pause(500);
 		int totalPages = isElementPresent(ELEMENT_PAGINATOR_TOTAL_NUMBER) ? Integer.valueOf(getText(ELEMENT_PAGINATOR_TOTAL_NUMBER)) : 1;
 		int i = 1;
 		while (isElementNotPresent(locator)) {
@@ -512,33 +543,8 @@ public class PlatformBase extends TestBase {
 			}
 			click(ELEMENT_PAGINATOR_NEXT_ICON);
 			waitForAndGetElement(ELEMENT_PAGINATOR_SELECTED_PAGE.replace("${number}", String.valueOf((++i))));
-			pause(500);
+			Utils.pause(500);
 		}
-	}
-
-	public void save() {
-		waitForAndGetElement(ELEMENT_SAVE_BUTTON);
-		click(ELEMENT_SAVE_BUTTON);
-	}
-
-	public void close(){
-		waitForAndGetElement(ELEMENT_CLOSE_BUTTON);
-		click(ELEMENT_CLOSE_BUTTON);
-	}
-
-	public void cancel(){
-		waitForAndGetElement(ELEMENT_CANCEL_BUTTON);
-		click(ELEMENT_CANCEL_BUTTON);
-	}
-
-	public void saveAndClose(){
-		waitForAndGetElement(ELEMENT_SAVE_CLOSE_BUTTON);
-		click(ELEMENT_SAVE_CLOSE_BUTTON);
-	}
-
-	public void apply(){
-		waitForAndGetElement(ELEMENT_APPLY_BUTTON);
-		click(ELEMENT_APPLY_BUTTON);
 	}
 
 	// Check UnexpectedError
@@ -551,7 +557,7 @@ public class PlatformBase extends TestBase {
 			return true;
 		}
 	}
-	
+
 	public void cloneNode(By locator)	{
 		for (int i =0;; i++){
 			if (i > DEFAULT_TIMEOUT/WAIT_INTERVAL) {
@@ -562,11 +568,11 @@ public class PlatformBase extends TestBase {
 				click((ELEMENT_CLONE_NODE));
 				return;
 			}
-			pause(WAIT_INTERVAL);
+			Utils.pause(WAIT_INTERVAL);
 		}
 	}
 
-	public void cutNode(By locator)	{
+	public void cutNode(Object locator)	{
 		for (int i =0;; i++){
 			if (i > DEFAULT_TIMEOUT/WAIT_INTERVAL) {
 				Assert.fail("Timeout");
@@ -577,11 +583,11 @@ public class PlatformBase extends TestBase {
 				click((ELEMENT_CUT_NODE));
 				return;
 			}
-			pause(WAIT_INTERVAL);
+			Utils.pause(WAIT_INTERVAL);
 		}
 	}
 
-	public void copyNode(By locator){
+	public void copyNode(Object locator){
 		for (int i =0;; i++){
 			if (i > DEFAULT_TIMEOUT/WAIT_INTERVAL) {
 				Assert.fail("Timeout");
@@ -591,11 +597,11 @@ public class PlatformBase extends TestBase {
 				click((ELEMENT_COPY_NODE));
 				return;
 			}
-			pause(WAIT_INTERVAL);
+			Utils.pause(WAIT_INTERVAL);
 		}
 	}
 
-	public void pasteNode(By locator) {
+	public void pasteNode(Object locator) {
 		for (int i =0;; i++){
 			if (i>DEFAULT_TIMEOUT/WAIT_INTERVAL){
 				Assert.fail("Timeout");
@@ -605,12 +611,13 @@ public class PlatformBase extends TestBase {
 				click(ELEMENT_PASTE_NODE);
 				return;
 			}
-			pause(WAIT_INTERVAL);
+			Utils.pause(WAIT_INTERVAL);
 		}
 	}
 
 	//Set to use captcha when registry a new account in public mode
 	public void setUseCaptcha(boolean useCaptcha, boolean useFrench){
+		button = new Button(driver);
 		waitForTextPresent("Register Account");
 		mouseOver(ELEMENT_REGISTER_ACCOUNT_PORTLET, true);
 		if (useFrench){
@@ -632,8 +639,8 @@ public class PlatformBase extends TestBase {
 				uncheck(ELEMENT_CHECK_BOX_USE_CAPTCHA);
 			}
 		}
-		save();
-		close();
+		button.save();
+		button.close();
 		if (useFrench){
 			click(ELEMENT_PAGE_FINISH_BUTTON_INFRENCH);
 			waitForTextNotPresent("Editeur de page");
@@ -643,37 +650,32 @@ public class PlatformBase extends TestBase {
 		}
 	}
 
-	public void next(){
-		waitForAndGetElement(ELEMENT_NEXT_BUTTON);
-		click(ELEMENT_NEXT_BUTTON);	
-	}
-	
 	/**
 	 *
 	 * Get cookies of current browser then delete all cookies
 	 * @return set of cookies of browser
 	 */
-	 public Set<Cookie> getBrowserCookies(){
-	    Set<Cookie> cookies = driver.manage().getCookies();
-	    driver.manage().deleteAllCookies();
-	    return cookies;
-	 }
-	  
-	 /**
-	  * Set cookies for current browser
-	  * @param cookies : Set of cookies
-	  */
-	 public void setBrowserCookies(Set<Cookie> cookies){
-	    for(Cookie cookie : cookies){
-	      driver.manage().addCookie(cookie);
-	    }
-	 }
-	  
-	 /**
-	  * Add by @author vuna2
-	  * Open a new browser by Javascript
-	  */
-	 public void openNewBrowser(){
+	public Set<Cookie> getBrowserCookies(){
+		Set<Cookie> cookies = driver.manage().getCookies();
+		driver.manage().deleteAllCookies();
+		return cookies;
+	}
+
+	/**
+	 * Set cookies for current browser
+	 * @param cookies : Set of cookies
+	 */
+	public void setBrowserCookies(Set<Cookie> cookies){
+		for(Cookie cookie : cookies){
+			driver.manage().addCookie(cookie);
+		}
+	}
+
+	/**
+	 * Add by @author vuna2
+	 * Open a new browser by Javascript
+	 */
+	public void openNewBrowser(){
 		//Open new browser by Javascript
 		//String handlesBefore = driver.getWindowHandle();
 		((JavascriptExecutor) driver).executeScript("window.open()");
@@ -681,26 +683,26 @@ public class PlatformBase extends TestBase {
 		for(String winHandle : driver.getWindowHandles()){
 			driver.switchTo().window(winHandle);
 		}
-			driver.navigate().to(baseUrl);
-	 }
-	  
-	  /**
-	   * Add by @author vuna2
-	   * @param cookies: Set of cookies (browsers)
-	   * @param handlesBefore: handle the current browser
-	   */
-	  public void backToPreviousBrowser(Set<Cookie> cookies, String handlesBefore){
-		  driver.manage().deleteAllCookies();
-	
+		driver.navigate().to(baseUrl);
+	}
+
+	/**
+	 * Add by @author vuna2
+	 * @param cookies: Set of cookies (browsers)
+	 * @param handlesBefore: handle the current browser
+	 */
+	public void backToPreviousBrowser(Set<Cookie> cookies, String handlesBefore){
+		driver.manage().deleteAllCookies();
+
 		//Add cookies back to previous browser
 		setBrowserCookies(cookies);
-		
+
 		//Switch back to previous browser
 		driver.switchTo().window(handlesBefore);
-	  }
-	
-	  //Function to add data to frame
-	  public void inputDataToFrame (By framelocator, String data, boolean...validate){
+	}
+
+	//Function to add data to frame
+	public void inputDataToFrame (By framelocator, String data, boolean...validate){
 		try {
 			WebElement inputsummary = null;
 
@@ -731,17 +733,17 @@ public class PlatformBase extends TestBase {
 			}
 		} catch (StaleElementReferenceException e) {
 			checkCycling(e, DEFAULT_TIMEOUT/WAIT_INTERVAL);
-			pause(WAIT_INTERVAL);
+			Utils.pause(WAIT_INTERVAL);
 			driver.switchTo().defaultContent();
 			inputDataToFrame (framelocator, data);
 		} catch (ElementNotVisibleException e) {
 			checkCycling(e, DEFAULT_TIMEOUT/WAIT_INTERVAL);
-			pause(WAIT_INTERVAL);
+			Utils.pause(WAIT_INTERVAL);
 			driver.switchTo().defaultContent();
 			inputDataToFrame (framelocator,data);
 		}catch (WebDriverException e) {
 			checkCycling(e, DEFAULT_TIMEOUT/WAIT_INTERVAL);
-			pause(WAIT_INTERVAL);
+			Utils.pause(WAIT_INTERVAL);
 			driver.switchTo().defaultContent();
 			inputDataToFrame (framelocator,data);
 		}
@@ -762,11 +764,11 @@ public class PlatformBase extends TestBase {
 				if (option.equals(select.getFirstSelectedOption().getAttribute("value"))) {
 					break;
 				}
-				pause(WAIT_INTERVAL);
+				Utils.pause(WAIT_INTERVAL);
 			}
 		} catch (StaleElementReferenceException e) {
 			checkCycling(e, DEFAULT_TIMEOUT/WAIT_INTERVAL);
-			pause(WAIT_INTERVAL);
+			Utils.pause(WAIT_INTERVAL);
 			select(locator, option);
 		} finally {
 			loopCount = 0;
@@ -799,7 +801,7 @@ public class PlatformBase extends TestBase {
 		// Switch back to previous window.
 		driver.switchTo().window(previousWindowHandle);
 	}*/	  
-	
+
 	/////////
 	//
 }

@@ -4,7 +4,10 @@ import static org.exoplatform.selenium.TestLogger.info;
 
 import java.util.Map;
 
+import org.exoplatform.selenium.Utils;
+
 public class GroupNavigation extends PlatformBase {
+
 	//Add a node for group at group navigation
 	public void addNodeForGroup(String currentNavigation, String currentNodeLabel, boolean useAddNodeLink, String nodeName, boolean extendedLabelMode, 
 			Map<String, String> languages, String nodeLabel, String pageName, String pageTitle, boolean verifyPage, boolean verifyNode){
@@ -20,7 +23,7 @@ public class GroupNavigation extends PlatformBase {
 		}else{
 
 			click(currentNode);
-			pause(500);
+			Utils.pause(500);
 			rightClickOnElement(currentNode);
 			if (currentNode.equals(ELEMENT_NAVIGATION_HOME_NODE)) {
 				click(ELEMENT_NODE_ADD_NEW_TOP_NODE);
@@ -34,7 +37,7 @@ public class GroupNavigation extends PlatformBase {
 		if (extendedLabelMode) {
 			for (String language : languages.keySet()) {
 				select(ELEMENT_SELECT_LANGUAGE, language);
-				pause(500);
+				Utils.pause(500);
 			}
 		} else {
 			uncheck(ELEMENT_CHECKBOX_EXTENDED_LABEL_MODE);
@@ -55,18 +58,18 @@ public class GroupNavigation extends PlatformBase {
 			}
 		} else {
 			//info("-- Select Page --");
-			pause(500);
+			Utils.pause(500);
 			click(ELEMENT_SEARCH_SELECT_PAGE_LINK);
 			click(ELEMENT_SELECT_HOME_PAGE);
 		}
 
 		info("-- Save to add node for portal --");
-		pause(1000);
-		save();
+		Utils.pause(1000);
+		button.save();
 		if (verifyNode) {
 			waitForTextNotPresent("Page Node Settings");
 			waitForTextPresent(nodeName);
-			save();
+			button.save();
 			waitForTextNotPresent("Navigation Management");
 		}
 	}

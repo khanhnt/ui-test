@@ -2,6 +2,7 @@ package org.exoplatform.selenium.platform.wiki.functional.information;
 
 import static org.exoplatform.selenium.TestLogger.info;
 
+import org.exoplatform.selenium.Button;
 import org.exoplatform.selenium.Utils;
 import org.exoplatform.selenium.platform.ManageAccount;
 import org.exoplatform.selenium.platform.wiki.BasicAction;
@@ -19,16 +20,17 @@ import org.testng.annotations.Test;
 public class Wiki_RelatedPage extends BasicAction{
 	
 	ManageAccount magAc;
-				
+	Button button;			
+	
 	public String admin = "john";
-	public String pass = "gtn";
+	public String pass = "gtngtn";
 
 	@BeforeMethod
 	public void beforeMethods(){
 		initSeleniumTest();
 		driver.get(baseUrl);
-		driver.manage().window().maximize();
 		magAc = new ManageAccount(driver);
+		button = new Button(driver);
 		magAc.signIn(admin, pass);
 	}
 
@@ -103,13 +105,17 @@ public class Wiki_RelatedPage extends BasicAction{
 
 		addBlankWikiPageAndEditPagePermissions(2, wikiPath[0], pageInfo, 0, editInfo, "any", 2);
 
+		goToWikiPage(wikiPath[1][0]);
+		
+		editPagePermission("any", true, true, false, 2);
+		
 		goToPageInfo(userType.AUTHOR, wikiPath[1][0]);
 
 		click(ELEMENT_ADD_MORE_RELATION_BUTTON);
 
 		waitForElementNotPresent(By.xpath(ELEMENT_SELECTED_PAGE.replace("${relatedPage}", pageInfo[0][1])));
 
-		cancel();
+		button.cancel();
 
 		resetDataByDeleteWikiPage(userType.ADMIN, wikiPath[1]);
 	}

@@ -1,22 +1,22 @@
 package org.exoplatform.selenium.platform;
 
 import static org.exoplatform.selenium.TestLogger.info;
+
+import org.exoplatform.selenium.Button;
+import org.exoplatform.selenium.Dialog;
+import org.exoplatform.selenium.ManageAlert;
+import org.exoplatform.selenium.Utils;
 import org.exoplatform.selenium.platform.UserGroupManagement;
 import org.exoplatform.selenium.platform.NavigationToolbar;
-
-import org.exoplatform.selenium.platform.ecms.EcmsBase;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 
-public class PageEditor extends EcmsBase {
-	
-	public PageEditor(WebDriver dr) {
-		super(dr);
-		// TODO Auto-generated constructor stub
-	}
+public class PageEditor extends PlatformBase {
 
-	NavigationToolbar nav = new NavigationToolbar();
+	NavigationToolbar nav = new NavigationToolbar(driver);
 	UserGroupManagement userGroup = new UserGroupManagement(driver);
+	Dialog dialog = new Dialog(driver);
+	Button button = new Button(driver);
+	ManageAlert magAlert = new ManageAlert(driver);
 	
 	/** 
 		Page Creation Wizard: Select a Navigation Node and create the Page 
@@ -62,11 +62,11 @@ public class PageEditor extends EcmsBase {
 	
 	//Create page wizard without layout
 	public void goToPageEditor_EmptyLayout(String pageName){
-		goToPageCreationWinzard();
+		nav.goToPageCreationWinzard();
 		type(ELEMENT_NEWPAGE_NAME_TEXTBOX, pageName, false);
-		click(ELEMENT_NEXT_BUTTON);
+		click(button.ELEMENT_NEXT_BUTTON);
 		waitForElementPresent(ELEMENT_ADDWIZARD_TEXT2);
-		click(ELEMENT_NEXT_BUTTON);
+		click(button.ELEMENT_NEXT_BUTTON);
 	}
 
 	//Create new page without content 
@@ -77,9 +77,9 @@ public class PageEditor extends EcmsBase {
 
 	//create new page having layout - step 1,2
 	public void gotoPageEditorAndSelectLayout(String pageName, int numberLayout){
-		goToPageCreationWinzard();
+		nav.goToPageCreationWinzard();
 		type(ELEMENT_NEWPAGE_NAME_TEXTBOX, pageName, false);
-		click(ELEMENT_NEXT_BUTTON);
+		click(button.ELEMENT_NEXT_BUTTON);
 		click(ELEMENT_NEWPAGE_LAYOUT_OPTION);
 		switch (numberLayout){
 		case 1: click(ELEMENT_NEWPAGE_LAYOUT_COLUMN_PAGE_OPTION);
@@ -93,7 +93,7 @@ public class PageEditor extends EcmsBase {
 		default: click(ELEMENT_NEWPAGE_LAYOUT_DEFAULT_OPTION);
 		break;
 		}
-		click(ELEMENT_NEXT_BUTTON);
+		click(button.ELEMENT_NEXT_BUTTON);
 	}
 
 	//Create new page having layout 
@@ -106,22 +106,22 @@ public class PageEditor extends EcmsBase {
 	//Create empty layout SCV (Single Content Viewer) with content
 	//	public void createPage_EmptyLayout_ContentDetail_ContentPath(String pageName, String contentPath){
 	//		goToPageEditor_EmptyLayout(pageName);
-	//		pause(500);
+	//		Utils.pause(500);
 	//		addContentDetailEmptyLayout();
-	//		pause(500);
+	//		Utils.pause(500);
 	//		selectContentPath(contentPath);
-	//		pause(500);
+	//		Utils.pause(500);
 	//		click(ELEMENT_NEWPAGE_SAVE_BUTTON);			
 	//	}
 
 	//Create new CLV with layout and content
 	public void createPage_ContentList_CLVpath(String pageName, String path, String clv){
 		gotoPageEditorAndSelectLayout(pageName, 1);
-		pause(500);
+		Utils.pause(500);
 		addContentList();
-		pause(500);
+		Utils.pause(500);
 		selectCLVPath(path, clv);
-		pause(500);
+		Utils.pause(500);
 		click(ELEMENT_NEWPAGE_SAVE_BUTTON);
 	}
 
@@ -155,8 +155,8 @@ public class PageEditor extends EcmsBase {
 		click(ELEMENT_EDIT_PORTLET_ICON);
 		click(ELEMENT_SELECT_CONTENT_PATH_LINK);
 		userGroup.selectGroup(pathContent);
-		click(ELEMENT_SAVE_BUTTON);
-		click(ELEMENT_CLOSE_BUTTON);
+		click(button.ELEMENT_SAVE_BUTTON);
+		click(button.ELEMENT_CLOSE_BUTTON);
 	}
 
 	/*Select "CLVPath" in Edit Mode
@@ -180,12 +180,12 @@ public class PageEditor extends EcmsBase {
 		click(ELEMENT_SELECT_CLV_PATH);
 		if (mode.length >0){ 
 			if (mode[0] == "content"){
-				click(ELEMENT_SAVE_BUTTON);
+				click(button.ELEMENT_SAVE_BUTTON);
 				waitForElementNotPresent(ELEMENT_SELECT_CLV_PATH);
 			}		
 		}
-		click(ELEMENT_SAVE_BUTTON);
-		click(ELEMENT_CLOSE_BUTTON);
+		click(button.ELEMENT_SAVE_BUTTON);
+		click(button.ELEMENT_CLOSE_BUTTON);
 	}
 
 	/*-- Add common functions for Single Content Viewer/Add SCV
@@ -234,7 +234,7 @@ public class PageEditor extends EcmsBase {
 		goToPageEditor_EmptyLayout(pageName);
 		click(ELEMENT_MENU_CONTENT_LINK);
 		dragAndDropToObject(ELEMENT_CONTENTS_BY_QUERY_PORTLET, ELEMENT_DROP_TARGET_NO_LAYOUT);
-		pause(500);
+		Utils.pause(500);
 	}
 
 
@@ -261,7 +261,7 @@ public class PageEditor extends EcmsBase {
 		if (waitForAndGetElement(sign) != null){
 			mouseOver(elementPortlet, true);
 			click(iconDelete);
-			acceptAlert();
+			magAlert.acceptAlert();
 			click(ELEMENT_PAGE_EDIT_FINISH);
 			info("remove portlet is successful");
 		}else{

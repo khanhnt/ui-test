@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import org.exoplatform.selenium.Button;
 import org.exoplatform.selenium.platform.ManageAccount;
 import org.exoplatform.selenium.platform.social.ManageMember;
 import org.exoplatform.selenium.platform.wiki.BasicAction;
@@ -25,16 +26,17 @@ import static org.exoplatform.selenium.TestLogger.info;
 public class Wiki_SpacePermission_Add extends BasicAction {
 
 	ManageAccount magAc;
+	Button button;
 	
 	String DATA_USER_ADMIN = "john";
-	String DATA_PASS = "gtn";
+	String DATA_PASS = "gtngtn";
 
 	@BeforeMethod
 	public void setUpBeforeTest(){
 		initSeleniumTest();
 		driver.get(baseUrl);
-		driver.manage().window().maximize();
 		magAc = new ManageAccount(driver);
+		button = new Button(driver);
 		magAc.signIn(DATA_USER_ADMIN, DATA_PASS);
 	}
 
@@ -123,7 +125,7 @@ public class Wiki_SpacePermission_Add extends BasicAction {
 
 		By ELEMENT_PAGE1 = By.linkText(PAGE_NAME1);
 
-		prepareDataWikiSpacePermissionV2(PAGE_NAME1, "james", "james", 1, 2);
+		prepareDataWikiSpacePermissionV2(PAGE_NAME1, "james", "james", 1);
 
 		info("Check user after set permisison");
 
@@ -156,7 +158,7 @@ public class Wiki_SpacePermission_Add extends BasicAction {
 
 		By ELEMENT_PAGE1 = By.linkText(PAGE_NAME1);
 
-		prepareDataWikiSpacePermissionV2(PAGE_NAME1, "James", "james", 2, 2);
+		prepareDataWikiSpacePermissionV2(PAGE_NAME1, "James", "james", 2);
 
 		info("Check after edit user");
 
@@ -189,7 +191,7 @@ public class Wiki_SpacePermission_Add extends BasicAction {
 
 		By ELEMENT_PAGE1 = By.linkText(PAGE_NAME1);
 
-		prepareDataWikiSpacePermissionV2(PAGE_NAME1, "Davis", "james", 3, 2);
+		prepareDataWikiSpacePermissionV2(PAGE_NAME1, "David", "james", 3);
 
 		userSignIn(ManageMember.userType.AUTHOR);
 		
@@ -220,7 +222,7 @@ public class Wiki_SpacePermission_Add extends BasicAction {
 
 		By ELEMENT_PAGE1 = By.linkText(PAGE_NAME1);
 
-		prepareDataWikiSpacePermissionV2(PAGE_NAME1, "james.davis@acme.exoplatform.com", "james", 4, 2);
+		prepareDataWikiSpacePermissionV2(PAGE_NAME1, "james@exoplatform.com", "james", 4);
 
 		userSignIn(ManageMember.userType.AUTHOR);
 		
@@ -251,11 +253,11 @@ public class Wiki_SpacePermission_Add extends BasicAction {
 
 		By ELEMENT_PAGE1 = By.linkText(PAGE_NAME1);
 
-		prepareDataWikiSpacePermissionV2(PAGE_NAME1, "james/demo", "james", 0, 2);
+		prepareDataWikiSpacePermissionV2(PAGE_NAME1, "james/mary", "james");
 
-		editSpacePermission("demo", true, true, true, true, 2);
+		editSpacePermission("mary", true, true, true, true, 2);
 
-		userSignIn(ManageMember.userType.AUTHOR);
+		userSignIn(ManageMember.userType.PUBLISHER);
 		
 		goToWiki();
 
@@ -271,7 +273,7 @@ public class Wiki_SpacePermission_Add extends BasicAction {
 
 		click(ELEMENT_PAGE1);
 
-		deleteSpacePermission("demo");
+		deleteSpacePermission("mary");
 
 		resetDataWikiSpacePermission(ELEMENT_PAGE1, "james");
 	}
@@ -319,7 +321,7 @@ public class Wiki_SpacePermission_Add extends BasicAction {
 
 		String PAGE_NAME1 = "Add permission for group by selecting directly";
 
-		String[] user3={"Platform/Visitors","*"};
+		String[] user3={"Platform/Users","*"};
 
 		By ELEMENT_PAGE1 = By.linkText(PAGE_NAME1);
 
@@ -385,7 +387,7 @@ public class Wiki_SpacePermission_Add extends BasicAction {
 
 		String PAGE_NAME1 = "Add permission for group by selecting group membership name";
 
-		String[] user4={"Platform/Visitors","member"};
+		String[] user4={"Platform/Users","member"};
 
 		By ELEMENT_PAGE1 = By.linkText(PAGE_NAME1);
 
@@ -439,10 +441,10 @@ public class Wiki_SpacePermission_Add extends BasicAction {
 		deleteSpacePermission("any");
 		click(ELEMENT_SELECT_USER);
 		selectUserPermission(selectUserPermission, type);
-		click(ELEMENT_ADD_BUTTON);
-		save();
+		click(button.ELEMENT_ADD_BUTTON);
+		button.save();
 		waitForMessage(MSG_PERMISSION_SAVE);
-		click(ELEMENT_OK_BUTTON);
+		click(button.ELEMENT_OK_BUTTON);
 		editSpacePermission(username, true, true, true, true, 2);
 	}
 

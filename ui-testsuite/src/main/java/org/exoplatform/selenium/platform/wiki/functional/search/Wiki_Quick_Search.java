@@ -20,19 +20,17 @@ public class Wiki_Quick_Search extends BasicAction {
 	public void setUpBeforeTest(){
 		initSeleniumTest();
 		driver.get(baseUrl);
-		driver.manage().window().maximize();
 		magAc = new ManageAccount(driver);
-		magAc.signIn("john", "gtn");
+		magAc.signIn("john", "gtngtn");
 	}
 	
 	//Search when the keyword is matched
 	@Test
 	public void test01_SearchWhenKeyWordIsMatched() {
 		
-		String PAGE_NAME1 = "wiki1";
+		String PAGE_NAME1 = "Wiki_Quick_Search_01";
 
 		By ELEMENT_PAGE1 = By.xpath(ELEMENT_RESULT_SEARCH.replace("${pageName}", PAGE_NAME1));
-				//By.xpath("//*[@id='UIWikiAdvanceSearchResult']//a/span[text()='wiki1']");
 
 		goToWiki();
 
@@ -49,7 +47,7 @@ public class Wiki_Quick_Search extends BasicAction {
 	@Test
 	public void test02_SearchWhenKeyWordIsNotMatched() {
 
-		String PAGE_NAME1 = "wiki2";
+		String PAGE_NAME1 = "Wiki_Quick_Search_02";
 
 		By ELEMENT_PAGE1 = By.linkText(PAGE_NAME1);
 
@@ -60,7 +58,7 @@ public class Wiki_Quick_Search extends BasicAction {
 		quickSearch("bbb");
 
 		//waitForTextPresent(ELEMENT_VERIFY_MESSAGE);
-		waitForElementPresent(ELEMENT_VERIFY_RESULT_SEARCH.replace("${pageName}", "bbb"), 3000, 0, 2);
+		waitForElementPresent(ELEMENT_VERIFY_RESULT_SEARCH.replace("${pageName}", "bbb"), DEFAULT_TIMEOUT, 1, 2);
 
 		click(ELEMENT_PAGE1);
 
@@ -72,7 +70,7 @@ public class Wiki_Quick_Search extends BasicAction {
 
 		String[] user1= {"james"};
 
-		String PAGE_NAME1 = "wiki3";
+		String PAGE_NAME1 = "Wiki_Quick_Search_03";
 
 		By ELEMENT_PAGE1 = By.linkText(PAGE_NAME1);
 
@@ -88,18 +86,18 @@ public class Wiki_Quick_Search extends BasicAction {
 
 		magAc.signOut();
 
-		magAc.signIn("james", "gtn");
+		magAc.signIn("james", "gtngtn");
 
 		goToWiki();
 
 		quickSearch(PAGE_NAME1);
 
 		//waitForTextPresent(ELEMENT_VERIFY_MESSAGE);
-		waitForElementPresent(ELEMENT_VERIFY_RESULT_SEARCH.replace("${pageName}", PAGE_NAME1), 3000, 0, 2);
+		waitForElementPresent(ELEMENT_VERIFY_RESULT_SEARCH.replace("${pageName}", PAGE_NAME1), DEFAULT_TIMEOUT, 1, 2);
 
 		magAc.signOut();
 
-		magAc.signIn("john", "gtn");
+		magAc.signIn("john", "gtngtn");
 
 		goToWiki();
 

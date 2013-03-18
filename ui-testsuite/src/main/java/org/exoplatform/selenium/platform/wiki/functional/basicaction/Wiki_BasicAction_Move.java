@@ -1,5 +1,6 @@
 package org.exoplatform.selenium.platform.wiki.functional.basicaction;
 
+import org.exoplatform.selenium.Button;
 import org.exoplatform.selenium.platform.wiki.BasicAction;
 import org.openqa.selenium.By;
 import org.testng.annotations.AfterMethod;
@@ -14,6 +15,7 @@ import org.exoplatform.selenium.platform.ManageAccount;
  */
 public class Wiki_BasicAction_Move extends BasicAction {
 	ManageAccount magAcc;
+	Button button;
 	
 	@BeforeMethod
 	public void setUpBeforeTest(){
@@ -21,7 +23,8 @@ public class Wiki_BasicAction_Move extends BasicAction {
 		driver.get(baseUrl);
 		driver.manage().window().maximize();
 		magAcc = new ManageAccount(driver);
-		magAcc.signIn("john", "gtn");
+		button = new Button(driver);
+		magAcc.signIn("john", "gtngtn");
 	}
 
 	String[] user1= {"james"};
@@ -35,7 +38,7 @@ public class Wiki_BasicAction_Move extends BasicAction {
 	//Move a page when user have edit permission on page 
 	//@Test(groups={"pending"})
 	@Test
-	public void test01_MoveAPageWhenUserHavePermisionOnPage() {
+	public void test01_MoveAPageWhenUserHavePermisionOnPage(){
 
 		String PAGE_NAME1 = "wiki1";
 		String PAGE_NAME2 = "wiki2";
@@ -51,7 +54,7 @@ public class Wiki_BasicAction_Move extends BasicAction {
 		
 		deletePagePermission("any");
 
-		addPagePermission(0,user1);
+		addPagePermission(0, user1);
 		
 		editPagePermission("james", true, true, false, 2);
 		
@@ -63,19 +66,19 @@ public class Wiki_BasicAction_Move extends BasicAction {
 		
 		deletePagePermission("any");
 
-		addPagePermission(0,user1);
+		addPagePermission(0, user1);
 		
 		editPagePermission("james", true, true, false, 2);
 		
 		magAcc.signOut();
 
-		magAcc.signIn("james", "gtn");
+		magAcc.signIn("james", "gtngtn");
 
 		goToWiki();
 		
 		click(ELEMENT_PAGE1);		
 			
-		movePage(PAGE_NAME1,PAGE_NAME2);
+		movePage(PAGE_NAME1, PAGE_NAME2);
 
 		click(ELEMENT_PAGE2);
 
@@ -106,7 +109,7 @@ public class Wiki_BasicAction_Move extends BasicAction {
 
 		magAcc.signOut();
 
-		magAcc.signIn("mary", "gtn");
+		magAcc.signIn("mary", "gtngtn");
 
 		goToWiki();
 
@@ -119,7 +122,7 @@ public class Wiki_BasicAction_Move extends BasicAction {
 		deleteCurrentWikiPage();
 	}
 	
-	//Move a page when user have edit permission on page 
+	//Move a page when user doesn't have edit permission on page 
 	@Test
 	public void test03_MoveAPageWhenUserDoesNotHavePermisionOnPage() {
 
@@ -137,7 +140,7 @@ public class Wiki_BasicAction_Move extends BasicAction {
 
 		magAcc.signOut();
 
-		magAcc.signIn("james", "gtn");
+		magAcc.signIn("james", "gtngtn");
 
 		goToWiki();
 
@@ -150,7 +153,7 @@ public class Wiki_BasicAction_Move extends BasicAction {
 
 		magAcc.signOut();
 
-		magAcc.signIn("john", "gtn");
+		magAcc.signIn("john", "gtngtn");
 
 		goToWiki();
 
@@ -189,7 +192,7 @@ public class Wiki_BasicAction_Move extends BasicAction {
 
 		magAcc.signOut();
 
-		magAcc.signIn("james", "gtn");
+		magAcc.signIn("james", "gtngtn");
 
 		goToWiki();
 
@@ -199,9 +202,9 @@ public class Wiki_BasicAction_Move extends BasicAction {
 
 		waitForTextPresent(ELEMENT_VERIRY_MESSAGE);
 
-		click(ELEMENT_OK_BUTTON);
+		click(button.ELEMENT_OK_BUTTON);
 
-		waitForElementNotPresent(ELEMENT_OK_BUTTON);
+		waitForElementNotPresent(button.ELEMENT_OK_BUTTON);
 
 		//cancel();
 		click(ELEMENT_CANCEL_BUTTON_MOVE_PAGE);
@@ -209,7 +212,7 @@ public class Wiki_BasicAction_Move extends BasicAction {
 
 		magAcc.signOut();
 
-		magAcc.signIn("john", "gtn");
+		magAcc.signIn("john", "gtngtn");
 
 		goToWiki();
 

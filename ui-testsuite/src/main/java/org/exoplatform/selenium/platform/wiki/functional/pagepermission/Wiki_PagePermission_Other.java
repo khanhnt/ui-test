@@ -1,6 +1,8 @@
 package org.exoplatform.selenium.platform.wiki.functional.pagepermission;
 
 import static org.exoplatform.selenium.TestLogger.info;
+
+import org.exoplatform.selenium.Utils;
 import org.exoplatform.selenium.platform.ManageAccount;
 import org.exoplatform.selenium.platform.social.ManageMember;
 import org.exoplatform.selenium.platform.wiki.BasicAction;
@@ -19,13 +21,12 @@ public class Wiki_PagePermission_Other extends BasicAction{
 	ManageAccount magAc;
 
 	public String DATA_USER_ADMIN = "john";
-	public String DATA_PASS_ADMIN = "gtn";
+	public String DATA_PASS_ADMIN = "gtngtn";
 
 	@BeforeMethod
 	public void beforeTest(){
 		initSeleniumTest();
 		driver.get(baseUrl);
-		driver.manage().window().maximize();
 		magAc = new ManageAccount(driver);
 		magAc.signIn(DATA_USER_ADMIN, DATA_PASS_ADMIN);	
 		goToWiki();
@@ -69,11 +70,11 @@ public class Wiki_PagePermission_Other extends BasicAction{
 		waitForElementNotPresent(ELEMENT_PAGE_PERMISSION_POPUP);
 		deletePagePermission("*:/spaces");
 		waitForElementNotPresent(ELEMENT_PAGE_PERMISSION_POPUP);
-		pause(2000);
+		Utils.pause(2000);
 		deletePagePermission("manager:/spaces");
 		waitForElementNotPresent(ELEMENT_PAGE_PERMISSION_POPUP);
-		pause(2000);
-		addPagePermission(option, userGroup, 2);
+		Utils.pause(2000);
+		addPagePermission(option, userGroup);
 		waitForElementNotPresent(ELEMENT_PAGE_PERMISSION_POPUP);
 	}
 
@@ -84,7 +85,7 @@ public class Wiki_PagePermission_Other extends BasicAction{
 		String title = "KS_Wiki_PagePermission_Other_Page_01_1";
 		String content = "KS_Wiki_PagePermission_Other_Content_01_1";
 		By element_page = By.linkText(title);
-		String user = "demo";
+		String user = "mary";
 		String[] userGroup = {user};
 
 		info("Add a wiki page");
@@ -93,7 +94,7 @@ public class Wiki_PagePermission_Other extends BasicAction{
 		info("Add user has permission default");
 		deletePagePermission("any");
 		waitForElementNotPresent(ELEMENT_PAGE_PERMISSION_POPUP);
-		addPagePermission(1, userGroup, 2);
+		addPagePermission(1, userGroup);
 		waitForElementNotPresent(ELEMENT_PAGE_PERMISSION_POPUP);
 		magAc.signOut();
 
@@ -111,7 +112,7 @@ public class Wiki_PagePermission_Other extends BasicAction{
 		String title = "KS_Wiki_PagePermission_Other_Page_01_2";
 		String content = "KS_Wiki_PagePermission_Other_Content_01_2";
 		By element_page = By.linkText(title);
-		String[] userGroup = {"Organization/Management/Human Resources"};
+		String[] userGroup = {"Platform/Administration"};
 
 		info("Add a wiki page");
 		addBlankWikiPage(title, content, 0);
@@ -124,7 +125,7 @@ public class Wiki_PagePermission_Other extends BasicAction{
 		magAc.signOut();
 
 		//check user demo does not have view permission because it does not belong to group
-		checkViewPage(ManageMember.userType.DEVELOPER, element_page);
+		checkViewPage(ManageMember.userType.AUTHOR, element_page);
 
 		//delete page
 		//deleteWikiPageWithUserAdmin(element_page);
@@ -137,7 +138,7 @@ public class Wiki_PagePermission_Other extends BasicAction{
 		String title = "KS_Wiki_PagePermission_Other_Page_01_3";
 		String content = "KS_Wiki_PagePermission_Other_Content_01_3";
 		By element_page = By.linkText(title);
-		String[] userGroup = {"Platform/Content Management", "redactor"};
+		String[] userGroup = {"Platform/Administration", "*"};
 
 		info("Add a wiki page");
 		addBlankWikiPage(title, content, 0);
@@ -165,7 +166,7 @@ public class Wiki_PagePermission_Other extends BasicAction{
 		String title = "KS_Wiki_PagePermission_Other_Page_02_1";
 		String content = "KS_Wiki_PagePermission_Other_Content_02_1";
 		By element_page = By.linkText(title);
-		String user = "demo";
+		String user = "james";
 		String[] userGroup = {user};
 
 		info("Add a wiki page");
@@ -174,12 +175,12 @@ public class Wiki_PagePermission_Other extends BasicAction{
 		info("Add user has permission default");
 		deletePagePermission("any");
 		waitForElementNotPresent(ELEMENT_PAGE_PERMISSION_POPUP);
-		addPagePermission(1, userGroup, 2);
+		addPagePermission(1, userGroup);
 		waitForElementNotPresent(ELEMENT_PAGE_PERMISSION_POPUP);
 		magAc.signOut();
 
 		//check user demo have view page but does not have edit page
-		checkEditPage(ManageMember.userType.DEVELOPER, element_page, content);
+		checkEditPage(ManageMember.userType.AUTHOR, element_page, content);
 
 		//delete page
 		//deleteWikiPageWithUserAdmin(element_page);
@@ -192,7 +193,7 @@ public class Wiki_PagePermission_Other extends BasicAction{
 		String title = "KS_Wiki_PagePermission_Other_Page_02_2";
 		String content = "KS_Wiki_PagePermission_Other_Content_02_2";
 		By element_page = By.linkText(title);
-		String[] userGroup = {"Organization/Management/Human Resources"};
+		String[] userGroup = {"Platform/Content Management"};
 
 		info("Add a wiki page");
 		addBlankWikiPage(title, content, 0);
@@ -246,13 +247,13 @@ public class Wiki_PagePermission_Other extends BasicAction{
 	 */
 	@Test
 	public void test03_CheckUserNotHaveEditPagePermission_AddSpace(){
-		String spaceName = "KS PagePermission space 03 1";
+		String spaceName = "pagespace031";
 		String spaceDescription = "KS_Wiki_PagePermission_Other_space_description_03_1";
 		By element_space = By.linkText(spaceName);
 		String title = "KS_Wiki_PagePermission_Other_Page_03_1";
 		String content = "KS_Wiki_PagePermission_Other_Content_03_1";
 		By element_page = By.linkText(title);
-		String user = "demo";
+		String user = "james";
 		String[] userGroup = {user};
 
 		//add new space visible and open
@@ -275,13 +276,13 @@ public class Wiki_PagePermission_Other extends BasicAction{
 
 	@Test
 	public void test03_CheckGroupNotHaveEditPagePermission_AddSpace(){
-		String spaceName = "KS PagePermission space 03 2";
+		String spaceName = "pagespace032";
 		String spaceDescription = "KS_Wiki_PagePermission_Other_space_description_03_2";
 		By element_space = By.linkText(spaceName);
 		String title = "KS_Wiki_PagePermission_Other_Page_03_2";
 		String content = "KS_Wiki_PagePermission_Other_Content_03_2";
 		By element_page = By.linkText(title);
-		String[] userGroup = {"Organization/Management/Human Resources"};
+		String[] userGroup = {"Platform/Content Management"};
 
 		//add new space visible and open
 		goToMySpacePage();
@@ -303,7 +304,7 @@ public class Wiki_PagePermission_Other extends BasicAction{
 
 	@Test
 	public void test03_CheckMembershipNotHaveEditPagePermission_AddSpace(){
-		String spaceName = "KS PagePermission space 03 3";
+		String spaceName = "pagespace033";
 		String spaceDescription = "KS_Wiki_PagePermission_Other_space_description_03_3";
 		By element_space = By.linkText(spaceName);
 		String title = "KS_Wiki_PagePermission_Other_Page_03_3";

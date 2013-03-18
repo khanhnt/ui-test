@@ -1,6 +1,8 @@
 package org.exoplatform.selenium.platform.wiki;
 
 import static org.exoplatform.selenium.TestLogger.info;
+
+import org.exoplatform.selenium.Utils;
 import org.openqa.selenium.By;
 
 /**
@@ -78,7 +80,7 @@ public class Version extends BasicAction{
 			info("-- You are currently in the revision page --");	
 		}else{
 			click(ELEMENT_REVISION_LINK);
-			pause(1000);
+			Utils.pause(1000);
 			waitForTextPresent("Page History");
 		}
 	}
@@ -89,7 +91,7 @@ public class Version extends BasicAction{
 	 * @param secondNumberVersion: second version to compare (String)
 	 */
 	public void changeCompareVersions(String firstNumberVersion, String secondNumberVersion){
-		pause(1000);
+		Utils.pause(1000);
 		click(By.xpath(ELEMENT_CHANGES_COMPARE_VERSION.replace("${1stNumber}", firstNumberVersion).replace("${2ndNumber}", secondNumberVersion)));
 		waitForElementNotPresent(ELEMENT_CHANGES_COMPARE_VERSION.replace("${1stNumber}", firstNumberVersion).replace("${2ndNumber}", secondNumberVersion));
 	}
@@ -99,7 +101,7 @@ public class Version extends BasicAction{
 	 * <li>Go to the View Page History (selected wiki page)</li>
 	 */
 	public void viewPageHistory(){
-		pause(1000);
+		Utils.pause(1000);
 		//click(By.linkText("View Page History"));
 		click(By.xpath("//*[contains(text(),'View Page History')]"));
 		waitForTextPresent("Revision");

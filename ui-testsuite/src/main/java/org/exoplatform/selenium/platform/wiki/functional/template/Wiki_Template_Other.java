@@ -11,7 +11,6 @@ import org.testng.annotations.Test;
  *-- Author: HaKT
  *-- Date: 19 Dec 2012
  **/
-
 public class Wiki_Template_Other extends Template{
 
 	ManageAccount magAc;
@@ -20,9 +19,8 @@ public class Wiki_Template_Other extends Template{
 	public void setUpBeforeTest(){
 		initSeleniumTest();
 		driver.get(baseUrl);
-		driver.manage().window().maximize();
 		magAc = new ManageAccount(driver);
-		magAc.signIn("john", "gtn");  
+		magAc.signIn("john", "gtngtn");  
 		goToWiki();
 	}
 

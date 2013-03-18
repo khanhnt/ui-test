@@ -12,7 +12,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
-import org.openqa.selenium.WebDriver;
+
 
 /**
  * Utils.java
@@ -20,19 +20,37 @@ import org.openqa.selenium.WebDriver;
  *
  */
 public class Utils {
-	public WebDriver driver;
+	//public WebDriver driver;
 	//
+	public static void pause(long timeInMillis) {
+		try {
+			Thread.sleep(timeInMillis);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}	
+
+	/*public static void clearCache(){
+		Actions actionObject = new Actions(driver);
+		try{
+			actionObject.sendKeys(Keys.CONTROL).sendKeys(Keys.F5).build().perform();
+		} catch(WebDriverException e){	
+			debug("Retrying clear cache...");
+			actionObject.sendKeys(Keys.CONTROL).sendKeys(Keys.F5).build().perform();
+		}
+	}*/
+	
 	/**
-	 * Capture the screen of the current graphics device 
+	 * Capture the screen of the current graphics device
 	 * @author vuna2
-	 * @param fileName: input an image name (String) 
-	 * @throws InterruptedException 
+	 * @param fileName: input an image name (String)
+	 * @throws InterruptedException
 	 */
 	public static void captureScreen(String fileName){
 		String path;
 		BufferedImage screenCapture;
-//		Thread.sleep(3000);
-		TestBase.pause(3000);
+		//		Thread.sleep(3000);
+		pause(3000);
 		try {
 			Robot robot = new Robot();
 			Rectangle screenSize = getScreenSize();
@@ -85,7 +103,7 @@ public class Utils {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/*---- Auxiliary functions ----
 	public static void captureScreen(String fileName){
 		String path;
@@ -102,7 +120,8 @@ public class Utils {
 			error("Failed to capture screenshot");
 		}
 	}
-	*/
+	 */
+
 	//This function returns a absolute path from a relative path
 	public static String getAbsoluteFilePath(String relativeFilePath){
 		String curDir = System.getProperty("user.dir");

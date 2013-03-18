@@ -1,7 +1,6 @@
 package org.exoplatform.selenium.platform.wiki.functional.template;
 
 import static org.exoplatform.selenium.TestLogger.info;
-
 import org.exoplatform.selenium.Utils;
 import org.exoplatform.selenium.platform.ManageAccount;
 import org.exoplatform.selenium.platform.wiki.Template;
@@ -14,7 +13,6 @@ import org.testng.annotations.Test;
  *-- Author: HaKT
  *-- Date: 19 Dec 2012
  **/
-
 public class Wiki_Template_Search extends Template{
 
 	ManageAccount magAc;
@@ -23,9 +21,8 @@ public class Wiki_Template_Search extends Template{
 	public void setUpBeforeTest(){
 		initSeleniumTest();
 		driver.get(baseUrl);
-		driver.manage().window().maximize();
 		magAc = new ManageAccount(driver);
-		magAc.signIn("john", "gtn"); 
+		magAc.signIn("john", "gtngtn"); 
 		goToWiki();
 	}
 
@@ -91,7 +88,7 @@ public class Wiki_Template_Search extends Template{
 
 		magAc.signOut();
 
-		magAc.signIn("john", "gtn"); 
+		magAc.signIn("john", "gtngtn"); 
 
 		goToWiki();
 

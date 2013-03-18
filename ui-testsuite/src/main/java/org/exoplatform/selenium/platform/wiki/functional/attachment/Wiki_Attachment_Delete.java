@@ -1,5 +1,6 @@
 package org.exoplatform.selenium.platform.wiki.functional.attachment;
 
+import org.exoplatform.selenium.Button;
 import org.exoplatform.selenium.platform.ManageAccount;
 import static org.exoplatform.selenium.TestLogger.info;
 import org.exoplatform.selenium.platform.wiki.BasicAction;
@@ -15,14 +16,15 @@ import org.testng.annotations.Test;
  */
 public class Wiki_Attachment_Delete extends BasicAction{
 	ManageAccount magAcc;
+	Button button;
 	
 	@BeforeMethod
 	public void setUpBeforeTest(){
 		initSeleniumTest();
 		driver.get(baseUrl);
-		driver.manage().window().maximize();
 		magAcc = new ManageAccount(driver);
-		magAcc.signIn("john", "gtn"); 
+		button = new Button(driver);
+		magAcc.signIn("john", "gtngtn"); 
 		goToWiki();
 	}
 
@@ -31,9 +33,6 @@ public class Wiki_Attachment_Delete extends BasicAction{
 		driver.manage().deleteAllCookies();
 		driver.quit();
 	}
-
-	//public static String MSG_CANCEL_CREATE_PAGE="Are you sure to leave this page?";
-	//public static By ELEMENT_OK_BUTTON=By.xpath("//input[@value='OK']");
 	
 	/**
 	 * Case 01: Delete attach file for page
@@ -50,7 +49,7 @@ public class Wiki_Attachment_Delete extends BasicAction{
 		String DATA_WIKI_PAGE_CONTENT="Blank_Wiki_Page_With_Image_Content";
 		String ATTACHMENT_NAME="Winter.jpg";
 		String ATTACHMENT_PATH="TestData/"+ATTACHMENT_NAME+"";
-		By ATTACHMENT_FILE_LINK=By.xpath("//a[text()='"+ATTACHMENT_NAME+"']");
+		By ATTACHMENT_FILE_LINK=By.xpath("//*[text()='"+ATTACHMENT_NAME+"']");
 
 		info("Delete attachment at wiki page");
 		
@@ -69,6 +68,6 @@ public class Wiki_Attachment_Delete extends BasicAction{
 		click(ELEMENT_CANCEL_BUTTON_ADD_PAGE);
 		//click(ELEMENT_CANCEL_BUTTON);
 		waitForTextPresent(MESSAGE_CANCEL_CREATE_PAGE);
-		click(ELEMENT_OK_BUTTON);
+		click(button.ELEMENT_OK_BUTTON);
 	}
 }

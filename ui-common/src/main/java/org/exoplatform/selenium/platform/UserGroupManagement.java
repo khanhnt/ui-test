@@ -2,6 +2,10 @@ package org.exoplatform.selenium.platform;
 
 import static org.exoplatform.selenium.TestLogger.info;
 
+import org.exoplatform.selenium.Button;
+import org.exoplatform.selenium.Dialog;
+import org.exoplatform.selenium.ManageAlert;
+import org.exoplatform.selenium.Utils;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -12,6 +16,10 @@ public class UserGroupManagement extends PlatformBase {
 	public UserGroupManagement(WebDriver dr){
 		driver = dr;
 	}
+	
+	ManageAlert alt;
+	Dialog dialog;
+	Button button;
 	
 	public  final String MESSAGE_DUPLICATE_USERS = "User \"${username}\" has already the same membership ";
 	public  final String MESSAGE_DUPLICATE_GROUPS = "in the group \"${groupName}\", please select another one.";
@@ -38,7 +46,7 @@ public class UserGroupManagement extends PlatformBase {
 
 	public void chooseMembershipTab() {
 		info("-- Choose Membership Management tab--");
-		pause(500);
+		Utils.pause(500);
 		click(ELEMENT_TAB_MEMBERSHIP_MANAGEMENT);
 		waitForTextPresent("Add/Edit Membership");
 	}
@@ -48,21 +56,23 @@ public class UserGroupManagement extends PlatformBase {
 	 * */
 
 	public void deleteUser(String username) {
+		dialog = new Dialog(driver);
+		alt = new ManageAlert(driver);
 		String userDeleteIcon = ELEMENT_USER_DELETE_ICON.replace("${username}", username);
 
 		info("--Deleting user " + username + "--");
 		if (isTextPresent("Total pages")) {
 			usePaginator(userDeleteIcon, "User " + username + "not found in group");
 		}
-		pause(500);
+		Utils.pause(500);
 		click(userDeleteIcon);
-		waitForConfirmation("Are you sure to delete user " + username + "?");
-		pause(1000);
+		alt.waitForConfirmation("Are you sure to delete user " + username + "?");
+		Utils.pause(1000);
 		type(ELEMENT_INPUT_SEARCH_USER_NAME, username, true);
 		select(ELEMENT_SELECT_SEARCH_OPTION, "User Name");
 		click(ELEMENT_SEARCH_ICON_USERS_MANAGEMENT);
 		waitForMessage("No result found.");
-		closeMessageDialog();
+		dialog.closeMessageDialog();
 		waitForTextNotPresent(username);
 	}
 
@@ -81,7 +91,7 @@ public class UserGroupManagement extends PlatformBase {
 
 		info("--Editing user " + username + "--");
 		click(userEditIcon);
-		pause(1000);
+		Utils.pause(1000);
 	}
 
 	/*
@@ -89,35 +99,38 @@ public class UserGroupManagement extends PlatformBase {
 	 * */
 
 	public void addGroup(String groupName, String groupLabel, String groupDesc, boolean verify){
+		button = new Button(driver);
 		info("--Add a new group--");
-		pause(500);
+		Utils.pause(500);
 		click(ELEMENT_GROUP_ADD_NEW_ICON);
 		type(ELEMENT_INPUT_GROUP_NAME, groupName, true);
 		type(ELEMENT_INPUT_LABEL, groupLabel, true);
 		type(ELEMENT_TEXTAREA_DESCRIPTION, groupDesc, true);
-		save();
+		button.save();
 		if (verify) {
 			waitForAndGetElement("//a[@title='" + (groupLabel.length() > 0 ? groupLabel : groupName) + "']");
 		}
 	}
 
 	public void addUsersToGroup(String userNames, String memberShip, boolean select, boolean verify) {
+		button = new Button(driver);
 		info("--Adding users to group--");
 		String[] users = userNames.split(",");
 		if (select) {
 			click(ELEMENT_GROUP_SEARCH_USER_ICON);
 			waitForTextPresent("Select User");
 			for (String user : users) {
-				check("//input[@name='" + user + "']");
+				click("//input[@name='" + user + "']", 2);
 			}
-			click(ELEMENT_GROUP_SEARCH_POPUP_ADD_ICON);
-			pause(500);
+			//click(ELEMENT_GROUP_SEARCH_POPUP_ADD_ICON);
+			click(button.ELEMENT_ADD_BUTTON);
+			Utils.pause(500);
 			Assert.assertEquals(getValue(ELEMENT_INPUT_USERNAME), userNames);
 		} else {
 			type(ELEMENT_INPUT_USERNAME, userNames, true);
 		}
 		select(ELEMENT_SELECT_MEMBERSHIP, memberShip);
-		save();
+		button.save();
 		if (verify) {
 			for (String user : users) {
 				String addedUser = ELEMENT_GROUP_USER_IN_TABLE.replace("${username}", user);
@@ -132,15 +145,16 @@ public class UserGroupManagement extends PlatformBase {
 
 	//Add a duplicated user into group
 	public void addDuplicatedUserToGroup(String groupName, String userName, String memberShip){
+		button = new Button(driver);
 		info("-- Add a duplicated user into group --");
 		String MESSAGE_DUPLICATE_USER = MESSAGE_DUPLICATE_USERS.replace("${username}", userName);
 		String MESSAGE_DUPLICATE_USER_WITH_SAME_ROLE = MESSAGE_DUPLICATE_USER + MESSAGE_DUPLICATE_GROUPS.replace("${groupName}", groupName);
 		selectGroup(groupName);
 		type(ELEMENT_INPUT_USERNAME, userName, true);
 		select(ELEMENT_SELECT_MEMBERSHIP, memberShip);
-		save();
+		button.save();
 		waitForMessage(MESSAGE_DUPLICATE_USER_WITH_SAME_ROLE);
-		click(ELEMENT_OK_BUTTON);	
+		click(button.ELEMENT_OK_BUTTON);	
 	}	
 
 	//Delete a user in current group
@@ -159,34 +173,48 @@ public class UserGroupManagement extends PlatformBase {
 		if (isTextPresent("Total pages")) {
 			usePaginator(userDeleteIcon, "User " + username + "not found in group");
 		}
-		pause(500);
+		Utils.pause(500);
 		click(userDeleteIcon);
 		//waitForConfirmation(MESSAGE_DELETE_CONFIRMATION);
 		Alert alert = driver.switchTo().alert();
 		alert.accept();
-		pause(500);
+		Utils.pause(500);
 		waitForTextNotPresent(username);	
 	}
 
 	//Function to select group
-	public void selectGroup(String groupPath){
+	public void selectGroup(String groupPath, Object...params){
+		String groupName =  "//*[text()='Select Group']/..//*[contains(text(), '${groupName}')]";
+		String groupName_2 =  "//*[text()='selectGroup']/..//*[contains(text(), '${groupName}')]";
+		String groupName_3 = "//*[contains(text(), 'select a group')]/..//*[contains(text(), '${groupName}')]";
 		String[] temp;			 
 		/* Delimiter */
 		String delimiter = "/";
+		Boolean isInPermissionTab = (Boolean) (params.length > 0? params[0]: false);
 
 		temp = groupPath.split(delimiter);
 		/* Go to group */
 		for(int i =0; i < temp.length ; i++){
 			info("Go to " + temp[i]);
-			click(By.linkText(temp[i]));
-			pause(500);
+			if (isInPermissionTab){
+				if (isElementPresent(By.xpath(groupName.replace("${groupName}", temp[i])))){
+					click(By.xpath(groupName.replace("${groupName}", temp[i])));
+				}else if (isElementPresent(By.xpath(groupName_2.replace("${groupName}", temp[i])))){
+					click(By.xpath(groupName_2.replace("${groupName}", temp[i])));
+				}else if (isElementPresent(By.xpath(groupName_3.replace("${groupName}", temp[i])))){
+					click(By.xpath(groupName_3.replace("${groupName}", temp[i])));
+				}
+			}else{
+				click(By.linkText(temp[i]));
+			}
+			Utils.pause(500);
 		}
 	}
 
 	public void editGroup(String groupName, boolean verify){
 		info("-- Edit group: " + groupName + "--");
 		click(ELEMENT_GROUP_EDIT_ICON);
-		pause(1000);
+		Utils.pause(1000);
 	}
 
 	public void deleteGroup(String groupName, boolean verify, int...wait) {
@@ -194,11 +222,11 @@ public class UserGroupManagement extends PlatformBase {
 		int waitTime= wait.length > 0 ? wait[0]: DEFAULT_TIMEOUT;
 		click(ELEMENT_GROUP_REMOVE_ICON);
 
-		waitForConfirmation("Are you sure to delete this group?");
+		alt.waitForConfirmation("Are you sure to delete this group?");
 		if (verify) {
 			waitForElementNotPresent("//a[@title='"+ groupName +"']",waitTime);
 		}
-		pause(1000);
+		Utils.pause(1000);
 	}
 
 	/*
@@ -207,13 +235,14 @@ public class UserGroupManagement extends PlatformBase {
 	 * */
 
 	public void addMembership(String membershipName, String membershipDesc, boolean verify){
+		button = new Button(driver);
 		boolean verifyMembership;
 		info("--Creating new membership--");
 		click(ELEMENT_TAB_MEMBERSHIP_MANAGEMENT);
 
 		type(ELEMENT_INPUT_NAME, membershipName, true);
 		type(ELEMENT_TEXTAREA_DESCRIPTION, membershipDesc, true);
-		save();
+		button.save();
 		verifyMembership = isTextPresent(membershipName);
 		if (verifyMembership){
 			waitForTextPresent(membershipName);
@@ -226,6 +255,7 @@ public class UserGroupManagement extends PlatformBase {
 	}
 
 	public void editMembership(String membershipName, String newDesc){
+		button = new Button(driver);
 		info("-- Edit membership: " + membershipName + "--");
 
 		boolean verifyMembership;
@@ -240,10 +270,10 @@ public class UserGroupManagement extends PlatformBase {
 		String editIcon = ELEMENT_MEMBERSHIP_EDIT_ICON.replace("${membership}", membershipName);
 		String membershipInput = "//input[@value='" + membershipName + "']";
 		click(editIcon);
-		pause(1000);
+		Utils.pause(1000);
 		waitForAndGetElement(membershipInput);
 		type(ELEMENT_TEXTAREA_DESCRIPTION, newDesc, true);
-		save();
+		button.save();
 		if (verifyMembership){
 			waitForTextPresent(membershipName);
 		}
@@ -266,7 +296,7 @@ public class UserGroupManagement extends PlatformBase {
 		String deleteIcon = ELEMENT_MEMBERSHIP_DELETE_ICON.replace("${membership}", membershipName);
 		info("--Deleting membership--");
 		click(deleteIcon);
-		waitForConfirmation("Are you sure to delete this membership?");
+		alt.waitForConfirmation("Are you sure to delete this membership?");
 		if (!verifyMembership){
 			waitForTextNotPresent(membershipName);
 		}
@@ -279,8 +309,17 @@ public class UserGroupManagement extends PlatformBase {
 	//Function to select a group and membership on permission management popup
 	//Go to siteExplorer - System tab - Permission - Select Membership
 	public void selectGroupAndMembership(String groupPath, String membership){
-		click(By.xpath("//img[@title='Select Membership']"));
+		if (isElementPresent(By.xpath("//*[@data-original-title = 'Select Membership']"))){
+			click(By.xpath("//*[@data-original-title = 'Select Membership']"));
+		}else if (isElementPresent(By.xpath("//*[@title = 'Select Membership']"))){
+			click(By.xpath("//*[@title = 'Select Membership']"));
+		}else if (isElementPresent(By.xpath("//*[@title = 'SelectMember']"))){
+			click(By.xpath("//*[@title = 'SelectMember']"));
+		}else if (isElementPresent(By.xpath("//*[@data-original-title = 'SelectMember']"))){
+			click(By.xpath("//*[@data-original-title = 'SelectMember']"));
+		}
 		selectGroup(groupPath);	
 		click(By.linkText(membership));
+		Utils.pause(1000);
 	}
 }

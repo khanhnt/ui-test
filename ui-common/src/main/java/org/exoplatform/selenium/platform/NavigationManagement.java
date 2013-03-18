@@ -1,11 +1,17 @@
 package org.exoplatform.selenium.platform;
 
 import static org.exoplatform.selenium.TestLogger.info;
+
+import org.exoplatform.selenium.ManageAlert;
+import org.exoplatform.selenium.Utils;
 import org.exoplatform.selenium.platform.PageManagement;
 import java.util.Map;
 import org.openqa.selenium.By;
 
 public class NavigationManagement extends  PageManagement{
+
+	ManageAlert alt = new ManageAlert(driver);
+	
 	public  final By ELEMENT_INPUT_POPUP_SEARCH_TITLE = By.xpath("//div[@class='QuickSet']/input[@id='pageTitle']"); 
 	public  final By ELEMENT_SELECT_PAGE = By.xpath("//div[@id='UIRepeater']//table//tbody/tr/td[5]/div[@class='ActionContainer']/img");
 
@@ -24,7 +30,7 @@ public class NavigationManagement extends  PageManagement{
 		}else{
 
 			click(currentNode);
-			pause(500);
+			Utils.pause(500);
 			rightClickOnElement(currentNode);
 			if (currentNode.equals(ELEMENT_NAVIGATION_HOME_NODE)) {
 				click(ELEMENT_NODE_ADD_NEW_TOP_NODE);
@@ -38,7 +44,7 @@ public class NavigationManagement extends  PageManagement{
 		if (extendedLabelMode) {
 			for (String language : languages.keySet()) {
 				select(ELEMENT_SELECT_LANGUAGE, language);
-				pause(500);
+				Utils.pause(500);
 			}
 		} else {
 			uncheck(ELEMENT_CHECKBOX_EXTENDED_LABEL_MODE);
@@ -59,7 +65,7 @@ public class NavigationManagement extends  PageManagement{
 			}
 		} else {
 			info("-- Select Page --");
-			pause(500);
+			Utils.pause(500);
 			click(ELEMENT_SEARCH_SELECT_PAGE_LINK);
 			type(ELEMENT_INPUT_POPUP_SEARCH_TITLE, pageTitle, true);
 			click(ELEMENT_PAGE_MANAGEMENT_SEARCH_BUTTON);
@@ -67,12 +73,12 @@ public class NavigationManagement extends  PageManagement{
 		}
 
 		info("-- Save add node for portal --");
-		pause(1000);
-		save();
+		Utils.pause(1000);
+		button.save();
 		if (verifyNode) {
 			waitForTextNotPresent("Page Node Settings");
 			waitForTextPresent(nodeName);
-			save();
+			button.save();
 			waitForTextNotPresent("Navigation Management");
 		}
 	}
@@ -100,7 +106,7 @@ public class NavigationManagement extends  PageManagement{
 		if (extendedLabelMode) {
 			for (String language : languages.keySet()) {
 				select(ELEMENT_SELECT_LANGUAGE, language);
-				pause(500);
+				Utils.pause(500);
 			}
 		} else {
 			uncheck(ELEMENT_CHECKBOX_EXTENDED_LABEL_MODE);
@@ -112,10 +118,10 @@ public class NavigationManagement extends  PageManagement{
 		type(ELEMENT_INPUT_PAGE_NAME, pageName, true);
 		type(ELEMENT_INPUT_PAGE_TITLE, pageTitle, true);
 		click(ELEMENT_CREATE_PAGE_LINK);
-		pause(1000);
-		save();
-		pause(1000);
-		save();
+		Utils.pause(1000);
+		button.save();
+		Utils.pause(1000);
+		button.save();
 		waitForTextNotPresent("Navigation Management");
 	}
 
@@ -130,17 +136,17 @@ public class NavigationManagement extends  PageManagement{
 			click(currentNodeName);
 			rightClickOnElement(currentNodeName);
 			click(ELEMENT_NODE_DELETE);
-			waitForConfirmation("Are you sure to delete this node?");
+			alt.waitForConfirmation("Are you sure to delete this node?");
 			waitForTextNotPresent(nodeName);
-			save();		
+			button.save();		
 		}else {
 			click(currentNodeHome);
 			click(currentNodeName);
 			rightClickOnElement(currentNodeName);
 			click(ELEMENT_NODE_DELETE);
-			waitForConfirmation("Are you sure to delete this node?");
+			alt.waitForConfirmation("Are you sure to delete this node?");
 			waitForTextNotPresent(nodeName);
-			save();		
+			button.save();		
 		}
 		waitForTextNotPresent("Navigation Management");
 	}

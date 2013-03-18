@@ -1,6 +1,8 @@
 package org.exoplatform.selenium.platform.wiki.functional.template;
 
 import static org.exoplatform.selenium.TestLogger.info;
+
+import org.exoplatform.selenium.Button;
 import org.exoplatform.selenium.platform.ManageAccount;
 import org.exoplatform.selenium.platform.wiki.Template;
 import org.openqa.selenium.By;
@@ -12,18 +14,18 @@ import org.testng.annotations.Test;
  *-- Author: HaKT
  *-- Date: 17 Dec 2012
  **/
-
 public class Wiki_Template_Add extends Template{
 
 	ManageAccount magAc;
+	Button button;
 
 	@BeforeMethod
 	public void setUpBeforeTest(){
 		initSeleniumTest();
 		driver.get(baseUrl);
-		driver.manage().window().maximize();
 		magAc = new ManageAccount(driver);
-		magAc.signIn("john", "gtn"); 
+		button = new Button(driver);
+		magAc.signIn("john", "gtngtn"); 
 		goToWiki();
 	}
 
@@ -99,7 +101,7 @@ public class Wiki_Template_Add extends Template{
 
 		waitForElementNotPresent(ELEMENT_CLOSE_PREVIEW_WINDOW);
 
-		cancel();
+		button.cancel();
 
 		deleteTemplate(DATA_TEMPLATE_TITLE);
 	}
@@ -138,7 +140,7 @@ public class Wiki_Template_Add extends Template{
 
 		waitForElementNotPresent(ELEMENT_CLOSE_PREVIEW_WINDOW);
 
-		cancel();
+		button.cancel();
 
 		deleteTemplate(DATA_TEMPLATE_TITLE);
 	}
@@ -177,7 +179,7 @@ public class Wiki_Template_Add extends Template{
 
 		waitForElementNotPresent(ELEMENT_CLOSE_PREVIEW_WINDOW);
 
-		cancel();
+		button.cancel();
 
 		deleteTemplate(DATA_TEMPLATE_TITLE);
 	}
@@ -216,7 +218,7 @@ public class Wiki_Template_Add extends Template{
 
 		waitForElementNotPresent(ELEMENT_CLOSE_PREVIEW_WINDOW);
 
-		cancel();
+		button.cancel();
 
 		deleteTemplate(DATA_TEMPLATE_TITLE);
 	}
@@ -255,7 +257,7 @@ public class Wiki_Template_Add extends Template{
 
 		waitForElementNotPresent(ELEMENT_CLOSE_PREVIEW_WINDOW);
 
-		cancel();
+		button.cancel();
 
 		deleteTemplate(DATA_TEMPLATE_TITLE);
 	}
@@ -295,7 +297,7 @@ public class Wiki_Template_Add extends Template{
 
 		waitForElementNotPresent(ELEMENT_CLOSE_PREVIEW_WINDOW);
 
-		cancel();
+		button.cancel();
 
 		deleteTemplate(DATA_TEMPLATE_TITLE);
 	}
@@ -335,7 +337,7 @@ public class Wiki_Template_Add extends Template{
 
 		waitForElementNotPresent(ELEMENT_CLOSE_PREVIEW_WINDOW);
 
-		cancel();
+		button.cancel();
 
 		deleteTemplate(DATA_TEMPLATE_TITLE);
 	}
@@ -375,7 +377,7 @@ public class Wiki_Template_Add extends Template{
 
 		waitForElementNotPresent(ELEMENT_CLOSE_PREVIEW_WINDOW);
 
-		cancel();
+		button.cancel();
 
 		deleteTemplate(DATA_TEMPLATE_TITLE);
 	}
@@ -414,7 +416,7 @@ public class Wiki_Template_Add extends Template{
 
 		waitForElementNotPresent(ELEMENT_CLOSE_PREVIEW_WINDOW);
 
-		cancel();
+		button.cancel();
 
 		deleteTemplate(DATA_TEMPLATE_TITLE);
 	}

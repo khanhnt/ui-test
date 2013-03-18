@@ -16,13 +16,12 @@ public class Wiki_Version_Restore extends Version{
 	ManageAccount magAcc;
 	
 	public String admin = "john";
-	public String pass = "gtn";
+	public String pass = "gtngtn";
 
 	@BeforeMethod
 	public void beforeMethods(){
 		initSeleniumTest();
 		driver.get(baseUrl);
-		driver.manage().window().maximize();
 		magAcc = new ManageAccount(driver);
 		magAcc.signIn(admin, pass);
 	}

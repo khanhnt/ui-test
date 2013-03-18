@@ -4,6 +4,7 @@ import static org.exoplatform.selenium.TestLogger.info;
 
 import java.util.Set;
 
+import org.exoplatform.selenium.Button;
 import org.exoplatform.selenium.Utils;
 import org.exoplatform.selenium.platform.ManageAccount;
 import org.exoplatform.selenium.platform.social.ManageMember;
@@ -22,16 +23,17 @@ import org.testng.annotations.Test;
  */
 public class Wiki_Version_View extends Version{
 	ManageAccount magAcc;
+	Button button;
 	
 	public String admin = "john";
-	public String pass = "gtn";
+	public String pass = "gtngtn";
 
 	@BeforeMethod
 	public void beforeMethods(){
 		initSeleniumTest();
 		driver.get(baseUrl);
-		driver.manage().window().maximize();
 		magAcc = new ManageAccount(driver);
+		button = new Button(driver);
 		magAcc.signIn(admin, pass);
 	}
 
@@ -133,7 +135,7 @@ public class Wiki_Version_View extends Version{
 
 		waitForTextPresent(dataInfo[1]);
 
-		next();
+		button.next();
 
 		waitForTextPresent(dataInfo[3]);
 

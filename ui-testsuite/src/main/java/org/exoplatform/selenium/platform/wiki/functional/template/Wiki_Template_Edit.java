@@ -1,6 +1,8 @@
 package org.exoplatform.selenium.platform.wiki.functional.template;
 
 import static org.exoplatform.selenium.TestLogger.info;
+
+import org.exoplatform.selenium.Button;
 import org.exoplatform.selenium.platform.ManageAccount;
 import org.exoplatform.selenium.platform.wiki.Template;
 import org.testng.annotations.AfterMethod;
@@ -14,14 +16,15 @@ import org.testng.annotations.Test;
 public class Wiki_Template_Edit extends Template{
 
 	ManageAccount magAc;
+	Button button;
 	
 	@BeforeMethod
 	public void setUpBeforeTest(){
 		initSeleniumTest();
 		driver.get(baseUrl);
-		driver.manage().window().maximize();
 		magAc = new ManageAccount(driver);
-		magAc.signIn("john", "gtn"); 
+		button = new Button(driver);
+		magAc.signIn("john", "gtngtn"); 
 		goToWiki();
 	}
 
@@ -59,7 +62,7 @@ public class Wiki_Template_Edit extends Template{
 		waitForElementPresent(ELEMENT_OLD_TEMPLATE_LINK.replace("${OLD_TEMPLATE_TITLE}", DATA_TEMPLATE_TITLE));
 	
 		//click(ELEMENT_CLOSE_TEMPLATE_LIST);
-		cancel();
+		button.cancel();
 
 		editTemplate(DATA_TEMPLATE_TITLE, DATA_NEW_TEMPLATE_TITLE, DATA_TEMPLATE_DESC, DATA_TEMPLATE_CONTENT);
 	

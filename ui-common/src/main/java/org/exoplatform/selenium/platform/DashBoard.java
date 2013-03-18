@@ -1,5 +1,8 @@
 package org.exoplatform.selenium.platform;
 
+import org.exoplatform.selenium.Dialog;
+import org.exoplatform.selenium.ManageAlert;
+import org.exoplatform.selenium.Utils;
 import org.exoplatform.selenium.platform.NavigationToolbar;
 import static org.exoplatform.selenium.TestLogger.info;
 import java.util.Map;
@@ -11,8 +14,10 @@ import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
 
 public class DashBoard extends PlatformBase {
-	
-	NavigationToolbar nav = new NavigationToolbar();
+
+	NavigationToolbar nav = new NavigationToolbar(driver);
+	Dialog dialog = new Dialog(driver);
+	ManageAlert alt = new ManageAlert(driver);
 	
 	/* Dashboard Page*/
 	public  String MESSAGE_DRAG_GADGETS_HERE = "Drag your gadgets here.";
@@ -70,7 +75,7 @@ public class DashBoard extends PlatformBase {
 			//String verification = PORTLET_LABEL.replace("${portletName}", portletIdsAndVerifications.get(portletId));
 			dragAndDropToObject("//div[@id='" + portletId + "']//img", elementEditPagePage);
 		}
-		pause(500);
+		Utils.pause(500);
 		click(ELEMENT_PAGE_FINISH_BUTTON);
 		waitForTextNotPresent("Page Editor");
 		if (verify) {
@@ -109,7 +114,7 @@ public class DashBoard extends PlatformBase {
 		} else {
 			click(ELEMENT_DASHBOARD_SELECTED_DELETE);
 		}	
-		waitForConfirmation("Are you sure to remove this dashboard?");
+		alt.waitForConfirmation("Are you sure to remove this dashboard?");
 		waitForElementNotPresent("//span[text()='" + currentName + "']");
 	}
 
@@ -119,7 +124,7 @@ public class DashBoard extends PlatformBase {
 		By deleteGadgetIcon = By.xpath("//span[text()='"+gadgetTitleDisplay+"']/preceding::span[@title='"+action+"']");
 		waitForAndGetElement(deleteGadgetIcon);
 		click(deleteGadgetIcon);
-		waitForConfirmation("Are you sure to delete this gadget?");
+		alt.waitForConfirmation("Are you sure to delete this gadget?");
 		waitForTextNotPresent(gadgetTitleDisplay);
 	}
 }

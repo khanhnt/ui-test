@@ -1,6 +1,10 @@
 package org.exoplatform.selenium.platform;
 
 import static org.exoplatform.selenium.TestLogger.info;
+
+import org.exoplatform.selenium.Dialog;
+import org.exoplatform.selenium.ManageAlert;
+import org.exoplatform.selenium.Utils;
 import  org.exoplatform.selenium.platform.NavigationToolbar;
 import  org.exoplatform.selenium.platform.NavigationManagement;
 import java.util.Map;
@@ -10,9 +14,11 @@ import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 
 public class PageManagement extends PlatformBase {
-	
-	NavigationToolbar nav = new NavigationToolbar();
+
+	NavigationToolbar nav = new NavigationToolbar(driver);
 	NavigationManagement navMag = new NavigationManagement();
+	Dialog dialog = new Dialog(driver);
+	ManageAlert alt = new ManageAlert(driver);
 	
 	/*
 	 * Page Management
@@ -68,8 +74,8 @@ public class PageManagement extends PlatformBase {
 		}		
 		click(ELEMENT_EDIT_PERMISSION_SETTING);
 		setEditPermissions(groupId, membership);
-		save();
-		pause(1000);
+		button.save();
+		Utils.pause(1000);
 		searchPageByTitle(type, pageTitle);
 	}
 
@@ -78,7 +84,7 @@ public class PageManagement extends PlatformBase {
 		String pageEditIcon = ELEMENT_PAGE_EDIT_ICON.replace("${page}", pageTitle);
 		searchPageByTitle(type, pageTitle);
 		click(pageEditIcon);
-		pause(1000);
+		Utils.pause(1000);
 	}
 
 	//Delete a page
@@ -87,9 +93,9 @@ public class PageManagement extends PlatformBase {
 		String pageDeleteIcon = ELEMENT_PAGE_DELETE_ICON.replace("${page}", pageTitle);
 		searchPageByTitle(type, pageTitle);
 		click(pageDeleteIcon);
-		waitForConfirmation(MESSAGE_DELETE_PAGE);
+		alt.waitForConfirmation(MESSAGE_DELETE_PAGE);
 		waitForMessage("No result found.",waitTime);
-		closeMessageDialog();
+		dialog.closeMessageDialog();
 		waitForTextNotPresent(pageTitle);
 	}
 
@@ -107,7 +113,7 @@ public class PageManagement extends PlatformBase {
 			break;
 		}
 		click(ELEMENT_PAGE_MANAGEMENT_SEARCH_BUTTON);
-		pause(1000);
+		Utils.pause(1000);
 		waitForTextPresent(pageTitle);
 	}
 
@@ -142,7 +148,7 @@ public class PageManagement extends PlatformBase {
 				dragAndDropToObject("//div[@id='" + portletIds.get(portletId) + "']//img", elementEditPagePage);
 			}
 		}
-		pause(500);
+		Utils.pause(500);
 		click(ELEMENT_PAGE_FINISH_BUTTON);
 		waitForTextNotPresent("Page Editor");
 	}
