@@ -1,83 +1,47 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
 <suite name="Wiki Functional Test" verbose="1" preserve-order="true">
-	<!-- <test name="wiki-func-attachment" enabled="true">
-		<groups>
-			<run>
-				<exclude name="pending" />
-			</run>
-		</groups>
+	<test name="platform-users" enabled="true">
 		<packages>
-			<package name="org.exoplatform.selenium.platform.wiki.functional.attachment.*" />
-		</packages>
-	</test> -->
-	
-	<!-- <test name="wiki-func-basicaction" enabled="true">
-		<groups>
-			<run>
-				<exclude name="pending" />
-			</run>
-		</groups>
-		<packages>
-			<package name="org.exoplatform.selenium.platform.wiki.functional.basicaction.*" />
-		</packages>
-	</test> -->
-	
-	<!-- <test name="wiki-func-pagepermission" enabled="true">
-		<groups>
-			<run>
-				<exclude name="pending" />
-			</run>
-		</groups>
-		<packages>
-			<package name="org.exoplatform.selenium.platform.wiki.functional.pagepermission.*" />
-		</packages>
-	</test> -->
-	
-	<!-- <test name="wiki-func-search" enabled="true">
-		<groups>
-			<run>
-				<exclude name="pending" />
-			</run>
-		</groups>
-		<packages>
-			<package name="org.exoplatform.selenium.platform.wiki.functional.search.*" />
-		</packages>
-	</test> -->
-	
-	<test name="wiki-func-info" enabled="true">
-		<groups>
-			<run>
-				<exclude name="pending" />
-			</run>
-		</groups>
-		<packages>
-			<package name="org.exoplatform.selenium.platform.wiki.functional.information.*" />
+			<package name="org.exoplatform.selenium.platform.users.*" />
 		</packages>
 	</test>
-	
-	<test name="wiki-func-spacepermission" enabled="true">
+	<test name="wiki-func-attachment" enabled="true">
 		<groups>
 			<run>
 				<exclude name="pending" />
 			</run>
 		</groups>
 		<packages>
-			<package name="org.exoplatform.selenium.platform.wiki.functional.spacepermission.*" />
+			<package
+				name="org.exoplatform.selenium.platform.wiki.functional.attachment.*" />
 		</packages>
 	</test>
-	
-	<test name="wiki-func-template" enabled="true">
-		<groups>
-			<run>
-				<exclude name="pending" />
-			</run>
-		</groups>
-		<packages>
-			<package name="org.exoplatform.selenium.platform.wiki.functional.template.*" />
-		</packages>
-	</test>
-	
+
+	<!-- <test name="wiki-func-basicaction" enabled="true"> <groups> <run> <exclude 
+		name="pending" /> </run> </groups> <packages> <package name="org.exoplatform.selenium.platform.wiki.functional.basicaction.*" 
+		/> </packages> </test> -->
+
+	<!-- <test name="wiki-func-pagepermission" enabled="true"> <groups> <run> 
+		<exclude name="pending" /> </run> </groups> <packages> <package name="org.exoplatform.selenium.platform.wiki.functional.pagepermission.*" 
+		/> </packages> </test> -->
+
+	<!-- <test name="wiki-func-search" enabled="true"> <groups> <run> <exclude 
+		name="pending" /> </run> </groups> <packages> <package name="org.exoplatform.selenium.platform.wiki.functional.search.*" 
+		/> </packages> </test> -->
+
+	<!-- <test name="wiki-func-info" enabled="true"> <groups> <run> <exclude 
+		name="pending" /> </run> </groups> <packages> <package name="org.exoplatform.selenium.platform.wiki.functional.information.*" 
+		/> </packages> </test> -->
+
+	<!-- <test name="wiki-func-spacepermission" enabled="true"> <groups> <run> 
+		<exclude name="pending" /> </run> </groups> <packages> <package name="org.exoplatform.selenium.platform.wiki.functional.spacepermission.*" 
+		/> </packages> </test> -->
+
+	<!-- <test name="wiki-func-template" enabled="true"> <groups> <run> <exclude 
+		name="pending" /> </run> </groups> <packages> <package name="org.exoplatform.selenium.platform.wiki.functional.template.*" 
+		/> </packages> </test> -->
+
 	<listeners>
 		<listener class-name="org.exoplatform.selenium.TestReportListener" />
 	</listeners>
