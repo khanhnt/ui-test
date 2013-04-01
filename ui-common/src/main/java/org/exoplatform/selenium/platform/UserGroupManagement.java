@@ -117,7 +117,11 @@ public class UserGroupManagement extends PlatformBase {
 		info("--Adding users to group--");
 		String[] users = userNames.split(",");
 		if (select) {
-			click(ELEMENT_GROUP_SEARCH_USER_ICON);
+			if (isElementPresent(ELEMENT_GROUP_SEARCH_USER_ICON)){
+				click(ELEMENT_GROUP_SEARCH_USER_ICON);
+			}else if (isElementPresent(By.xpath("//*[contains(@class, 'uiIconSelectUser')]"))){
+				click(By.xpath("//*[contains(@class, 'uiIconSelectUser')]"));
+			}
 			waitForTextPresent("Select User");
 			for (String user : users) {
 				click("//input[@name='" + user + "']", 2);
