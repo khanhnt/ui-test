@@ -374,7 +374,13 @@ public class BasicAction extends Permission{
 		goToPagePermission();
 		assert !waitForAndGetElement(EditPage, 5000, 1, notDisplay).isSelected();
 		assert waitForAndGetElement(ViewPage, 5000, 1, notDisplay).isSelected();
-		button.close();
+		if (isElementPresent(button.ELEMENT_CLOSE_BUTTON)){
+			button.close();
+		}else if (isElementPresent(By.xpath("//*[contains(@class, 'popupTitle') and text()='Page Permissions']/..//*[contains(@class, 'uiIconClose')]"))){
+			click(By.xpath("//*[contains(@class, 'popupTitle') and text()='Page Permissions']/..//*[contains(@class, 'uiIconClose')]"));
+		}else {
+			click(button.ELEMENT_CANCEL_BUTTON);
+		}
 		waitForElementNotPresent(ELEMENT_PAGE_PERMISSION_POPUP);
 
 		info("Add edit page permission for " + user);

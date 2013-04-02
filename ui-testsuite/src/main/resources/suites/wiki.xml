@@ -6,7 +6,15 @@
 			<package name="org.exoplatform.selenium.platform.users.*" />
 		</packages>
 	</test>
-	<test name="wiki-func-attachment" enabled="true">
+	<!-- <test name="wiki-func-attachment" enabled="true"> <groups> <run> <exclude 
+		name="pending" /> </run> </groups> <packages> <package name="org.exoplatform.selenium.platform.wiki.functional.attachment.*" 
+		/> </packages> </test> -->
+
+	<!-- <test name="wiki-func-basicaction" enabled="true"> <groups> <run> <exclude 
+		name="pending" /> </run> </groups> <packages> <package name="org.exoplatform.selenium.platform.wiki.functional.basicaction.*" 
+		/> </packages> </test> -->
+
+	<test name="wiki-func-pagepermission" enabled="true">
 		<groups>
 			<run>
 				<exclude name="pending" />
@@ -14,17 +22,9 @@
 		</groups>
 		<packages>
 			<package
-				name="org.exoplatform.selenium.platform.wiki.functional.attachment.*" />
+				name="org.exoplatform.selenium.platform.wiki.functional.pagepermission.*" />
 		</packages>
 	</test>
-
-	<!-- <test name="wiki-func-basicaction" enabled="true"> <groups> <run> <exclude 
-		name="pending" /> </run> </groups> <packages> <package name="org.exoplatform.selenium.platform.wiki.functional.basicaction.*" 
-		/> </packages> </test> -->
-
-	<!-- <test name="wiki-func-pagepermission" enabled="true"> <groups> <run> 
-		<exclude name="pending" /> </run> </groups> <packages> <package name="org.exoplatform.selenium.platform.wiki.functional.pagepermission.*" 
-		/> </packages> </test> -->
 
 	<!-- <test name="wiki-func-search" enabled="true"> <groups> <run> <exclude 
 		name="pending" /> </run> </groups> <packages> <package name="org.exoplatform.selenium.platform.wiki.functional.search.*" 
