@@ -81,7 +81,7 @@ public class ECMS_Admin_ManageView extends PlatformBase{
 		//Fill data for Add New View Form
 		magView.fillAddNewViewForm("Test Template", "List", "Test", "addCategory", true, true, "Organization/Management", "*");
 		info("Delete a view that isn't used"); //Test case 15
-		magView.deleteView("Test Template", "Are you sure to delete this view?", true);
+		magView.deleteView("Test Template", "Are you sure you want to delete this view?", true);
 	}
 
 	/*
@@ -90,7 +90,7 @@ public class ECMS_Admin_ManageView extends PlatformBase{
 	@Test
 	public void test16_DeleteUsedView(){
 		info("Delete a view that is in-use");
-		magView.deleteView("Web", "Are you sure to delete this view?", false);
+		magView.deleteView("Web", "Are you sure you want to delete this view?", false);
 		waitForMessage("Cannot delete Web. It is currently in use.");
 		dialog.closeMessageDialog();
 	}
@@ -107,17 +107,18 @@ public class ECMS_Admin_ManageView extends PlatformBase{
 		magView.openAddViewForm("Add", "Add Explorer Template");
 		magView.fillExplorerTemplateForm("Test Content", "Test Name", "ecm-explorer");
 		info("Delete an ECM template"); //Test case 09
-		magView.deleteView("Test Name", "Are you sure to delete this template?", true);
+		magView.deleteView("Test Name", "Are you sure you want to delete this template?", true);
 	}
 
 	/*
 	 * Restore a view at a specific version
 	 */
-	/*@Test
+	@Test
 	public void test08_RestoreVersion(){
 		info("Restore Version");
-		String viewName = "Simple View";
+		String viewName = "Content";
+		ecMain.goToExplorerTemplates();
 		magView.createVersion(viewName, 2);
 		magView.restoreVersion(viewName, 1);
-	}*/
+	}
 }

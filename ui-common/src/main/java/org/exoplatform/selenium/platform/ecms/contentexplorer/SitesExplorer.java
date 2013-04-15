@@ -38,11 +38,11 @@ public class SitesExplorer extends EcmsBase{
 	//Button on the top-bar menu
 	public final By ELEMENT_BUTTON_BACK_PREVIOUS_NODE = By.className("uiIconEcmsGoBack");
 	public final By ELEMENT_BUTTON_REFRESH_TOPBAR_MENU = By.className("uiIconRefresh");
-	
+
 	//Simple Search
 	public final By ELEMENT_SIMPLESEARCH_TEXTBOX = By.id("simpleSearch");
 	public final By ELEMENT_SIMPLESEARCH_SUBMIT = By.id("SimpleSearch");
-	
+
 	/* sidebar */
 	public final By ELEMENT_SIDEBAR_SITES_MANAGEMENT = By.xpath("//*[@data-original-title = 'Sites Management']");
 	//File Explorer - relation -clipboard - tag clould - saved search
@@ -53,7 +53,8 @@ public class SitesExplorer extends EcmsBase{
 	public final By MESSAGE_CLEAR_ALL = By.xpath("//*[contains(text(),'There are no items in the clipboard.')]");
 	public final String ELEMENT_VERIFY_ACTION = "//*[contains(@data-original-title, '${titleOfFile}')]/../..//*[contains(@class, 'uiIconEcmsPaste')]";
 	public final String ELEMENT_TITLE_LEFT_PANEL = "//div[@id='UITreeExplorer']//div[contains(@onmousedown,'collaboration:/sites/${title}')]";
-
+	public final By ELEMENT_FILE_EXPLORER_MINI_ICON = By.className("uiIconEcmsExplorerMini");
+	
 	/*================***==================*/
 
 	//Verify if Driver is present
@@ -71,7 +72,7 @@ public class SitesExplorer extends EcmsBase{
 		if (isTextNotPresent(driverName)){
 			Utils.pause(1000);
 			ecMain.goToManageDriver();
-			magDrv.addNewDriver(driverName, driverWorkspace, driverHomePath, groupPermission, member, viewOption, view);	
+			magDrv.addNewDrive(driverName, driverWorkspace, driverHomePath, groupPermission, member, viewOption, view);	
 			navToolBar.goToSiteExplorer();
 			Utils.pause(1000);
 			if (isTextNotPresent(driverName)){
@@ -118,37 +119,33 @@ public class SitesExplorer extends EcmsBase{
 	}
 
 	//Add tag for a node
-	public void addTagForNode(String name, boolean isPublic) {
+	public void addTagForNode(String tagName) {
 		// Go to collaboration tab
-		info("Go to Collaboration tab");
-		actBar.goToCollaboration();
-
+		info("-- Open a Tag Form --");
+		//actBar.goToCollaboration();
 		// Click Tags
-		waitForElementPresent(ELEMENT_TAG);
-		click(ELEMENT_TAG);
+		//waitForElementPresent(ELEMENT_TAG);
+		//click(ELEMENT_TAG);
+
+		if (isElementPresent(By.className("uiIconEcmsTaggingDocument"))){
+			click(By.className("uiIconEcmsTaggingDocument"));
+		}
 
 		// Input information
-		type(ELEMENT_TAG_NAME, name, true);
-
-		// Save
-		if (isPublic){
-			selectOption(ELEMENT_TAG_SCOPE, "Public");
-		} else 
-			selectOption(ELEMENT_TAG_SCOPE, "Private");
-
-		click(ELEMENT_ADD_TAGS_BUTTON);
+		type(ELEMENT_TAG_NAME, tagName, true);
+		click(button.ELEMENT_ADD_BUTTON);
 
 		//Verify new tag
-		waitForElementPresent(By.linkText(name));
+		waitForElementPresent(By.xpath("//*[text()='Linked Tags:']/..//*[contains(text(), '"+ tagName +"')]"));
 
-		//Close tag form
-		click(ELEMENT_CLOSE_TAG_FORM);
+		// Close
+		click(button.ELEMENT_CLOSE_BUTTON);
 
 		//Verify add new tag
 		click(ELEMENT_TAG_CLOUD);
 
 		// waitForTextPresent("Private Tags");
-		waitForTextPresent(name);
+		waitForTextPresent(tagName);
 	}
 
 	//Simple search

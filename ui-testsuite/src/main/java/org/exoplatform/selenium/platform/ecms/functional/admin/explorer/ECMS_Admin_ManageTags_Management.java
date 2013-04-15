@@ -26,29 +26,45 @@ package org.exoplatform.selenium.platform.ecms.functional.admin.explorer;
 import static org.exoplatform.selenium.TestLogger.info;
 
 import org.exoplatform.selenium.Button;
+import org.exoplatform.selenium.Utils;
 import org.exoplatform.selenium.platform.ManageAccount;
+import org.exoplatform.selenium.platform.NavigationToolbar;
 import org.exoplatform.selenium.platform.PlatformBase;
 import org.exoplatform.selenium.platform.UserGroupManagement;
 import org.exoplatform.selenium.platform.ecms.EcmsBase;
 import org.exoplatform.selenium.platform.ecms.admin.ECMainFunction;
 import org.exoplatform.selenium.platform.ecms.admin.Permission;
+import org.exoplatform.selenium.platform.ecms.contentexplorer.ActionBar;
+import org.exoplatform.selenium.platform.ecms.contentexplorer.ContentTemplate;
+import org.exoplatform.selenium.platform.ecms.contentexplorer.ContextMenu;
 import org.exoplatform.selenium.platform.ecms.contentexplorer.SitesExplorer;
+import org.openqa.selenium.By;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+/**
+ * PLF4: Add a new test case
+ * <li>Add a tag for a document in Content Explorer</li>
+ * @author vuna2
+ * @date 15th, April, 2013
+ */
 public class ECMS_Admin_ManageTags_Management extends PlatformBase {
 
 	//Platform
 	ManageAccount magAcc;
 	UserGroupManagement userGrp;
 	Button button;
+	NavigationToolbar nav;
 
 	//Ecms
 	EcmsBase ecms;
 	ECMainFunction ecMain;
 	SitesExplorer sitesExp;
 	Permission adminPer;
+	ActionBar actBar;
+	ContentTemplate contentTemp;
+	ContextMenu contextMenu;
 
 	public final String DATA_USER_ADMIN = "john";
 	public final String DATA_USER_NORMAL = "mary";
@@ -59,6 +75,7 @@ public class ECMS_Admin_ManageTags_Management extends PlatformBase {
 		initSeleniumTest();
 		driver.get(baseUrl);
 		info("Login ECMS with "+ DATA_USER_ADMIN);
+		nav = new NavigationToolbar(driver);
 		magAcc = new ManageAccount(driver);
 		userGrp = new UserGroupManagement(driver);
 		button = new Button(driver);
@@ -66,6 +83,9 @@ public class ECMS_Admin_ManageTags_Management extends PlatformBase {
 		ecMain = new ECMainFunction(driver); 
 		sitesExp = new SitesExplorer(driver);
 		adminPer = new Permission(driver);
+		actBar = new ActionBar(driver);
+		contentTemp = new ContentTemplate(driver);
+		contextMenu = new ContextMenu(driver);
 		magAcc.signIn(DATA_USER_ADMIN, DATA_PASS);
 	}
 
@@ -79,14 +99,17 @@ public class ECMS_Admin_ManageTags_Management extends PlatformBase {
 	
 	/**
 	 * Test Edit Tags Function when input valid data
+	 * Check Tag Permission in the Content Explorer
 	 */
 	@Test
 	public void test06_CheckRightGroupContentExplorer() {
 		//Go to tag permission    
 		ecMain.goToTagPermissionManager();
+
 		//Add tag permission
 		userGrp.selectGroupAndMembership("Platform/Content Management", "*"); 
 		click(button.ELEMENT_ADD_BUTTON);
+
 		//Open Edit Tag form
 		magAcc.signOut();
 		magAcc.signIn(DATA_USER_NORMAL, DATA_PASS);  
@@ -96,5 +119,27 @@ public class ECMS_Admin_ManageTags_Management extends PlatformBase {
 		magAcc.signIn(DATA_USER_ADMIN, DATA_PASS);
 		ecMain.goToTagPermissionManager();
 		adminPer.removeTagPermission("platform/web-contributors", "*");
+	}
+	
+	/**
+	 * Step 1: Create node in CE
+	 * Step 2: Add tag for document
+	 * Step 3: View the displaying of tag's style
+	 */
+	@Test
+	public void test07_AddTagForDocumentInContentExplorer(){
+		info("-- Create a new File in Content Explorer --");
+		nav.goToSiteExplorer();
+		actBar.goToAddNewContent();
+		contentTemp.createNewFile("Add tag for document", "Add tag for document", "Add tag for document");
+		
+		info("-- Adding a tag for File.. --");
+		sitesExp.addTagForNode("TagName07");
+		
+		Utils.captureScreen("Add_Tag_For_Document_ContentExplorer");
+		
+		info("-- Reset data... --");
+		click(sitesExp.ELEMENT_FILE_EXPLORER_MINI_ICON);
+		contextMenu.deleteDocument(By.linkText("Add tag for document"));
 	}
 }

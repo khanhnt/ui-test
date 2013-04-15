@@ -61,6 +61,17 @@ public class ActionBar extends EcmsBase{
 	public final By ELEMENT_CURRENT_STATUS = By.xpath("//a[@class='CurrentStatus']");
 	public final By ELEMENT_CURRENT_PUBLIC_STATUS = By.xpath("//a[@class='CurrentStatus' and contains(text(), 'Published')]");
 
+	//Go to Sites Management
+	public void goToSitesManagement(){
+		Utils.pause(500);
+		if (isElementPresent(ELEMENT_SHOW_DRIVES)){
+			click(ELEMENT_SHOW_DRIVES);
+		}else if (isElementPresent(By.xpath("//*[@data-original-title = 'Show Drives']"))){
+			click(By.xpath("//*[@data-original-title = 'Show Drives']"));
+		}
+		Utils.pause(500);
+	}
+	
 	//Go to new content
 	public void goToAddNewContent(){
 		waitForElementPresent(ELEMENT_NEW_CONTENT_LINK, DEFAULT_TIMEOUT, 0, 2);

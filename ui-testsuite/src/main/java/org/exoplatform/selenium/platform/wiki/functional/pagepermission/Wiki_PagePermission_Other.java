@@ -263,6 +263,7 @@ public class Wiki_PagePermission_Other extends BasicAction{
 		info("Add a wiki page");
 		goToWikiFromSpace(spaceName);
 		addBlankWikiPage(title, content, 0);
+		click(element_page);
 		setPagePermission(userGroup, 1);
 		magAc.signOut();
 
@@ -291,6 +292,7 @@ public class Wiki_PagePermission_Other extends BasicAction{
 		info("Add a wiki page");
 		goToWikiFromSpace(spaceName);
 		addBlankWikiPage(title, content, 0);
+		click(element_page);
 		setPagePermission(userGroup, 2);
 		magAc.signOut();
 
@@ -319,6 +321,7 @@ public class Wiki_PagePermission_Other extends BasicAction{
 		info("Add a wiki page");
 		goToWikiFromSpace(spaceName);
 		addBlankWikiPage(title, content, 0);
+		click(element_page);
 		setPagePermission(userGroup, 3);
 		magAc.signOut();
 

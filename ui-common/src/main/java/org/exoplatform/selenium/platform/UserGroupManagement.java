@@ -12,22 +12,22 @@ import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 
 public class UserGroupManagement extends PlatformBase {
-	
+
 	public UserGroupManagement(WebDriver dr){
 		driver = dr;
 	}
-	
+
 	ManageAlert alt;
 	Dialog dialog;
 	Button button;
-	
+
 	public  final String MESSAGE_DUPLICATE_USERS = "User \"${username}\" has already the same membership ";
 	public  final String MESSAGE_DUPLICATE_GROUPS = "in the group \"${groupName}\", please select another one.";
 	public  final String ELEMENT_USER_INGROUP_DELETE_ICON = "//div[@id='UIGridUser']//div[text()='${username}']/../..//img[@class='DeleteUserIcon']";
 
 	//User Management -> Edit User form
 	public  final String ELEMENT_USER_MEMBERSHIP_TAB = "//div[text()='User Membership' and @class='MiddleTab']";
-	
+
 	/*
 	 *  Choose TAB actions
 	 * */
@@ -97,7 +97,6 @@ public class UserGroupManagement extends PlatformBase {
 	/*
 	 *  Group Management 
 	 * */
-
 	public void addGroup(String groupName, String groupLabel, String groupDesc, boolean verify){
 		button = new Button(driver);
 		info("--Add a new group--");
@@ -112,12 +111,17 @@ public class UserGroupManagement extends PlatformBase {
 		}
 	}
 
+	//Add an User to a group
 	public void addUsersToGroup(String userNames, String memberShip, boolean select, boolean verify) {
 		button = new Button(driver);
 		info("--Adding users to group--");
 		String[] users = userNames.split(",");
 		if (select) {
-			click(ELEMENT_GROUP_SEARCH_USER_ICON);
+			if (isElementPresent(ELEMENT_GROUP_SEARCH_USER_ICON)){
+				click(ELEMENT_GROUP_SEARCH_USER_ICON);
+			}else if (isElementPresent(By.xpath("//*[contains(@class, 'uiIconSelectUser')]"))){
+				click(By.xpath("//*[contains(@class, 'uiIconSelectUser')]"));
+			}
 			waitForTextPresent("Select User");
 			for (String user : users) {
 				click("//input[@name='" + user + "']", 2);
@@ -187,9 +191,9 @@ public class UserGroupManagement extends PlatformBase {
 		String groupName =  "//*[text()='Select Group']/..//*[contains(text(), '${groupName}')]";
 		String groupName_2 =  "//*[text()='selectGroup']/..//*[contains(text(), '${groupName}')]";
 		String groupName_3 = "//*[contains(text(), 'select a group')]/..//*[contains(text(), '${groupName}')]";
-		String groupNameBis =  "//*[text()='selectGroup']/..//*[contains(text(), '${groupName}')]";
+		//String groupNameBis =  "//*[text()='selectGroup']/..//*[contains(text(), '${groupName}')]";
 		String[] temp;			 
-		
+
 		/* Delimiter */
 		String delimiter = "/";
 		Boolean isInPermissionTab = (Boolean) (params.length > 0? params[0]: false);
@@ -205,11 +209,13 @@ public class UserGroupManagement extends PlatformBase {
 					click(By.xpath(groupName_2.replace("${groupName}", temp[i])));
 				}else if (isElementPresent(By.xpath(groupName_3.replace("${groupName}", temp[i])))){
 					click(By.xpath(groupName_3.replace("${groupName}", temp[i])));
-				}else if (isElementPresent(By.xpath(groupNameBis.replace("${groupName}", temp[i])))){
-					click(By.xpath(groupNameBis.replace("${groupName}", temp[i])));
 				}
 			}else{
-				click(By.linkText(temp[i]));
+				if (!temp[i].matches("Administration")){
+					click(By.linkText(temp[i]));
+				}else{
+					click(By.xpath(groupName.replace("${groupName}", temp[i])));
+				}
 			}
 			Utils.pause(500);
 		}

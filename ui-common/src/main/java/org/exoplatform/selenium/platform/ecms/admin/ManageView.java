@@ -126,6 +126,7 @@ public class ManageView extends EcmsBase{
 			click(ELEMENT_ENABLE_VERSION, 2);
 		}
 		button.save();
+		select(By.xpath("//select[contains(@id,'maxPageSize')]"),"20");
 		waitForElementPresent(ELEMENT_EDIT_VIEW.replace("${viewName}", name));
 		Utils.pause(1000);
 	}
@@ -187,8 +188,12 @@ public class ManageView extends EcmsBase{
 			assert false : ("Number of versions is required 2 at least");
 		}
 		for(int i = 0; i < versionNumber ; i++) {
-			editView(viewName);
-			if(getElement(ELEMENT_ENABLE_VERSION).isEnabled()) check(ELEMENT_ENABLE_VERSION);          
+			//editView(viewName);
+			click(ELEMENT_EDIT_VIEW.replace("${viewName}", viewName));
+			waitForElementPresent("//*[contains(@class, 'popupTitle') and text()='Edit Explorer Template']");
+			if(getElement(ELEMENT_ENABLE_VERSION).isEnabled()){ 
+				click(ELEMENT_ENABLE_VERSION, 2);          
+			}
 			button.save();
 			Utils.pause(500);
 		}
@@ -200,11 +205,20 @@ public class ManageView extends EcmsBase{
 	 * @param orderVersion : Version that want to restore
 	 */
 	public void restoreVersion(String viewName, int orderVersion){
-		editView(viewName);
+		//editView(viewName);
+		click(ELEMENT_EDIT_VIEW.replace("${viewName}", viewName));
+		waitForElementPresent("//*[contains(@class, 'popupTitle') and text()='Edit Explorer Template']");
 		String order = "" + orderVersion;
-		select(ELEMENT_VERSION_OPTION, order);
-		click(By.linkText("Restore"));
-		waitForElementPresent(By.xpath("//div[@class='Text' and contains(text(),'" + viewName + "')]/ancestor::tr//div[@class='Text' and text()='" + orderVersion + "']"));
+		if (isElementPresent(ELEMENT_VERSION_OPTION)){
+			select(ELEMENT_VERSION_OPTION, order);
+		}else if (isElementPresent(By.name("version"))){
+			select(By.name("version"), order);
+		} 
+		//click(By.linkText("Restore"));
+		click(button.ELEMENT_RESTORE_BUTTON);
+		//waitForElementPresent(By.xpath("//div[@class='Text' and contains(text(),'" + viewName + "')]/ancestor::tr//div[@class='Text' and text()='" + orderVersion + "']"));
+		alt.waitForMessage("Version 1 was restored successfully");
+		click(button.ELEMENT_OK_BUTTON);
+		Utils.pause(500);
 	}
-
 }

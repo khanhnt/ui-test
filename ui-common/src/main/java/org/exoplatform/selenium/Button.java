@@ -41,6 +41,7 @@ public class Button extends TestBase{
 	public final By ELEMENT_PREVIOUS_BUTTON_ADMIN_4 = By.xpath("//*[@class='UITaxonomyTreeCreateChild']//*[text()='Previous']");
 	public final By ELEMENT_PREVIOUS_BUTTON_ADMIN_3 = By.xpath("//*[@class='UIAction']//*[text()='Previous']");
 
+	public final By ELEMENT_RESTORE_BUTTON = By.xpath("//*[text()='Restore']");
 	//Content explorer 
 	public final By ELEMENT_REFRESH_BUTTON = By.xpath("//*[text()='refresh']");
 	public final By ELEMENT_RENAME_BUTTON = By.xpath("//*[text()='Rename']");

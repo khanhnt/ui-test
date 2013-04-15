@@ -12,11 +12,13 @@ import org.exoplatform.selenium.platform.ecms.EcmsBase;
 import org.exoplatform.selenium.platform.ecms.admin.ECMainFunction;
 import org.exoplatform.selenium.platform.ecms.admin.ManageDriver;
 import org.exoplatform.selenium.platform.ecms.admin.Permission;
+import org.exoplatform.selenium.platform.ecms.contentexplorer.ActionBar;
 import org.exoplatform.selenium.platform.ecms.contentexplorer.SitesExplorer;
 import org.openqa.selenium.By;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
 /*
  * @author: Lientm
  * @date: 16/10/2012
@@ -35,6 +37,7 @@ public class ECMS_Admin_ManageDriver_Display extends PlatformBase{
 	SitesExplorer sitesExp;
 	Permission adminPer;
 	ManageDriver magDrv;
+	ActionBar actBar;
 
 	public final String DATA_USER = "john";
 	public final String DATA_PASS = "gtngtn";
@@ -54,6 +57,7 @@ public class ECMS_Admin_ManageDriver_Display extends PlatformBase{
 		sitesExp = new SitesExplorer(driver);
 		adminPer = new Permission(driver);
 		magDrv = new ManageDriver(driver);
+		actBar = new ActionBar(driver);
 		magAcc.signIn(DATA_USER, DATA_PASS);
 	}
 
@@ -76,17 +80,18 @@ public class ECMS_Admin_ManageDriver_Display extends PlatformBase{
 
 		//add drive
 		ecMain.goToManageDriver();
-		magDrv.addNewDriver(DATA_DRIVE_NAME, "collaboration","sites", "Platform/Administration","*", 
+		magDrv.addNewDrive(DATA_DRIVE_NAME, "collaboration","sites", "Platform/Administration","*", 
 				"Non-document Nodes/Sidebar", "Admin/Icons/List");
 
 		//check displaying of drive in site explorer when user has access permission
 		nav.goToSiteExplorer();
-		click(ecms.ELEMENT_SHOW_DRIVES);
+		//click(ecms.ELEMENT_SHOW_DRIVES);
+		actBar.goToSitesManagement();
 		waitForElementPresent(ELEMENT_DRIVE);
 		info("Drive display true");
 
 		//delete data
-		magDrv.deleteDriver(DATA_DRIVE_NAME);
+		magDrv.deleteDrive(DATA_DRIVE_NAME);
 	}
 
 	/*case02: Check the displaying of drive after being created by user does not have access right with this drive
@@ -100,7 +105,7 @@ public class ECMS_Admin_ManageDriver_Display extends PlatformBase{
 
 		//add drive
 		ecMain.goToManageDriver();
-		magDrv.addNewDriver(DATA_DRIVER_NAME,"collaboration","sites", "Platform/Administration","*",
+		magDrv.addNewDrive(DATA_DRIVER_NAME,"collaboration","sites", "Platform/Administration","*",
 				"Non-document Nodes/Sidebar", "Admin/Icons/List");
 		magAcc.signOut();
 
@@ -108,14 +113,15 @@ public class ECMS_Admin_ManageDriver_Display extends PlatformBase{
 		info("Login as mary who does not have access permission on drive");
 		magAcc.signIn("mary", "gtngtn");
 		nav.goToSiteExplorer();
-		click(ecms.ELEMENT_SHOW_DRIVES);
+		//click(ecms.ELEMENT_SHOW_DRIVES);
+		actBar.goToSitesManagement();
 		waitForElementNotPresent(ELEMENT_DRIVER);
 		info("User does not see driver");
 		magAcc.signOut();
 
 		//delete data
 		magAcc.signIn(DATA_USER, DATA_PASS);
-		magDrv.deleteDriver(DATA_DRIVER_NAME);
+		magDrv.deleteDrive(DATA_DRIVER_NAME);
 	}
 
 	/*case03: Check the displaying of drive after deleting it 
@@ -130,17 +136,18 @@ public class ECMS_Admin_ManageDriver_Display extends PlatformBase{
 
 		//add driver
 		ecMain.goToManageDriver();
-		magDrv.addNewDriver(DATA_DRIVER_NAME,"collaboration","sites", "Platform/Administration","*",
+		magDrv.addNewDrive(DATA_DRIVER_NAME,"collaboration","sites", "Platform/Administration","*",
 				"Non-document Nodes/Sidebar", "Admin/Icons/List");
 
 		//check displaying of driver in site explorer when user has access permission
 		nav.goToSiteExplorer();
-		click(ecms.ELEMENT_SHOW_DRIVES);
+		//click(ecms.ELEMENT_SHOW_DRIVES);
+		actBar.goToSitesManagement();
 		waitForElementPresent(ELEMENT_DRIVER);
 		info("Drive display true");
 
 		//delete data
-		magDrv.deleteDriver(DATA_DRIVER_NAME);
+		magDrv.deleteDrive(DATA_DRIVER_NAME);
 
 		//check displaying of drive in site explorer
 		nav.goToSiteExplorer();

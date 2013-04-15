@@ -16,7 +16,7 @@ import org.openqa.selenium.WebElement;
  *
  */
 public class BasicAction extends Permission{
-	
+
 	//Dialog dialog = new Dialog(driver);
 	//Button button = new Button(driver);
 	//ManageAlert magAlert;
@@ -24,7 +24,7 @@ public class BasicAction extends Permission{
 	Dialog dialog = new Dialog(driver);
 	Button button = new Button(driver);
 	ManageAlert magAlert = new ManageAlert(driver);
-	
+
 	// Wiki page
 	/*===================== Add Page ====================*/	
 
@@ -50,7 +50,7 @@ public class BasicAction extends Permission{
 		else{
 			addWikiPageSourceEditor(title, content);
 		}
-		
+
 		if (ca){
 			//cancel();
 			click(ELEMENT_CANCEL_BUTTON_ADD_PAGE);
@@ -61,13 +61,13 @@ public class BasicAction extends Permission{
 			click(ELEMENT_SAVE_BUTTON_ADD_PAGE);
 			//waitForElementNotPresent(ELEMENT_SAVE_BUTTON_ADD_PAGE);
 		}
-		
+
 		if (!message.isEmpty()){ 
 			waitForMessage(message);
 			click(button.ELEMENT_OK_BUTTON);
 			click(ELEMENT_CANCEL_BUTTON_ADD_PAGE);
 		}
-		
+
 		/*if (verify){
 			waitForTextPresent(content);
 		}*/
@@ -230,6 +230,7 @@ public class BasicAction extends Permission{
 	public void waitForWikiConfirmation(String message, boolean...isCancel){
 		//By btnOK = By.xpath("//input[@type='button' and @value='OK']");
 		//By btnCancel = By.xpath("//input[@type='button' and @value='Cancel']");
+		button = new Button(driver);
 		By messageLocator = By.xpath("//div[@class='confirmMessage' and text()='" + message + "']");
 		waitForElementPresent(messageLocator);
 		if(isCancel.length > 0 && (isCancel[0] == true)) 
@@ -248,6 +249,7 @@ public class BasicAction extends Permission{
 	 * @param pageName: name of related page (String)
 	 */
 	public void addRelatedPage(String wikiPath, String pageName){
+		button = new Button(driver);
 		//goToWikiPage(wikiPath);
 		goToPageInfo(null, wikiPath);
 		click(ELEMENT_ADD_MORE_RELATION_BUTTON);
@@ -380,7 +382,13 @@ public class BasicAction extends Permission{
 		goToPagePermission();
 		assert !waitForAndGetElement(EditPage, 5000, 1, notDisplay).isSelected();
 		assert waitForAndGetElement(ViewPage, 5000, 1, notDisplay).isSelected();
-		button.close();
+		if (isElementPresent(button.ELEMENT_CLOSE_BUTTON)){
+			button.close();
+		}else if (isElementPresent(By.xpath("//*[contains(@class, 'popupTitle') and text()='Page Permissions']/..//*[contains(@class, 'uiIconClose')]"))){
+			click(By.xpath("//*[contains(@class, 'popupTitle') and text()='Page Permissions']/..//*[contains(@class, 'uiIconClose')]"));
+		}else {
+			click(button.ELEMENT_CANCEL_BUTTON);
+		}
 		waitForElementNotPresent(ELEMENT_PAGE_PERMISSION_POPUP);
 
 		info("Add edit page permission for " + user);
@@ -397,7 +405,7 @@ public class BasicAction extends Permission{
 	 */
 	public void editParagraph (String paragraphTitle, String paragraphContent) {
 		String ELEMENT_PARAGRAPH_ID = "H"+paragraphTitle;
-		
+
 		mouseOver(By.id(ELEMENT_PARAGRAPH_ID), true);
 		//click(By.xpath("//*[@title='Edit section: " + paragraphTitle + "']"), 2);
 		WebElement element = driver.findElement(By.xpath("//*[@title='Edit section: " + paragraphTitle + "']"));

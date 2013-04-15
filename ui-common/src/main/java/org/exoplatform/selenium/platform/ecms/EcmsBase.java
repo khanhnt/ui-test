@@ -192,8 +192,8 @@ public class EcmsBase extends ManageAccount {
 	//public By ELEMENT_LINK_TAB_PUBLICATION= By.xpath("//a[contains(text(),'Publication')]");
 	public final By ELEMENT_MANAGE_VIEW = By.xpath("//a[contains(text(),'Manage View')]");
 	public final By ELEMENT_MANAGEMENT_VIEW = By.className("uiIconEcmsViewManager");
-	public final String ELEMENT_EDIT_VIEW = "//*[@title='${viewName}']/../..//*[@class='uiIconEditInfo']"; //*[@id='UIViewList']
-	public final String ELEMENT_DELETE_VIEW = "//*[@title='${viewName}']/../..//*[@class='uiIconDelete']";
+	public final String ELEMENT_EDIT_VIEW = "//*[@data-original-title='${viewName}']/../..//*[@class='uiIconEditInfo']"; //*[@id='UIViewList']
+	public final String ELEMENT_DELETE_VIEW = "//*[@data-original-title='${viewName}']/../..//*[@class='uiIconDelete']";
 	
 	//Edit View Form 
 	public final By ELEMENT_CHECKBOX_VERSION=By.id("manageVersions");
@@ -360,7 +360,7 @@ public class EcmsBase extends ManageAccount {
 		}else if (isElementPresent(By.xpath("//*[@title = '" + anchor + "']"))){
 			click(By.xpath("//*[@title = '" + anchor + "']"));
 		}
-		userGroup.selectGroup(groupPath, true);
+		userGroup.selectGroup(groupPath, false);
 		click(By.linkText(membership));
 		Utils.pause(1000);
 	}

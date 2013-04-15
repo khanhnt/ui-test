@@ -48,7 +48,8 @@ public class Permission extends EcmsPermission{
 		//By locator = By.xpath("//*[contains(text(),'" + str + "')]/ancestor::tr//*[@class='uiIconDelete']");
 		By permission = By.xpath("//*[contains(text(),'" + str + "')]");
 		click(ELEMENT_DELETE_SELECTED_GROUP.replace("${selectedGroup}", str));
-		magAlert.waitForConfirmation("Are you sure to delete this permission?");
+		//magAlert.waitForConfirmation("Are you sure you want to delete this permission?");
+		magAlert.acceptAlert();
 		waitForElementNotPresent(permission);
 		Utils.pause(1000);
 	}

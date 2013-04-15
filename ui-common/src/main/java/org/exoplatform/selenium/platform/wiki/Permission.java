@@ -81,7 +81,7 @@ public class Permission extends WikiBase{
 
 		goToPagePermission();
 
-		info("--Add space permission--");
+		info("--Add page permissions--");
 		if (edit){
 			if(!waitForAndGetElement(EDIT_PAGE, 5000, 0, notDisplay).isSelected()){
 				click(EDIT_PAGE, notDisplay);
@@ -433,7 +433,14 @@ public class Permission extends WikiBase{
 		info("Check user/group permission is not listed in page permission list");
 		goToPagePermission();
 		waitForElementNotPresent(element_permission);
-		button.close();
+		if (isElementPresent(button.ELEMENT_CLOSE_BUTTON)){
+			button.close();
+		}else if (isElementPresent(By.xpath("//*[contains(@class, 'popupTitle') and text()='Page Permissions']/..//*[contains(@class, 'uiIconClose')]"))){
+			click(By.xpath("//*[contains(@class, 'popupTitle') and text()='Page Permissions']/..//*[contains(@class, 'uiIconClose')]"));
+		}else {
+			click(button.ELEMENT_CANCEL_BUTTON);
+		}
+		//button.close();
 		waitForElementNotPresent(ELEMENT_PAGE_PERMISSION_POPUP);
 	}
 }
