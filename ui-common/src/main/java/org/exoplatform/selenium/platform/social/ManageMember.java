@@ -900,16 +900,16 @@ public class ManageMember extends SpaceManagement {
 			magAcc.signIn("root", "gtngtn");
 			break;
 		case ADMIN:
-			magAcc.signIn("john", "gtngtn");
+			magAcc.signIn("john", "gtn");
 			break;	
 		case AUTHOR:
-			magAcc.signIn("james", "gtngtn");
+			magAcc.signIn("james", "gtn");
 			break;
 		case DEVELOPER:
-			magAcc.signIn("jack", "gtngtn");
+			magAcc.signIn("jack", "gtn");
 			break;
 		case PUBLISHER:
-			magAcc.signIn("mary", "gtngtn");
+			magAcc.signIn("mary", "gtn");
 			break;
 		default:
 			break;

@@ -17,7 +17,7 @@ public class Wiki_BasicAction_Edit extends BasicAction {
 	ManageAccount magAcc;
 	
 	public String admin = "john";
-	public String pass = "gtngtn";
+	public String pass = "gtn";
 
 	@BeforeMethod
 	public void beforeMethods(){

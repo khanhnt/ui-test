@@ -20,7 +20,7 @@ public class Wiki_SpacePermission_Delete extends Permission {
 		initSeleniumTest();
 		driver.get(baseUrl);
 		magAc = new ManageAccount(driver);
-		magAc.signIn("john", "gtngtn");
+		magAc.signIn("john", "gtn");
 	}
 
 	//Delete permission for space

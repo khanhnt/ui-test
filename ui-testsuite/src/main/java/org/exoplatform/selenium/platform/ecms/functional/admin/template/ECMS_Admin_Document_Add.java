@@ -44,7 +44,7 @@ public class ECMS_Admin_Document_Add extends PlatformBase {
 	ManageTemplate magTem;
 
 	public final String DATA_USER_ADMIN = "john";
-	public final String DATA_PASS = "gtngtn";
+	public final String DATA_PASS = "gtn";
 
 	@BeforeMethod
 	public void beforeMethod(){

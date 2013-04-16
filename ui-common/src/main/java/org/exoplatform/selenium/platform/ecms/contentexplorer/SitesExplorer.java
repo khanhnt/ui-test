@@ -48,13 +48,15 @@ public class SitesExplorer extends EcmsBase{
 	//File Explorer - relation -clipboard - tag clould - saved search
 	public final By ELEMENT_TAG_CLOUD = By.xpath("//*[@data-original-title = 'Tag Cloud']");
 	public final By ELEMENT_SIDEBAR_FILE_EXPLORER = By.xpath("//*[@data-original-title = 'File Explorer']");
+	//public final By ELEMENT_FILE_EXPLORER_MINI_ICON = By.className("uiIconEcmsExplorerMini");
+
 	public final By ELEMENT_CLIPBOARD_ICON = By.xpath("//*[@data-original-title = 'Clipboard']");
 	public final By ELEMENT_CLEAR_ALL_ICON = By.xpath("//*[contains(text(),'Clear All')]");
 	public final By MESSAGE_CLEAR_ALL = By.xpath("//*[contains(text(),'There are no items in the clipboard.')]");
 	public final String ELEMENT_VERIFY_ACTION = "//*[contains(@data-original-title, '${titleOfFile}')]/../..//*[contains(@class, 'uiIconEcmsPaste')]";
 	public final String ELEMENT_TITLE_LEFT_PANEL = "//div[@id='UITreeExplorer']//div[contains(@onmousedown,'collaboration:/sites/${title}')]";
-	public final By ELEMENT_FILE_EXPLORER_MINI_ICON = By.className("uiIconEcmsExplorerMini");
-	
+
+
 	/*================***==================*/
 
 	//Verify if Driver is present
@@ -85,27 +87,28 @@ public class SitesExplorer extends EcmsBase{
 	}
 
 	//Delete a tag
-	public void deleteTag(String name, boolean isPublic){
-		// Delete tags
-		By ELEMENT_REMOVE_TAG = By.xpath(REMOVE_TAG.replace("${TagsName}", name));
-		if (isPublic){
-			waitForElementPresent(ELEMENT_EDIT_TAGS);
-			click(ELEMENT_EDIT_TAGS);
+	public void deleteTag(String[] tagName){
+		for(int i = 0; i < tagName.length ; i++){
+			info("-- Deleting the tag: " + tagName[i]);
+			By ELEMENT_REMOVE_TAG = By.xpath(REMOVE_TAG.replace("${TagsName}", tagName[i]));
+			if (isElementPresent(ELEMENT_REMOVE_TAG)){
+				click(ELEMENT_REMOVE_TAG);
+			}else if (isElementPresent(By.xpath("//*[text()='Edit Tag']/../..//*[text()='"+ tagName[i] +"']/../..//*[@data-original-title='Remove Tag']"))){
+				click(By.xpath("//*[text()='Edit Tag']/../..//*[text()='"+ tagName[i] +"']/../..//*[@data-original-title='Remove Tag']"));
+			}
+			//magAlert.waitForConfirmation(MESSAGE_WARNING_AFTER_DELETE_TAG);
+			magAlert.acceptAlert();
 		}
-		else {
-			waitForElementPresent(ELEMENT_EDIT_PRIVATE_TAG);
-			click(ELEMENT_EDIT_PRIVATE_TAG);
-		}
-		waitForElementPresent(ELEMENT_REMOVE_TAG);
-		click(ELEMENT_REMOVE_TAG);
-		magAlert.waitForConfirmation(MESSAGE_WARNING_AFTER_DELETE_TAG);
 		click(button.ELEMENT_CLOSE_WINDOW);
-		waitForTextNotPresent(name);
+		waitForTextNotPresent(tagName[0]);
 	}
 
 	//Edit a public tag
 	public void goToEditTag(){
-		navToolBar.goToSiteExplorer();     
+		info("-- Go to Edit Tags Form --");
+		if (isElementNotPresent(ELEMENT_SIDEBAR_FILE_EXPLORER)){
+			navToolBar.goToSiteExplorer();     
+		}
 		waitForElementPresent(ELEMENT_TAG_CLOUD);
 		click(ELEMENT_TAG_CLOUD);
 		if (isElementPresent(ELEMENT_EDIT_TAGS)){
@@ -115,37 +118,34 @@ public class SitesExplorer extends EcmsBase{
 			//click(By.xpath("//*[@data-original-title = 'Edit Tags']"));
 			((JavascriptExecutor)driver).executeScript("arguments[0].click();", By.xpath("//*[@data-original-title = 'Edit Tags']"));
 		}
+		click(By.xpath("//*[@id='UITagExplorer']//*[contains(@class, 'uiIconEdit')]"));
 		waitForElementPresent(ELEMENT_EDIT_TAGS_FORM);
 	}
 
 	//Add tag for a node
-	public void addTagForNode(String tagName) {
-		// Go to collaboration tab
+	public void addTagForNode(String[] tagName) {
 		info("-- Open a Tag Form --");
-		//actBar.goToCollaboration();
-		// Click Tags
-		//waitForElementPresent(ELEMENT_TAG);
-		//click(ELEMENT_TAG);
-
 		if (isElementPresent(By.className("uiIconEcmsTaggingDocument"))){
+			click(By.className("uiIconEcmsTaggingDocument"));
+		}else {
+			click(ELEMENT_MORE_LINK_WITHOUT_BLOCK);
 			click(By.className("uiIconEcmsTaggingDocument"));
 		}
 
-		// Input information
-		type(ELEMENT_TAG_NAME, tagName, true);
-		click(button.ELEMENT_ADD_BUTTON);
-
-		//Verify new tag
-		waitForElementPresent(By.xpath("//*[text()='Linked Tags:']/..//*[contains(text(), '"+ tagName +"')]"));
-
-		// Close
+		for(int i = 0; i < tagName.length ; i++){
+			// Input information
+			type(ELEMENT_TAG_NAME, tagName[i], true);
+			click(button.ELEMENT_ADD_BUTTON);
+			//Verify new tag
+			waitForElementPresent(By.xpath("//*[text()='Linked Tags:']/..//*[contains(text(), '"+ tagName[i] +"')]"));
+		}
+		
+		//Close
 		click(button.ELEMENT_CLOSE_BUTTON);
 
-		//Verify add new tag
+		//Verify added new tag
 		click(ELEMENT_TAG_CLOUD);
-
-		// waitForTextPresent("Private Tags");
-		waitForTextPresent(tagName);
+		waitForTextPresent(tagName[0]);
 	}
 
 	//Simple search

@@ -20,7 +20,7 @@ public class Wiki_Template_Other extends Template{
 		initSeleniumTest();
 		driver.get(baseUrl);
 		magAc = new ManageAccount(driver);
-		magAc.signIn("john", "gtngtn");  
+		magAc.signIn("john", "gtn");  
 		goToWiki();
 	}
 

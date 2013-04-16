@@ -26,7 +26,7 @@ public class Wiki_Version_View extends Version{
 	Button button;
 	
 	public String admin = "john";
-	public String pass = "gtngtn";
+	public String pass = "gtn";
 
 	@BeforeMethod
 	public void beforeMethods(){

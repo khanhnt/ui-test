@@ -24,7 +24,7 @@ public class Wiki_BasicAction_Move extends BasicAction {
 		driver.manage().window().maximize();
 		magAcc = new ManageAccount(driver);
 		button = new Button(driver);
-		magAcc.signIn("john", "gtngtn");
+		magAcc.signIn("john", "gtn");
 	}
 
 	String[] user1= {"james"};
@@ -72,7 +72,7 @@ public class Wiki_BasicAction_Move extends BasicAction {
 		
 		magAcc.signOut();
 
-		magAcc.signIn("james", "gtngtn");
+		magAcc.signIn("james", "gtn");
 
 		goToWiki();
 		
@@ -109,7 +109,7 @@ public class Wiki_BasicAction_Move extends BasicAction {
 
 		magAcc.signOut();
 
-		magAcc.signIn("mary", "gtngtn");
+		magAcc.signIn("mary", "gtn");
 
 		goToWiki();
 
@@ -140,7 +140,7 @@ public class Wiki_BasicAction_Move extends BasicAction {
 
 		magAcc.signOut();
 
-		magAcc.signIn("james", "gtngtn");
+		magAcc.signIn("james", "gtn");
 
 		goToWiki();
 
@@ -153,7 +153,7 @@ public class Wiki_BasicAction_Move extends BasicAction {
 
 		magAcc.signOut();
 
-		magAcc.signIn("john", "gtngtn");
+		magAcc.signIn("john", "gtn");
 
 		goToWiki();
 
@@ -192,7 +192,7 @@ public class Wiki_BasicAction_Move extends BasicAction {
 
 		magAcc.signOut();
 
-		magAcc.signIn("james", "gtngtn");
+		magAcc.signIn("james", "gtn");
 
 		goToWiki();
 
@@ -212,7 +212,7 @@ public class Wiki_BasicAction_Move extends BasicAction {
 
 		magAcc.signOut();
 
-		magAcc.signIn("john", "gtngtn");
+		magAcc.signIn("john", "gtn");
 
 		goToWiki();
 

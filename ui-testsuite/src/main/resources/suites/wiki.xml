@@ -2,9 +2,9 @@
 
 <suite name="Wiki Functional Test" verbose="1" preserve-order="true">
 	<test name="platform-users" enabled="true">
-		<packages>
-			<package name="org.exoplatform.selenium.platform.users.*" />
-		</packages>
+		<classes>
+			<class name="org.exoplatform.selenium.platform.TermAndConditionAgreement" />
+		</classes>
 	</test>
 	<test name="wiki-func-attachment" enabled="true">
 		<groups>

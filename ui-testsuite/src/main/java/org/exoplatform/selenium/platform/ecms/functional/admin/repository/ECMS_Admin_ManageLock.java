@@ -3,6 +3,7 @@ package org.exoplatform.selenium.platform.ecms.functional.admin.repository;
 import static org.exoplatform.selenium.TestLogger.info;
 import org.exoplatform.selenium.Button;
 import org.exoplatform.selenium.Dialog;
+import org.exoplatform.selenium.Utils;
 import org.exoplatform.selenium.platform.ManageAccount;
 import org.exoplatform.selenium.platform.NavigationToolbar;
 import org.exoplatform.selenium.platform.PlatformBase;
@@ -43,7 +44,7 @@ public class ECMS_Admin_ManageLock extends PlatformBase{
 	Permission adminPer;
 
 	public String DATA_USER = "john";
-	public String DATA_PASS = "gtngtn";
+	public String DATA_PASS = "gtn";
 
 	//Data for these test cases 
 	public By ELEMENT_GROUP_MEMBERSHIP = By.linkText("manager");
@@ -96,7 +97,8 @@ public class ECMS_Admin_ManageLock extends PlatformBase{
 		info("-- Step 3: Unlock node by administrator --");
 		//Select “Locked Node” tab
 
-		click(cMenu.ELEMENT_UNLOCK_ARTICLE);
+		//click(cMenu.ELEMENT_UNLOCK_ARTICLE);
+		click(ecMain.ELEMENT_UNLOCK_NODE.replace("${lockedNode}", titleArticle));
 
 		waitForTextNotPresent(titleArticle);
 
@@ -136,7 +138,7 @@ public class ECMS_Admin_ManageLock extends PlatformBase{
 		nav = new NavigationToolbar(driver);
 		cMenu = new ContextMenu(driver);
 		ecms = new EcmsBase(driver);
-		magAcc.signIn("mary", "gtngtn");
+		magAcc.signIn("mary", "gtn");
 
 		info("-- Step 2: Open form to unlock node --");
 
@@ -145,7 +147,8 @@ public class ECMS_Admin_ManageLock extends PlatformBase{
 		info("-- Step 3: Unlock node by administration with admin who does not have permission --");
 		//Select “Locked Node” tab
 
-		click(cMenu.ELEMENT_UNLOCK_ARTICLE);
+		//click(cMenu.ELEMENT_UNLOCK_ARTICLE);
+		click(ecMain.ELEMENT_UNLOCK_NODE.replace("${lockedNode}", titleArticle));
 
 		waitForMessage(dialog.MESSAGE_UNLOCK_WITHOUT_PERMISSION);
 
@@ -262,9 +265,11 @@ public class ECMS_Admin_ManageLock extends PlatformBase{
 
 		//goToAdminManageLockAndVerify(titleArticle);
 		nav.goToContentAdministration();
-		waitForTextPresent("/sites/intranet/documents/test04");
-		waitForTextNotPresent("/sites/intranet/test04");
-
+		//waitForTextPresent("/sites/intranet/documents/test04");
+		//waitForTextNotPresent("/sites/intranet/test04");
+		waitForTextPresent("test04");
+		Utils.captureScreen("Check_List_Locked_Node_After_Coyping");
+		
 		info("-- Restore original data --");
 
 		nav.goToSiteExplorer();
@@ -411,11 +416,12 @@ public class ECMS_Admin_ManageLock extends PlatformBase{
 		info("-- Login with user in the selected group and un lock that node --");
 
 		ecms = new EcmsBase(driver);
-		magAcc.signIn("mary", "gtngtn");
+		magAcc.signIn("mary", "gtn");
 
 		goToAdminManageLockAndVerify(titleArticle);
 
-		click(cMenu.ELEMENT_UNLOCK_ARTICLE);
+		//click(cMenu.ELEMENT_UNLOCK_ARTICLE);
+		click(ecMain.ELEMENT_UNLOCK_NODE.replace("${lockedNode}", titleArticle));
 
 		waitForTextNotPresent(titleArticle);
 
@@ -546,12 +552,13 @@ public class ECMS_Admin_ManageLock extends PlatformBase{
 		info("-- Login with user in the selected group and un-lock that node --");
 
 		ecms = new EcmsBase(driver);
-		magAcc.signIn("mary", "gtngtn");
+		magAcc.signIn("mary", "gtn");
 
 		nav.goToSiteExplorer();
 		
-		actBar.chooseDrive(actBar.ELEMENT_SITES_MANAGEMENT_DRIVE);
-
+		//actBar.chooseDrive(actBar.ELEMENT_SITES_MANAGEMENT_DRIVE);
+		actBar.goToSitesManagement();
+		
 		ecms.goToNode("intranet/documents");
 
 		rightClickOnElement(elementArticleToLock);
@@ -601,7 +608,8 @@ public class ECMS_Admin_ManageLock extends PlatformBase{
 		nav.goToSiteExplorer();
 
 		actBar = new ActionBar(driver);
-		actBar.chooseDrive(actBar.ELEMENT_SITES_MANAGEMENT_DRIVE);
+		//actBar.chooseDrive(actBar.ELEMENT_SITES_MANAGEMENT_DRIVE);
+		actBar.goToSitesManagement();
 
 		ecms.goToNode("intranet/documents");
 

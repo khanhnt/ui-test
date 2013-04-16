@@ -34,7 +34,7 @@ public class ECMS_Admin_ManageNodeType_Search extends PlatformBase {
 	ManageNodeType magNode;
 
 	String DATA_USER = "john";
-	String DATA_PASS = "gtngtn";
+	String DATA_PASS = "gtn";
 	
 	@BeforeMethod
 	public void beforeMethods() {

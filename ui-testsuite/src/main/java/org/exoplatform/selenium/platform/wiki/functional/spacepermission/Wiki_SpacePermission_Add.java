@@ -29,7 +29,7 @@ public class Wiki_SpacePermission_Add extends BasicAction {
 	Button button;
 	
 	String DATA_USER_ADMIN = "john";
-	String DATA_PASS = "gtngtn";
+	String DATA_PASS = "gtn";
 
 	@BeforeMethod
 	public void setUpBeforeTest(){

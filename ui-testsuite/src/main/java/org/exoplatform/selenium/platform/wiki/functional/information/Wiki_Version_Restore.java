@@ -16,7 +16,7 @@ public class Wiki_Version_Restore extends Version{
 	ManageAccount magAcc;
 	
 	public String admin = "john";
-	public String pass = "gtngtn";
+	public String pass = "gtn";
 
 	@BeforeMethod
 	public void beforeMethods(){

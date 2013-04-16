@@ -21,7 +21,7 @@ public class Wiki_Advanced_Search extends BasicAction {
 		initSeleniumTest();
 		driver.get(baseUrl);
 		magAc = new ManageAccount(driver);
-		magAc.signIn("john", "gtngtn");
+		magAc.signIn("john", "gtn");
 	}
 	
 	//Search when the keyword is matched
@@ -87,7 +87,7 @@ public class Wiki_Advanced_Search extends BasicAction {
 
 		magAc.signOut();
 
-		magAc.signIn("james", "gtngtn");
+		magAc.signIn("james", "gtn");
 
 		goToWiki();
 
@@ -98,7 +98,7 @@ public class Wiki_Advanced_Search extends BasicAction {
 
 		magAc.signOut();
 
-		magAc.signIn("john", "gtngtn");
+		magAc.signIn("john", "gtn");
 
 		goToWiki();
 

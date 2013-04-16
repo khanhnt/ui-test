@@ -41,6 +41,9 @@ public class ECMainFunction extends EcmsBase{
 	//		public final By ELEMENT_NODETYPE_TEXT = By.id("NodeTypeText");
 	//		public final By ELEMENT_NODETYPE_SEARCH = By.xpath("//a[@title = 'Search']");
 
+	//Repository > Locks
+	public final String ELEMENT_UNLOCK_NODE = "//*[text()='${lockedNode}']/../..//*[@class='uiIconUnlockMini']";
+	
 	public final By ELEMENT_MANAGE_CATEGORIES_LINK = By.className("uiIconEcmsTaxonomyManagerTrees");
 
 	/*=============================================================*/

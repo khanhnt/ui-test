@@ -134,12 +134,17 @@ public class ECMS_Admin_ManageTags_Management extends PlatformBase {
 		contentTemp.createNewFile("Add tag for document", "Add tag for document", "Add tag for document");
 		
 		info("-- Adding a tag for File.. --");
-		sitesExp.addTagForNode("TagName07");
+		String[] tagName = {"TagName07_1", "TagName07_2", "TagName07_3"};
+		sitesExp.addTagForNode(tagName);
 		
 		Utils.captureScreen("Add_Tag_For_Document_ContentExplorer");
 		
 		info("-- Reset data... --");
-		click(sitesExp.ELEMENT_FILE_EXPLORER_MINI_ICON);
+		click(sitesExp.ELEMENT_SIDEBAR_FILE_EXPLORER);
 		contextMenu.deleteDocument(By.linkText("Add tag for document"));
+		
+		sitesExp.goToEditTag();
+		
+		sitesExp.deleteTag(tagName);
 	}
 }

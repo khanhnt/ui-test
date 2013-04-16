@@ -20,7 +20,7 @@ public class Wiki_PagePermission_Add extends BasicAction {
 	Button button;
 	
 	public String DATA_USER_ADMIN = "john";
-	public String DATA_PASS_ADMIN = "gtngtn";
+	public String DATA_PASS_ADMIN = "gtn";
 
 	@BeforeMethod
 	public void beforeTest(){

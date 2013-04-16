@@ -20,7 +20,7 @@ public class Wiki_SpacePermission_Edit extends Permission {
 		initSeleniumTest();
 		driver.get(baseUrl);
 		magAc = new ManageAccount(driver);
-		magAc.signIn("john", "gtngtn");
+		magAc.signIn("john", "gtn");
 	}
 
 	//Edit permission for space

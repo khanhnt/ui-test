@@ -22,7 +22,7 @@ public class Wiki_SpacePermission_Others extends BasicAction {
 		initSeleniumTest();
 		driver.get(baseUrl);
 		magAc = new ManageAccount(driver);
-		magAc.signIn("john", "gtngtn");
+		magAc.signIn("john", "gtn");
 	}
 	
 	/* case01: Check when user/group does not admin page permission
