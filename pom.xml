@@ -48,8 +48,8 @@
 			<artifactId>log4j</artifactId>
 			<version>1.2.17</version>
 		</dependency>
-		<!-- <dependency> <groupId>org.exoplatform.platform</groupId> <artifactId>exo.platform.packaging.tomcat</artifactId> 
-			<version>${org.exoplatform.platform.version}</version> <type>zip</type> </dependency> -->
+		<dependency> <groupId>org.exoplatform.platform.distributions</groupId> <artifactId>plf-community-tomcat-standalone</artifactId> 
+			<version>${org.exoplatform.platform.version}</version> <type>zip</type> </dependency>
 		
 	</dependencies>
 	<modules>

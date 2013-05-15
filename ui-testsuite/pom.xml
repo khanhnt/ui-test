@@ -14,6 +14,8 @@
 	<properties>
 		<cargo.skip>false</cargo.skip>
 		<maven.test.skip>false</maven.test.skip>
+		<server.dir>/home/hainh/platform-server/</server.dir>
+		<unpack.server.skip>false</unpack.server.skip>
 		<!-- <selenium.port>4444</selenium.port> -->
 		<!-- <servlet.port>18880</servlet.port> -->
 		<!-- <selenium.background>true</selenium.background> -->
@@ -66,6 +68,35 @@
 
 	<build>
 		<plugins>
+			<!-- Unpack the app server -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>2.7</version>
+				<executions>
+					<execution>
+						<id>a-unpack</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>unpack</goal>
+						</goals>
+						<configuration>
+							<skip>${unpack.server.skip}</skip>
+							<artifactItems>
+								<artifactItem>
+									<groupId>org.exoplatform.platform.distributions</groupId>
+									<artifactId>plf-community-tomcat-standalone</artifactId>
+									<version>${org.exoplatform.platform.version}</version>
+									<type>zip</type>
+									<overWrite>false</overWrite>
+									<outputDirectory>${server.dir}</outputDirectory>
+								</artifactItem>
+							</artifactItems>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
 			<!-- Execute integration tests -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
