@@ -132,13 +132,12 @@ public class Wiki extends KsBase {
 	/*------------------------Browser/Space setting/ Permission space------------------------*/
 	public static final By ELEMENT_PERMISSION_LINK=By.linkText("Permission");
 	public static final String MSG_PERMISSION_SAVE = "The permission setting has been saved successfully.";
-	public static final String ELEMENT_EDIT_PAGE_CHECK = "//tr/td/div[contains(@title,'{$user}')]/../../td/input[@title='Edit Pages']";
-	public static final String ELEMENT_VIEW_PAGE_CHECK = "//tr/td/div[contains(@title,'{$user}')]/../../td/input[@title='View Pages']";
-	public static final String ELEMENT_ADMIN_PAGE_CHECK = "//tr/td/div[contains(@title,'{$user}')]/../../td/input[@title='Admin Pages']";
-	public static final String ELEMENT_ADMIN_SPACE_CHECK = "//tr/td/div[contains(@title,'{$user}')]/../../td/input[@title='Admin Space']";
-	public static final String ELEMENT_VIEW_SPACE_CHECK = "//tr/td/div[@title='{$user}']/../../td/input[@title='View Pages']";
-	public static final String ELEMENT_DELETE_PERMISSION = "//tr/td/div[contains(@title,'{$user}')]/../../td/div/img[@alt='Delete permission']";
-
+	public static final String ELEMENT_EDIT_PAGE_CHECK = "//input[@id='EDITPAGE{$user}']";
+	public static final String ELEMENT_VIEW_PAGE_CHECK = "//input[@id='VIEWPAGE{$user}']";
+	public static final String ELEMENT_ADMIN_PAGE_CHECK = "//input[@id='ADMINPAGE{$user}']";
+	public static final String ELEMENT_ADMIN_SPACE_CHECK = "//input[@id='ADMINSPACE{$user}']";
+	public static final String ELEMENT_DELETE_PERMISSION = "//tr/td/div[contains(@title,'{$user}')]/../../td/div/img[@alt='Delete permission']";	
+	
 	/*-------------------------Page information area---------------------------*/
 	public static final By ELEMENT_COMPARE_TEXT = By.xpath("//div[contains(text(),'Compared With')]");
 	public static final By ELEMENT_REVISION_LINK = By.xpath("//a[contains(text(),'Revisions')]");
@@ -739,24 +738,24 @@ public class Wiki extends KsBase {
 		mouseOverAndClick(ELEMENT_PAGE_PERMISSION_LINK);
 		waitForTextPresent("Page Permissions");
 		if (viewPage){
-			if (waitForAndGetElement(VIEW_PAGE_LOCATOR, 5000, 0).isSelected() == false){
+			if (waitForAndGetElement(VIEW_PAGE_LOCATOR, 10000).isSelected() == false){
 				click(VIEW_PAGE_LOCATOR);
 			}else{
 				info("Element " + VIEW_PAGE_LOCATOR + " is already checked.");
 			}		
 		}else{
-			if (waitForAndGetElement(VIEW_PAGE_LOCATOR, 5000, 0).isSelected() == true){
+			if (waitForAndGetElement(VIEW_PAGE_LOCATOR, 10000).isSelected() == true){
 				click(VIEW_PAGE_LOCATOR);
 			}
 		}		
 		if (editPage){
-			if (waitForAndGetElement(EDIT_PAGE_LOCATOR, 5000, 0).isSelected() == false){
+			if (waitForAndGetElement(EDIT_PAGE_LOCATOR, 10000).isSelected() == false){
 				click(EDIT_PAGE_LOCATOR);
 			}else{
 				info("Element " + EDIT_PAGE_LOCATOR + " is already checked.");
 			}
 		}else{
-			if (waitForAndGetElement(EDIT_PAGE_LOCATOR, 5000, 0).isSelected() == true){
+			if (waitForAndGetElement(EDIT_PAGE_LOCATOR, 10000).isSelected() == true){
 				click(EDIT_PAGE_LOCATOR);
 			}
 		} 	
@@ -1090,11 +1089,10 @@ public class Wiki extends KsBase {
 	 * @param adminSpace: true , then this user/group have admin space permission and vice versa
 	 */
 	public static void editSpacePermission(String userGroup,boolean view,boolean edit, boolean adminPage, boolean adminSpace){
-		//By bEditPage = By.xpath(ELEMENT_EDIT_PAGE_CHECK.replace("{$user}", userGroup));
-		By bEditPage = By.xpath(ELEMENT_EDIT_PAGE_PERMISSIONS.replace("${user}", userGroup));
+		By bEditPage = By.xpath(ELEMENT_EDIT_PAGE_CHECK.replace("{$user}", userGroup));
+		//By bEditPage = By.xpath(ELEMENT_EDIT_PAGE_PERMISSIONS.replace("${user}", userGroup));
 		By bAdminPage = By.xpath(ELEMENT_ADMIN_PAGE_CHECK.replace("{$user}", userGroup));		
 		By bAdminSpace = By.xpath(ELEMENT_ADMIN_SPACE_CHECK.replace("{$user}", userGroup));
-		//By bViewSpace = By.xpath(ELEMENT_VIEW_SPACE_CHECK.replace("{$user}", userGroup));
 		By bViewSpace = By.xpath(ELEMENT_VIEW_PAGE_PERMISSIONS.replace("${user}", userGroup));
 		
 		goToSpacePermission();
@@ -1169,7 +1167,7 @@ public class Wiki extends KsBase {
 	 */
 	public static void deletePermission(String user){
 
-		By Delete = By.xpath(ELEMENT_DELETE_PERMISSION.replace("{$user}", user));
+		By Delete = By.xpath(ELEMENT_DELETE_PERMISSIONS.replace("${user}", user));
 
 		goToPagePermission();
 

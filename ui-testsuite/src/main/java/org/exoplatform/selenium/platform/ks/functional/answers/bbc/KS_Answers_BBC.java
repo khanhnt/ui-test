@@ -5,11 +5,9 @@ import static org.exoplatform.selenium.platform.ManageAccount.*;
 import static org.exoplatform.selenium.platform.ManageApplications.showImportApplication;
 import static org.exoplatform.selenium.platform.PageManagement.*;
 import java.awt.event.KeyEvent;
-import java.util.Set;
 
 import org.exoplatform.selenium.platform.ks.Answer;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Cookie;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -335,19 +333,16 @@ public class KS_Answers_BBC extends Answer{
 		waitForTextPresent("Link effect");
 
 		captureScreen("FNC_KS_ANS_BBC_Case11_01");
-
+		String previousWindowHandle = driver.getWindowHandle();
+		
 		click(By.linkText("Link effect"));
 
-		// Save the current window handle
-		Set<Cookie> cookies = getBrowserCookies();
-		String previousWindowHandle = driver.getWindowHandle(); 
-
 		switchToNewWindow();
-
+		waitForElementPresent(By.xpath("//*[@title='Google']"));
 		captureScreen("FNC_KS_ANS_BBC_Case11_02");
 
-		backToPreviousBrowser(cookies, previousWindowHandle); 
-		//switchToParentWindow();
+		//backToPreviousBrowser(cookies, previousWindowHandle); 
+		driver.switchTo().window(previousWindowHandle);
 
 		info("-- Reset a data --");
 
@@ -415,7 +410,7 @@ public class KS_Answers_BBC extends Answer{
 	/**
 	 * Delete data after testing
 	 */
-	@Test
+	//@Test -> lientm: do not need delete answer page, run order may be not follow case order
 	public void test20_DeleteData(){
 		info("-- Deleting a data --");
 		showImportApplication(false);
