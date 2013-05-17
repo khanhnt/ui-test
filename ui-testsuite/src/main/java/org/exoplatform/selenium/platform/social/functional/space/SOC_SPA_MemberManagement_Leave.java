@@ -71,7 +71,7 @@ public class SOC_SPA_MemberManagement_Leave extends ManageMember{
 
 		signIn(DATA_USER1, DATA_PASS);
 
-		restoreData(SPACE_NAME1, 120000);
+		restoreData(SPACE_NAME1, 180000);
 	}
 	
 	//Root leave the space
@@ -121,7 +121,7 @@ public class SOC_SPA_MemberManagement_Leave extends ManageMember{
 
 		closeMessageDialog();
 
-		restoreData(SPACE_NAME3,120000);
+		restoreData(SPACE_NAME3,180000);
 	}
 	
 	//Make a user to become the manager of the space
@@ -169,7 +169,7 @@ public class SOC_SPA_MemberManagement_Leave extends ManageMember{
 
 		info("Delete space");
 
-		restoreData(SPACE_NAME4,120000);
+		restoreData(SPACE_NAME4,180000);
 	}
 	
 	//Remove A Manager
@@ -363,7 +363,7 @@ public class SOC_SPA_MemberManagement_Leave extends ManageMember{
 
 		signIn(DATA_USER1, DATA_PASS);
 
-		restoreData(SPACE_NAME9,120000);
+		restoreData(SPACE_NAME9,180000);
 	}
 	
 	@AfterMethod

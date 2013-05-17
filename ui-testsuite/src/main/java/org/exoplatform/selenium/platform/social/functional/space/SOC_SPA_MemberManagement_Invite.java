@@ -109,7 +109,7 @@ public class SOC_SPA_MemberManagement_Invite extends PeopleConnection{
 
 		waitForElementNotPresent(ELEMENT_INVITED_TABLE + "//td[contains(text(),'James')]");
 
-		restoreData(spaceName, timeToDeleteSpace);
+		restoreData(spaceName, 180000);
 	} 
 
 	/**
@@ -156,7 +156,7 @@ public class SOC_SPA_MemberManagement_Invite extends PeopleConnection{
 
 		backToPreviousBrowser(cookies1, handlesBefore);
 
-		restoreData(spaceName, timeToDeleteSpace);
+		restoreData(spaceName, 180000);
 	}
 
 	/**
@@ -618,6 +618,6 @@ public class SOC_SPA_MemberManagement_Invite extends PeopleConnection{
 	public void resetDataMemberManagementInvite(String spaceName){
 		signOut();
 		signIn(admin, pass);
-		restoreData(spaceName, timeToDeleteSpace);
+		restoreData(spaceName, 180000);
 	}
 }

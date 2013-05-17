@@ -18,7 +18,7 @@ public class SpaceNavigation extends SocialBase{
 
 	public static final By ADD_NODE_BUTTON = By.xpath("//a[text()='Add Node']");
 	public static final By NODE_NAME = By.xpath("//input[@id='name']");
-	public static final By NODE_LABEL = By.xpath("//input[@id='label']");
+	public static final By NODE_LABEL = By.xpath("//input[@id='i18nizedLabel']");
 	public static final By PAGE_SELECTOR = By.xpath("//div[text()='Page Selector']");
 	public static final By PAGE_NAME = By.id("pageName");
 	public static final By CREATE_PAGE_BUTTON = By.linkText("Create Page");
