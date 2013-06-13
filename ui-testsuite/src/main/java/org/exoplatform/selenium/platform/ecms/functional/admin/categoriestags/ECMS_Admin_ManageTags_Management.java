@@ -63,7 +63,7 @@ public class ECMS_Admin_ManageTags_Management extends EcmsBase {
 		//Go to tag permission    
 		gotoTagPermission();
 		//Add tag permission
-		UserGroupManagement.selectGroupAndMembership("platform/web-contributors", "*"); 
+		UserGroupManagement.selectGroupAndMembership("Platform/Content Management", "*"); 
 		save();
 		//Open Edit Tag form
 		logoutEcms();

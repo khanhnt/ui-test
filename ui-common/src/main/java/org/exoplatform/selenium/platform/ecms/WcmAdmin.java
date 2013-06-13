@@ -247,10 +247,10 @@ public class WcmAdmin extends EcmsBase {
 		temp = homePath.split(delimiter);
 		for(int i =0; i < temp.length - 1 ; i++){
 			info("Go to "+temp[i]);
-			click(By.linkText(temp[i]));
+			mouseOverAndClick(By.linkText(temp[i]));
 			pause(100);
 		}
-		click(By.xpath("//div[contains(text(),'" + temp[temp.length - 1] + "')]/../../td/a[@title='select']"));
+		mouseOverAndClick(By.xpath("//div[contains(text(),'" + temp[temp.length - 1] + "')]/../../td/a[@title='select']"));
 	}
 
 	/*-- Update common functions for Manage ECM Main Functions
@@ -309,8 +309,8 @@ public class WcmAdmin extends EcmsBase {
 		else if (selectUserOrGroup){
 			waitForElementPresent(By.xpath("//div[@title='"+ user_Per +"']"));
 		}
-		else if (selectMembership){
-			waitForElementPresent(By.xpath("//div[@title='"+ membership +":/"+ groupID +"']"));
+		else if (selectMembership && (groupID.contains("Administration") == false)){
+			waitForElementPresent(By.xpath("//div[@title='"+ membership +":/"+ groupID.toLowerCase() +"']"));
 		}
 		info("Add user permission for category is successfull");
 	}
@@ -355,8 +355,10 @@ public class WcmAdmin extends EcmsBase {
 		}
 		pause(500);	
 		click(ELEMENT_SELECT_PATH_ICON);
-		
 		selectHomePath(nodeTargetPath);
+//		String script = waitForAndGetElement(By.xpath("//div[contains(text(),'" + nodeTargetPath + "')]/../../td/a[@title='select']")).getAttribute("href");
+//		JavascriptExecutor js = (JavascriptExecutor) driver;
+//		js.executeScript(script);
 		
 		click(ELEMENT_SAVE_BUTTON);
 		pause(500);

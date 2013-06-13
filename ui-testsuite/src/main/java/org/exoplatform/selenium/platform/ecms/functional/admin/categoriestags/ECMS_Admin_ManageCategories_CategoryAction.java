@@ -25,7 +25,7 @@ public class ECMS_Admin_ManageCategories_CategoryAction extends ActionBar{
 	String categoryWorkspace = "collaboration";
 	String nodeHomePath = "sites content/live/acme";
 	String username = "john";
-	String groupID = "platform/administrators"; 
+	String groupID = "Platform/Administration"; 
 	String actionName = "test";
 	String optionLifeCycle = "User Action/Content Addition"; 
 	String nodeTargetPath = "jcr:system/exo:ecm";	
