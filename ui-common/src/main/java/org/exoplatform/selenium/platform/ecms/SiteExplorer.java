@@ -61,6 +61,7 @@ public class SiteExplorer extends EcmsBase {
 	public static By ELEMENT_SIDEBAR_FILE_EXPLORER = By.xpath("//div[@title='File Explorer']");
 	public static By ELEMENT_SAVED_SEARCH_ICON = By.xpath("//div[@title='Saved Searches']");
 	public static By ELEMENT_CLIPBOARD_ICON = By.xpath("//div[@title='Clipboard']");
+	public static String ELEMENT_NODE = "//div[@class='NodeLabel']/a[@title='${node} ']";
 	
 	//choose a drive
 	public static void chooseDrive(By locator)

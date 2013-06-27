@@ -334,7 +334,7 @@ public class ECMS_WCM_Viewer_SingleContent_PublishIcon extends ActionBar{
 	public void restoreOriginalData(String pageSCVName, String titleOfArticle){
 		goToSiteExplorer();
 		goToNodeByPath("acme/documents");
-		deleteDocument(By.linkText(titleOfArticle));
+		deleteDocument(By.xpath(ELEMENT_NODE.replace("${node}", titleOfArticle)));
 		//delete page at Manage page and Portal Navigation
 		deletePageAtManagePageAndPortalNavigation(pageSCVName, true,"acme", false, "");
 	}
