@@ -45,7 +45,7 @@ public class ActionBar extends EcmsBase {
 	public static By ELEMENT_ADD_ROOT_BUTTON = By.xpath("//label[text()='Root Tree']/following::img[@title='Add Root Node']");
 
 	//Permission Management Form
-	public static By ELEMENT_PERMISSION_MANAGEMENT_POPUP = By.id("UIPopupWindow");
+	public static By ELEMENT_PERMISSION_MANAGEMENT_POPUP = By.xpath("//*[@id='UIPopupWindow']//span[text()='Permission Management']");
 	public static String ELEMENT_PERMISSION_MANAGEMENT_TEXT = "Permission Management";
 	public static By ELEMENT_PERMISSION_MANAGEMENT_GRID = By.xpath("//table[@class='UIGrid']");
 	public static By READ_CHECKBOX = By.id("read");
@@ -95,10 +95,9 @@ public class ActionBar extends EcmsBase {
 			if (repeat >= ACTION_REPEAT) {
 				Assert.fail("Cannot perform the action after " + ACTION_REPEAT + "tries");
 			}
-			mouseOver(ELEMENT_COLLABORATION_TAB, true);
-			click(ELEMENT_COLLABORATION_TAB);
+			mouseOverAndClick(ELEMENT_COLLABORATION_TAB);
 
-			if (waitForElementPresent(ELEMENT_TAG, 30000, 0) != null) return;
+			if (waitForElementPresent(ELEMENT_TAG, 10000, 0) != null) return;
 			pause(WAIT_INTERVAL);
 			info("retry...[" + repeat + "]");
 		}

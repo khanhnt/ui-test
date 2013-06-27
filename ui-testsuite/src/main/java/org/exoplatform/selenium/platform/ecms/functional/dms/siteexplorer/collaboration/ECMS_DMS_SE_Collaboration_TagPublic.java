@@ -79,10 +79,11 @@ public class ECMS_DMS_SE_Collaboration_TagPublic  extends EcmsBase {
 
 		info("Go to Site management/ acme");
 		goToNode(ELEMENT_SIDEBAR_ACME);
+		waitForElementPresent(ELEMENT_SIDEBAR_ACME_DOCUMENTS);
 		uploadFile(DATA_UPLOAD_FILE_NAME, DATA_UPLOAD_FILE_LINK);
 		waitForElementPresent(ELEMENT_UPLOAD_FILE);
 		goToNode(ELEMENT_UPLOAD_FILE);
-		pause(2000);
+		waitForElementPresent("//*[@class='TopTitle' and @title='" + DATA_UPLOAD_FILE_NAME + ".doc']");
 
 		//info("Add tags for public");
 		addTagForNode("collaboration_02_015", true);	

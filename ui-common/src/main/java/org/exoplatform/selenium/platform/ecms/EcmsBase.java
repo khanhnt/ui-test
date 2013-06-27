@@ -297,14 +297,16 @@ public class EcmsBase extends PlatformBase {
 		waitForElementPresent(ELEMENT_ALERT);
 		assert isElementPresent(ELEMENT_ALERT):"Not found alert";
 		assert getText(ELEMENT_MESSAGE).contains(message):"Message is wrong";
-		click(By.linkText("OK"));
+		click(ELEMENT_OK_BUTTON);
+		waitForElementNotPresent(ELEMENT_ALERT);
 	}
 
 	public static void checkAlertInfo(String message){
 		waitForElementPresent(ELEMENT_ALERT);
 		assert isElementPresent(ELEMENT_ALERT):"Not found alert";
 		assert getText(ELEMENT_INFO).contains(message):"Message is wrong";
-		click(By.linkText("OK"));
+		click(ELEMENT_OK_BUTTON);
+		waitForElementNotPresent(ELEMENT_ALERT);
 	}
 
 	//Rename a node

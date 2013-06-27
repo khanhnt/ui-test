@@ -136,7 +136,7 @@ public class ECMS_DMS_SE_Info_Permission extends EcmsBase{
 	public void test04_EditNodePermission(){
 		String DATA_CONTENT_FOLDER = "ECMS_DMS_SE_Info_Permission_contentfolder_04";
 		By ELEMENT_CONTENT_FOLDER = By.linkText(DATA_CONTENT_FOLDER);
-		By ELEMENT_EDIT_WEB_CONTRIBUTOR = By.xpath("//div[@title='*:/platform/web-contributors']/../../td/div/img[@class='EditIcon']");
+		By ELEMENT_EDIT_WEB_CONTRIBUTOR = By.xpath("//div[@title='*:/platform/web-contributors']/../..//img[@class='EditIcon']");
 
 		//create new content folder
 		goToSiteExplorer();
@@ -144,21 +144,23 @@ public class ECMS_DMS_SE_Info_Permission extends EcmsBase{
 
 		//go to edit permission
 		goToNode(ELEMENT_CONTENT_FOLDER);
+		pause(3000);
 		goToPermissionManagement();
 		info("Edit permission of group *:/platform/web-contributors");
 		click(ELEMENT_EDIT_WEB_CONTRIBUTOR);
-		setNodePermission(true, false, true, true);
+		setNodePermission(true, false, false, true);
 		click(ELEMENT_SAVE_BUTTON);
+		pause(2000);
 		click(ELEMENT_CLOSE_BUTTON);
+		waitForElementNotPresent(ELEMENT_PERMISSION_MANAGEMENT_POPUP);
 		logoutEcms();
 
 		//login as mary
-		driver.get(baseUrl);
 		info("Login as user mary in *:/platform/web-contributors group");
 		loginEcms("mary", "gtn");
 		goToSiteExplorer();
 		goToNode(ELEMENT_CONTENT_FOLDER);
-		click(By.linkText("New Folder"));
+		click(ELEMENT_NEW_FOLDER_LINK);
 		checkAlertWarning("You do not have permission to add a new node.");
 		info("Check cannot add node for this node");
 		logoutEcms();
@@ -258,20 +260,21 @@ public class ECMS_DMS_SE_Info_Permission extends EcmsBase{
 	public void test16_AddPermissionForGroupToNodeWithMemberShip(){
 		String DATA_CONTENT_FOLDER = "ECMS_DMS_SE_Info_Permission_contentfolder_16";
 		By ELEMENT_CONTENT_FOLDER = By.linkText(DATA_CONTENT_FOLDER);
+		String GROUP_PATH = "Organization/Management/Executive Board";
 
 		//add user mary is member to group Organization/Management/Executive Board
 		goToUsersAndGroupsManagement();
 		click(ELEMENT_GROUP_MANAGEMENT_TAB);
 		info("Add user mary is member to group");
 		//clickUpLevel();
-		selectGroup("Organization/Management/Executive Board");
+		selectGroup(GROUP_PATH);
 		addUsersToGroup("mary", "member", false, true);
 
 		//add user mary is member to group Organization/Management/Executive Board
 		info("Add user james is editor to group");
 		//clickUpLevel();
 		click(By.xpath("//div[@class='BreadcumbsInfoBar ClearFix']/a[1]"));
-		selectGroup("Organization/Management/Executive Board");
+		selectGroup(GROUP_PATH);
 		addUsersToGroup("james", "editor", false, true);
 
 		//create new content folder
@@ -286,7 +289,7 @@ public class ECMS_DMS_SE_Info_Permission extends EcmsBase{
 
 		//add permission for group to content folder: Organization/Management/Executive Board with membership = member, permission = read
 		info("Set permission for group executive board to node");
-		selectGroupAndMembership("organization/management/executive-board", "member");
+		selectGroupAndMembership(GROUP_PATH, "member");
 		pause(1000);
 		setNodePermission(true, false, false, false);
 		click(ELEMENT_SAVE_BUTTON);
@@ -320,10 +323,10 @@ public class ECMS_DMS_SE_Info_Permission extends EcmsBase{
 		goToUsersAndGroupsManagement();
 		click(ELEMENT_GROUP_MANAGEMENT_TAB);
 		//clickUpLevel();
-		deleteUserInGroup("organization/management/executive-board", "Organization/Management/Executive Board", "mary");
+		deleteUserInGroup("organization/management/executive-board", GROUP_PATH, "mary");
 		//clickUpLevel();
 		click(By.xpath("//div[@class='BreadcumbsInfoBar ClearFix']/a[1]"));
-		deleteUserInGroup("organization/management/executive-board", "Organization/Management/Executive Board", "james");
+		deleteUserInGroup("organization/management/executive-board", GROUP_PATH, "james");
 	}
 
 	/*case17: Add permission for group to node, membership = *
@@ -340,20 +343,21 @@ public class ECMS_DMS_SE_Info_Permission extends EcmsBase{
 	public void test17_AddPermissionForGroupToNodeWithMemberShipFull(){
 		String DATA_CONTENT_FOLDER = "ECMS_DMS_SE_Info_Permission_contentfolder_17";
 		By ELEMENT_CONTENT_FOLDER = By.linkText(DATA_CONTENT_FOLDER);
+		String GROUP_PATH = "Organization/Management/Executive Board";
 
 		//add user mary is member to group Organization/Management/Executive Board
 		goToUsersAndGroupsManagement();
 		click(ELEMENT_GROUP_MANAGEMENT_TAB);
 		info("Add user mary is member to group");
 		//clickUpLevel();
-		selectGroup("Organization/Management/Executive Board");
+		selectGroup(GROUP_PATH);
 		addUsersToGroup("mary", "member", false, true);
 
 		//add user mary is member to group Organization/Management/Executive Board
 		info("Add user james is editor to group");
 		//clickUpLevel();
 		click(By.xpath("//div[@class='BreadcumbsInfoBar ClearFix']/a[1]"));
-		selectGroup("Organization/Management/Executive Board");
+		selectGroup(GROUP_PATH);
 		addUsersToGroup("james", "editor", false, true);
 
 		//create new content folder
@@ -368,7 +372,7 @@ public class ECMS_DMS_SE_Info_Permission extends EcmsBase{
 
 		//add permission for group to content folder: Organization/Management/Executive Board with membership = *, permission = read
 		info("Set permission for group executive board to node");
-		selectGroupAndMembership("organization/management/executive-board", "*");
+		selectGroupAndMembership(GROUP_PATH, "*");
 		pause(1000);
 		setNodePermission(true, false, false, false);
 		click(ELEMENT_SAVE_BUTTON);
@@ -403,10 +407,10 @@ public class ECMS_DMS_SE_Info_Permission extends EcmsBase{
 		goToUsersAndGroupsManagement();
 		click(ELEMENT_GROUP_MANAGEMENT_TAB);
 		//clickUpLevel();
-		deleteUserInGroup("organization/management/executive-board", "Organization/Management/Executive Board", "mary");
+		deleteUserInGroup("organization/management/executive-board", GROUP_PATH, "mary");
 		//clickUpLevel();
 		click(By.xpath("//div[@class='BreadcumbsInfoBar ClearFix']/a[1]"));
-		deleteUserInGroup("organization/management/executive-board", "Organization/Management/Executive Board", "james");
+		deleteUserInGroup("organization/management/executive-board", GROUP_PATH, "james");
 	}
 
 	/*case18: Add permission for any user to node
@@ -551,7 +555,7 @@ public class ECMS_DMS_SE_Info_Permission extends EcmsBase{
 
 		//set permission for user mary does not have set properties permission for node
 		selectUser("mary");
-		setNodePermission(true, true, false, true);
+		setNodePermission(true, false, false, true);
 		click(ELEMENT_SAVE_BUTTON);
 		click(ELEMENT_CLOSE_BUTTON);
 		logoutEcms();
@@ -824,7 +828,7 @@ public class ECMS_DMS_SE_Info_Permission extends EcmsBase{
 
 		//check can edit permission for child node
 		click(ELEMENT_EDIT);
-		setNodePermission(true, false, true, true);
+		setNodePermission(true, false, false, true);
 		click(ELEMENT_SAVE_BUTTON);
 		waitForElementPresent(By.xpath("//div[@title='*:/platform/administrators']/../../td[3]/div[@title='false']"));
 		info("Edit permission for node has parent node being check in status succesfully");

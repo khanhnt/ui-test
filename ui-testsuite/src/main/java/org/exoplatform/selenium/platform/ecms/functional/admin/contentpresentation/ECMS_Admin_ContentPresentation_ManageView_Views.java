@@ -56,7 +56,7 @@ public class ECMS_Admin_ContentPresentation_ManageView_Views extends EcmsBase{
 	 * add new view
 	 * delete not used view
 	 */
-	@Test
+	@Test (groups = {"pending"})
 	public void test01_AddNewView(){
 		info("Add New View");
 		//Open Add New View Form
