@@ -1,6 +1,6 @@
 package org.exoplatform.selenium.platform.ecms.functional.wcm.categories;
 
-import static org.exoplatform.selenium.TestLogger.info;
+import static org.exoplatform.selenium.TestLogger.*;
 import static org.exoplatform.selenium.platform.NavigationToolbar.*;
 import static org.exoplatform.selenium.platform.PageEditor.*;
 import static org.exoplatform.selenium.platform.ecms.SiteExplorer.*;
@@ -9,6 +9,7 @@ import static org.exoplatform.selenium.platform.ecms.ContentTemplate.*;
 import static org.exoplatform.selenium.platform.ecms.WcmAdmin.*;
 
 import org.exoplatform.selenium.platform.ecms.EcmsBase;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.annotations.AfterMethod;
@@ -104,6 +105,7 @@ public class ECMS_WCM_Categories_PCLV extends EcmsBase {
 		}else{
 			info("Content By URL portlet has already exited");
 		}	
+		assert checkError();
 		mouseOver(ELEMENT_URL_PORTLET, true);
 		click(ELEMENT_EDIT_URL_PORTLET);
 		info("Select show in page = news");
@@ -169,7 +171,7 @@ public class ECMS_WCM_Categories_PCLV extends EcmsBase {
 
 		goToSiteExplorer();
 		
-//				chooseDrive(ELEMENT_ACME_DRIVE);
+				chooseDrive(ELEMENT_ACME_DRIVE);
 				while (getElement(ELEMENT_ARTICLE_DEFENSE) == null){
 					click(ELEMENT_DEFENCE);
 				}
@@ -187,10 +189,10 @@ public class ECMS_WCM_Categories_PCLV extends EcmsBase {
 
 		//---create new document in acme drive: create article document in Movement---
 		goToSiteExplorer();
-		createNewArticleInAcme(DATA_ARTICLE);
+//		createNewArticleInAcme(DATA_ARTICLE);
 
 		info("Set for user mary does not have view permission this document");
-//		click(ELEMENT_ARTICLE);
+		click(ELEMENT_ARTICLE);
 		waitForElementPresent(ELEMENT_COLLABORATION_TAB);
 		click(ELEMENT_COLLABORATION_TAB);
 		if (waitForAndGetElement(ELEMENT_PERMISSION_LINK,5000,0) == null){

@@ -370,7 +370,7 @@ public class ECMS_DMS_SE_Podcast extends EcmsBase {
 		pause(1000);
 		deleteDocument(By.xpath("//a[@title='"+UPLOAD_NAME + ".png ']"));
 	}
-	public boolean checkError()
+	public static boolean checkError()
 	{
 		try {
 			driver.findElement(By.xpath(ELEMENT_ERROR_ICON));

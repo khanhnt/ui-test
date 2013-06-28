@@ -111,12 +111,13 @@ public class ContextMenu extends EcmsBase {
 				click(ELEMENT_MENU_DELETE);
 				waitForTextPresent("Confirm Deletion");
 				click(By.linkText("OK"));
+				waitForElementNotPresent(By.linkText("OK"));
 				break;
 			}
 			info("Retry...[" + repeat + "]");
 
 		}
-		waitForElementNotPresent(By.linkText("OK"));
+		
 		//click(ELEMENT_MENU_REFRESH);
 		waitForElementNotPresent(locator, iTimeout);
 		info(locator.toString() + "is deleted successfully");		

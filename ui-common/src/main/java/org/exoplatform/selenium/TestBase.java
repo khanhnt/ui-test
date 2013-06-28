@@ -793,4 +793,15 @@ public class TestBase {
 		}
 		return dt;
 	}
+	
+	public static boolean checkError(){
+		try{
+		
+		}catch(org.openqa.selenium.UnhandledAlertException e){
+			String message = getTextFromAlert();
+			error("There is an error: " + message);
+			return false;
+		}
+		return true;
+	}
 }

@@ -34,7 +34,8 @@ public class ManageAccount extends PlatformBase {
 
 	//Sign-out for eXoGTN
 	public static void signOut(){
-		mouseOver(ELEMENT_ACCOUNT_NAME_LINK, true);
+		while (waitForAndGetElement(ELEMENT_SIGN_OUT_LINK,5000,0) == null)
+			mouseOver(ELEMENT_ACCOUNT_NAME_LINK, true);
 		click(ELEMENT_SIGN_OUT_LINK);
 		pause(500);
 		if ( ExpectedConditions.alertIsPresent() != null ){
