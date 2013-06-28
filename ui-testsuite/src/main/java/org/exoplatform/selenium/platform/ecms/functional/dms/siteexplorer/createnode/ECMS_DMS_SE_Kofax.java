@@ -10,16 +10,17 @@ import org.testng.annotations.Test;
 import static org.exoplatform.selenium.platform.ecms.ContentTemplate.*;
 import static org.exoplatform.selenium.platform.ecms.ContextMenu.*;
 import static org.exoplatform.selenium.platform.ecms.ActionBar.*;
+import static org.exoplatform.selenium.platform.ecms.SiteExplorer.*;
 
 public class ECMS_DMS_SE_Kofax extends EcmsBase {
 
-	public static By KOFAX_LINHTEXT = By.xpath("//a[@title='Kofax document']");
+	public static By KOFAX_LINK = By.xpath("//a[@title='Kofax document']");
 
 	public static String KOFAX_NAME = "Kofax_Document_Name";
 
 	public static By KOFAX_PATH = By.xpath("//a[@title='"+ KOFAX_NAME +" "+"']");	
 
-	public static By NEW_CONTENT_LINHTEXT = By.xpath("//a[@title='New Content']");
+	public static By NEW_CONTENT_LINK = By.xpath("//a[@title='New Content']");
 
 	public static final String UPLOADED_FILE_PATH ="TestData/Winter.jpg";
 
@@ -107,7 +108,7 @@ public class ECMS_DMS_SE_Kofax extends EcmsBase {
 		goToAddNewContent();
 
 		info("Verify Kofax is not in the list");
-		waitForElementNotPresent(KOFAX_LINHTEXT);
+		waitForElementNotPresent(KOFAX_LINK);
 
 		info("Go to document folder");
 		goToNode(DOCUMENT_FOLDER_PATH);
@@ -152,9 +153,10 @@ public class ECMS_DMS_SE_Kofax extends EcmsBase {
 
 		info("Click Article");
 		goToNode(ARTICLE_PATH);
+		checkPreferenceOption("enableStructure");
+		waitForElementPresent(KOFAX_PATH);
 
 		info("Delete Article and Kofax");
-		deleteDocument(KOFAX_PATH);
 		deleteDocument(ARTICLE_PATH);
 	}
 
@@ -183,7 +185,7 @@ public class ECMS_DMS_SE_Kofax extends EcmsBase {
 		createNewFile(FILE_NAME_TITLE, FILE_NAME_CONTENT, FILE_NAME_TITLE);
 
 		info("Verify no New Content on action bar");
-		waitForElementNotPresent(NEW_CONTENT_LINHTEXT);
+		waitForElementNotPresent(NEW_CONTENT_LINK);
 
 		info("Delete File");
 		deleteDocument(FILE_PATH);
@@ -213,7 +215,7 @@ public class ECMS_DMS_SE_Kofax extends EcmsBase {
 		createNewPodcast(PODCAST_TITLE_NAME, PODCAST_TITLE_NAME, PODCAST_LINK);
 
 		info("Verify no New Content on action bar");
-		waitForElementNotPresent(NEW_CONTENT_LINHTEXT);
+		waitForElementNotPresent(NEW_CONTENT_LINK);
 
 		info("Delete Podcast");
 		deleteDocument(PODCAST_PATH);
@@ -251,8 +253,10 @@ public class ECMS_DMS_SE_Kofax extends EcmsBase {
 
 		info("Verify Kofax is created");
 		waitForTextPresent(KOFAX_NAME);
+		
+		checkPreferenceOption("enableStructure");
+		waitForElementPresent(KOFAX_PATH);
 
-		deleteDocument(KOFAX_PATH);
 		deleteDocument(SAMPLE_NODE_PATH);
 
 	}
@@ -319,7 +323,7 @@ public class ECMS_DMS_SE_Kofax extends EcmsBase {
 		goToAddNewContent();
 
 		info("Verify no Kofax in template list");
-		waitForElementNotPresent(KOFAX_LINHTEXT);
+		waitForElementNotPresent(KOFAX_LINK);
 
 		info("Select kofax again");
 		goToNode(KOFAX_PATH);
@@ -351,7 +355,7 @@ public class ECMS_DMS_SE_Kofax extends EcmsBase {
 		goToNode(UPLOADED_FILE_XPATH);
 
 		info("Verify no New Content on action bar");
-		waitForElementNotPresent(NEW_CONTENT_LINHTEXT);
+		waitForElementNotPresent(NEW_CONTENT_LINK);
 
 		info("Delete File");
 		deleteDocument(UPLOADED_FILE_XPATH);

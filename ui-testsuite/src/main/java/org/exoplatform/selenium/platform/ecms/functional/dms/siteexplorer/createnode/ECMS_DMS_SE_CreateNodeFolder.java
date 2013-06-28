@@ -316,7 +316,7 @@ public class ECMS_DMS_SE_CreateNodeFolder extends EcmsBase {
 	/*
 	 * case 9:Add folder with special characters in 'Title' field like !,@,#
 	 */
-	@Test
+	@Test (groups = "pending")
 	public void test09_AddFolderWithSpecialCharsTitle() {
 		String DATA_CONTENT_FOLDER_NAME = "ECMS_DMS_SE_CreateNodeFolder_contentfolder_09";
 		By ELEMENT_CONTENT_FOLDER = By.linkText(DATA_SPECIAL_CHARACTER_STRING);

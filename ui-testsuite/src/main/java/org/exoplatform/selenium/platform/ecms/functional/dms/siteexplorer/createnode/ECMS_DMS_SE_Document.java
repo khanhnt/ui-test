@@ -541,7 +541,7 @@ public class ECMS_DMS_SE_Document extends EcmsBase {
 		By SELECT_JAMES=By.xpath("//div[@title='james']/following::div/img[@class='SelectPageIcon']");
 
 		By SELECT_READ_RIGHT=By.id("read");
-		By SELECT_SET_PROPERTY_RIGHT=By.id("set_property");
+		//By SELECT_SET_PROPERTY_RIGHT=By.id("set_property");
 		By SELECT_REMOVE_RIGHT=By.id("remove");
 
 		String MSS_NO_RIGHT_TO_ADD_NODE="You do not have permission to add a new node.";
@@ -582,7 +582,7 @@ public class ECMS_DMS_SE_Document extends EcmsBase {
 
 		info("Choose all rights accept Add Node");
 		check(SELECT_READ_RIGHT);
-		check(SELECT_SET_PROPERTY_RIGHT);
+		//check(SELECT_SET_PROPERTY_RIGHT);
 		check(SELECT_REMOVE_RIGHT);
 
 		info("Save then close");
@@ -662,6 +662,6 @@ public class ECMS_DMS_SE_Document extends EcmsBase {
 		//delete date with user John
 		loginEcms("john", "gtn");
 		goToSiteExplorer();
-		deleteData(ELEMENT_ARTICLE);
+		deleteData(By.xpath("//a[@title='" + DATA_ARTICLE_TITLE + " (Locked by john)']"));
 	} 
 }

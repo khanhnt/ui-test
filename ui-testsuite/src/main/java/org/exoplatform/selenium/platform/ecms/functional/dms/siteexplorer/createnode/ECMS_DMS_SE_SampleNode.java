@@ -411,11 +411,7 @@ public class ECMS_DMS_SE_SampleNode extends EcmsBase{
 		createNewSampleNode(SAMPLE_NODE_TITLE, SAMPLE_NODE_TITLE,UPLOADED_FILE_PATH);
 
 		info("Verify content of Sample Node");
-		pause(1000);
-		assert isTextPresent(SAMPLE_NODE_TITLE):"This is not content of sample node";
-
-		info("Go to content folder");
-		goToNode(By.xpath(CONTENT_FOLDER_LOCK));
+		waitForTextPresent(SAMPLE_NODE_TITLE);
 
 		info("Delete Content Folder including sample node");
 		pause(500);
