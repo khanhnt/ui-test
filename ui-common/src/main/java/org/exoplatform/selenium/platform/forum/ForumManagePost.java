@@ -23,7 +23,7 @@ public class ForumManagePost extends ForumBase {
 	public ForumManagePost(WebDriver dr){
 		driver = dr;
 		per = new ForumPermission(driver);
-		button = new Button(driver);
+		but = new Button(driver);
 		alert = new ManageAlert(driver);
 		magTopic = new ForumManageTopic(driver);
 	}
@@ -115,10 +115,10 @@ public class ForumManagePost extends ForumBase {
 	 * @param file: file attach
 	 */
 	public void privatePost(String topic, String title, String message, String groupName, String iconClass, String... file){
-		By private_button = By.xpath(ELEMENT_PRIVATE_POST_BUTTON.replace("${topic}", topic));
+		By private_but = By.xpath(ELEMENT_PRIVATE_POST_BUTTON.replace("${topic}", topic));
 		
 		info("Make a private post");
-		click(private_button);
+		click(private_but);
 		waitForAndGetElement(ELEMENT_POST_PRIVATE_POPUP);
 		putDataPost(title, message, groupName, iconClass, file);
 	}
@@ -186,7 +186,7 @@ public class ForumManagePost extends ForumBase {
 			for (int i = 0; i < view.length; i ++){
 				waitForAndGetElement(view[i]); 
 			}
-			button.close(); 
+			but.close(); 
 			waitForElementNotPresent(ELEMENT_POST_PREVIEW_POPUP);
 		}
 		click(ELEMENT_POST_QUICK_BUTTON);

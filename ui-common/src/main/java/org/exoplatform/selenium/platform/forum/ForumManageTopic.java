@@ -31,7 +31,7 @@ public class ForumManageTopic extends ForumBase {
 		per = new ForumPermission(driver);
 		magCat = new ForumManageCategory(driver);
 		magFor = new ForumManageForum(driver);
-		button = new Button(driver);
+		but = new Button(driver);
 		alert = new ManageAlert(driver);
 	}
 
@@ -150,7 +150,7 @@ public class ForumManageTopic extends ForumBase {
 			click(ELEMENT_MORE_ACTION);
 			click(ELEMENT_START_TOPIC_BUTTON);
 		}else {
-			info("Go to start topic by click start topic button");
+			info("Go to start topic by click start topic but");
 			click(ELEMENT_START_TOPIC_BUTTON);
 		}
 		waitForAndGetElement(ELEMENT_POPUP_START_TOPIC);
@@ -548,7 +548,7 @@ public class ForumManageTopic extends ForumBase {
 		waitForAndGetElement(ELEMENT_TOPIC_ADD_TYPE_POPUP);
 		type(ELEMENT_TOPIC_TYPE_NAME, typeName, true);
 		chooseIcon(groupName, iconClass);
-		button.save();
+		but.save();
 	}
 
 	/** function: create a topic types 

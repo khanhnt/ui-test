@@ -5,13 +5,11 @@
 		<groups>
 			<run>
 				<exclude name="pending" />
-				<exclude name="error" />
-				<exclude name="email" />
+				<!--<include name="error" />-->
 			</run>
 		</groups>
-		<packages>
-			<package name="org.exoplatform.selenium.platform.forum.sniff" />
-		</packages>
+		<packages> <package name="org.exoplatform.selenium.platform.forum.sniff" /> </packages>
+ 		
 	</test>
 	<listeners>
 		<listener class-name="org.exoplatform.selenium.TestReportListener" />

@@ -102,7 +102,6 @@ public class Forum_Forum_MoreAction extends ForumBase{
 		
 		//Check if normal user cannot see the forum
 		goToCategory("demo", cate);
-		waitForAndGetElement(mngFru.ELEMENT_NO_FORUM);
 		waitForElementNotPresent(By.linkText(forum));
 		
 		//Login as admin to open the forum

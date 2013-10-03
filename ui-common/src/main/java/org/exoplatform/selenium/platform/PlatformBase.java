@@ -33,7 +33,7 @@ public class PlatformBase extends TestBase {
 
 	
 	public ManageAlert alert = new ManageAlert(driver);
-	public Button button = new Button(driver);
+	public Button but = new Button(driver);
 
 	/*
 	 * Default Page - http://localhost:8080/portal/default/
@@ -484,8 +484,8 @@ public class PlatformBase extends TestBase {
 	public final String EMAIL_ADDRESS1 = "exomailtest01@gmail.com";
 	public final String EMAIL_ADDRESS2 = "exoservice@gmail.com";
 	public final String EMAIL_PASS = "exoadmin";
-	public final By ELEMENT_DELETE_MAIL = By.xpath("//*[@id=':ro']/div[2]//*[@class='ar9 T-I-J3 J-J5-Ji']");
-    public final By ELEMENT_DELETE_MAIL_2 = By.xpath("//*[@id=':5']//*[@class='iH']//*[@class='ar9 T-I-J3 J-J5-Ji']");
+	public final By ELEMENT_DELETE_MAIL = By.xpath("//*[@class='ar9 T-I-J3 J-J5-Ji']");
+    public final By ELEMENT_DELETE_MAIL_2 = By.xpath("//*[@id=':5']/div[@gh='tm']/div/div//div[@class='ar9 T-I-J3 J-J5-Ji']");
 	public final By ELEMENT_GMAIL_INBOX = By.xpath("//a[contains(@title, 'Inbox')]");
 	public final By ELEMENT_MAIL_CONTENT = By.xpath("//*[contains(@class, 'adP adO')]/div");
 	public final By ELEMENT_GMAIL_USERNAME = By.id("Email");
@@ -493,6 +493,8 @@ public class PlatformBase extends TestBase {
 	public final By ELEMENT_GMAIL_SIGN_IN = By.id("signIn");
 	public final String ELEMENT_GMAIL_TITLE = "//span/b[contains(text(),'{$title}')]";
 	public final By ELEMENT_GMAIL_COMPOSE = By.xpath("//div[contains(text(),'COMPOSE')]");
+	public final By ELEMENT_FIRST_MAIL = By.xpath("//div[@class='iA g6' and contains(text(),'Hi')]/../../../../../table[@class='cf iB']");
+	public final String ELEMENT_GMAIL_CONTENT = "//*[@class='adn ads']//*[contains(text(),'${content}')]";
 	
 	//get url
 	public final String ELEMENT_GET_URL_IMAGE = "//img[@alt='${name}']";
@@ -684,7 +686,7 @@ public class PlatformBase extends TestBase {
 				click(ELEMENT_PAGINATOR_NEXT_ICON);
 				waitForAndGetElement(ELEMENT_PAGINATOR_SELECTED_PAGE.replace("${number}", String.valueOf((++i))));
 			}else {
-				click(button.ELEMENT_NEXT_PAGE_BUTTON);
+				click(but.ELEMENT_NEXT_PAGE_BUTTON);
 			}
 			Utils.pause(500);
 		}
@@ -824,8 +826,8 @@ public class PlatformBase extends TestBase {
 				uncheck(ELEMENT_CHECK_BOX_USE_CAPTCHA);
 			}
 		}
-		button.save();
-		button.close();
+		but.save();
+		but.close();
 		if (useFrench){
 			click(ELEMENT_PAGE_FINISH_BUTTON_INFRENCH);
 			waitForTextNotPresent("Editeur de page");
@@ -1038,17 +1040,23 @@ public class PlatformBase extends TestBase {
 	 * @param content: mail content
 	 */
 	public void checkAndDeleteMail(By mail, String content){
-		waitForAndGetElement(mail,150000);
+		waitForAndGetElement(mail,300000);
+		
 		click(mail);	
-		waitForTextPresent(content);
+		if(waitForAndGetElement(ELEMENT_GMAIL_CONTENT.replace("${content}",content),20000,0) == null )
+			click(ELEMENT_FIRST_MAIL);
+		waitForAndGetElement(ELEMENT_GMAIL_CONTENT.replace("${content}",content));
 		info("Found notify mail");
 
 		info("delete mail");
 		if (waitForAndGetElement(ELEMENT_DELETE_MAIL_2, 5000, 0) == null){
 			click(ELEMENT_DELETE_MAIL);
+			info("Delete 1");
 		}else {
 			click(ELEMENT_DELETE_MAIL_2);
+			info("Delete 2");
 		}
+		waitForElementNotPresent(mail);
 		Utils.pause(1000);
 	}
 }

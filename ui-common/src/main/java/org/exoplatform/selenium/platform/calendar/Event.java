@@ -28,7 +28,7 @@ public class Event extends CalendarBase{
 
 	public Event(WebDriver dr){
 		driver = dr;
-		button = new Button(driver);
+		but = new Button(driver);
 		alert = new ManageAlert(driver);
 	}
 
@@ -106,7 +106,7 @@ public class Event extends CalendarBase{
 		info("--Add an event--");
 		goToAddEvent();
 		inputQuickAddEventForm(name,desc,from,to,allDay,opt);
-		button.save();
+		but.save();
 	}
 
 

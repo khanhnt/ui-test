@@ -51,7 +51,7 @@ public class Task extends CalendarBase{
 
 	public Task(WebDriver dr){
 		driver = dr;
-		button = new Button(driver);
+		but = new Button(driver);
 	}
 
 	/** Input into tab Detail of Add task form

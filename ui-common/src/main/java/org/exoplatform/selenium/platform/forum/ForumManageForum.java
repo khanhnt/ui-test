@@ -23,7 +23,7 @@ public class ForumManageForum extends ForumBase {
 		driver = dr;
 		per = new ForumPermission(driver);
 		cat = new ForumManageCategory(driver);
-		button = new Button(driver);
+		but = new Button(driver);
 		alert = new ManageAlert(driver);
 	}
 
@@ -187,7 +187,7 @@ public class ForumManageForum extends ForumBase {
 		info("Create new forum");
 		inputDataForum(catName, addForum, autofill, postEmail, topicEmail, moderateTopic, type, userGroup, permission);
 
-		button.save();
+		but.save();
 		boolean verify = permission.length > 4 ? permission[4]:true;
 		if (verify){
 			waitForAndGetElement(FORUM);
@@ -197,14 +197,14 @@ public class ForumManageForum extends ForumBase {
 
 	public void quickAddForum(String forumName){
 		String[] addForum = {forumName, null, null, null, null};
-		button = new Button(driver);
+		but = new Button(driver);
 		By FORUM = By.xpath(ELEMENT_FORUM.replace("${forumName}", addForum[0]));
 
 		goToAddForum();
 
 		info("Create new forum");
 		inputDataInAddForumTab_addForum(null, addForum);
-		button.save();
+		but.save();
 		waitForAndGetElement(FORUM);
 		info("Create forum successfully");
 	}
@@ -219,7 +219,8 @@ public class ForumManageForum extends ForumBase {
 		info("Delete forum");
 		click(ELEMENT_DELETE_FORUM);
 		click(ELEMENT_OK_DELETE);
-		waitForTextNotPresent(title);
+//		waitForTextNotPresent(title);
+		waitForElementNotPresent(By.linkText(title));
 		info("Delete forum successfully");
 	}
 
@@ -253,7 +254,7 @@ public class ForumManageForum extends ForumBase {
 		info("Edit forum");
 		inputDataForum(null, addForum, autofill, postEmail, topicEmail, moderateTopic, type, userGroup, permission);
 
-		button.save();	
+		but.save();	
 		boolean verify = permission.length > 4 ? permission[4]:true;
 		if (verify){
 			waitForAndGetElement(FORUM);
@@ -285,7 +286,7 @@ public class ForumManageForum extends ForumBase {
 	 */
 	public void exportAForum(String fileName, boolean compress){
 		cat = new ForumManageCategory(driver);
-		button = new Button(driver);
+		but = new Button(driver);
 
 		click(ELEMENT_MORE_ACTION);
 		click(ELEMENT_EXPORT_FORUM);
@@ -297,7 +298,7 @@ public class ForumManageForum extends ForumBase {
 		} else {
 			uncheck(ELEMENT_EXPORT_FORUM_COMPRESS, 2);
 		}
-		button.save();
+		but.save();
 		waitForElementNotPresent(ELEMENT_EXPORT_FORUM_POPUP);
 	}
 
@@ -370,7 +371,7 @@ public class ForumManageForum extends ForumBase {
 
 			goToBanIPForum();
 			inputBanIP(ip);
-			button.cancel();
+			but.cancel();
 		}
 	}
 }

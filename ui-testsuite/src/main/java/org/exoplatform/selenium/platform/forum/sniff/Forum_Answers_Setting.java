@@ -59,7 +59,7 @@ public class Forum_Answers_Setting extends AnswerBase {
 		//category2 in answer
 		String categoryName2 = "Answersetting2";
 		String description2 = "Add new category2 for answer";
-		String[] userGroup2 = {"Platform/Content Management", "", "/platform/web-contributors"};
+		String[] userGroup2 = {"Platform/Content Management"};
 		
 		//question in category1
 		String questionName = "Questionsetting1";

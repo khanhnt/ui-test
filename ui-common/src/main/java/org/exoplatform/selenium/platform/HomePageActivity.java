@@ -42,7 +42,7 @@ public class HomePageActivity extends PlatformBase{
 	
 	//Comment box
 	public final String ELEMENT_COMMENT_LINK = "//div[@class='text' or @class = 'description'or @class='linkSource' or contains(@id, 'ContextBox')]/*[contains(text(), '${activityText}')]//ancestor::div[contains(@id,'ActivityContextBox')]//*[starts-with(@id, 'CommentLink')]";
-	public final String ELEMENT_ACTIVITY_COMMENT_CONTENT = "//*[contains(text(),'${title}')]/../../../..//*[@class='contentComment']/../*[contains(text(), 'Comment of content')]";
+	public final String ELEMENT_ACTIVITY_COMMENT_CONTENT = "//*[contains(text(),'${title}')]/../../../..//*[@class='contentComment']/../*[contains(text(), '${comment}')]";
 	public final String ELEMENT_ACTIVITY_COMMENT_CONTENT_1 = "//*[text()='${title}']/ancestor::div[@class='boxContainer']//*[@class='contentComment']";
 	
 	//Comment box for ECMS data type
@@ -116,7 +116,7 @@ public class HomePageActivity extends PlatformBase{
 	//Forum activity
 	public final String ELEMENT_FORUM_ACT_CONTENT = "//a[text()='${title}']/../../..//div[@class='contentForum theContent']//p";
 	public final String ELEMENT_FORUM_NUMBER_REPLY = "//a[text()='${title}']/../../..//div[@class='contentForum theContent']/span[text()='${number} Replies']";
-	public final String ELEMENT_FORUM_ONE_REPLY = "//a[text()='${title}']/../../..//div[@class='contentForum theContent']/span[text()='${number} Reply']";
+	public final String ELEMENT_FORUM_ONE_REPLY = "//a[text()='${title}']/../../..//div[@class='contentForum theContent']/span[text()='${number} reply']";
 	public final String ELEMENT_TOPIC_RATE = "//a[@class='textBold linkTitle' and text()='${title}']/../..//div[@class='avgRatingImages sumaryRate']/i[@class='voted'][${rate}]";
 	public final String ELEMENT_TOPIC_HAFT_RATE = "//a[@class='textBold linkTitle' and text()='${title}']/../..//div[@data-original-title='Average']/i[@class='votedHaft']";
 	public final String ELEMENT_TOPIC_REPLY = "//a[contains(text(),'${title}')]/../../../..//i[@class='uiIconReply uiIconLightGray']";
@@ -218,6 +218,15 @@ public class HomePageActivity extends PlatformBase{
 	 */
 	public void checkTitleAfterEditing(String name, String titleEdit){
 		waitForAndGetElement(ELEMENT_CONTENT_COMMENT_EDIT_TITLE.replace("@{fileName}", name).replace("${title}", titleEdit));
+	}
+	
+	/**Function check add comment in activity after editing title of a question
+	 * @author Thuntn
+	 * @param name
+	 * @param titleEdit
+	 */
+	public void checkTitleAfterEditQuestion(String newName){
+		waitForAndGetElement(ELEMENT_CONTENT_COMMENT_EDIT_TITLE.replace("@{fileName}", newName).replace("${title}", newName));
 	}
 
 	/** function check add comment in activity after adding tags for a content/file
@@ -724,7 +733,7 @@ public class HomePageActivity extends PlatformBase{
 		Actions actions = new Actions(driver);
 		WebElement element = waitForAndGetElement(ELEMENT_TOPIC_COMMENT.replace("${title}",topic).replace("${comment}", reply));
 
-		Locatable hoverItem = (Locatable) driver.findElement(By.xpath("//div[@class='footerWLC backOutdated']"));
+		Locatable hoverItem = (Locatable) waitForAndGetElement(By.xpath("//div[@class='activityBottom']"));
 		int y = hoverItem.getCoordinates().onPage().getY();
 		((JavascriptExecutor)driver).executeScript("window.scrollBy(0,"+y+");");
 		actions.moveToElement(element).click().perform();

@@ -33,7 +33,7 @@ public class Forum_FAQ extends FAQ {
 		magCat = new AnswerManageCategory(driver);
 		magQuest = new AnswerManageQuestion(driver);
 		magAns = new AnswerManageAnwser(driver);
-		button = new Button(driver);
+		but = new Button(driver);
 		pageE = new PageEditor(driver);
 		magAc.signIn("john", "gtn");
 		goToAnswer();
@@ -105,7 +105,7 @@ public class Forum_FAQ extends FAQ {
 		goToEditFaqPortlet();
 		settingDisplayCategoryScope(categoryName2, false);
 		settingFAQTemplate(data);
-		button.close();
+		but.close();
 		pageE.finishEditLayout();
 		
 		waitForAndGetElement(By.xpath("//h2[text()='Edit Template']"));

@@ -85,7 +85,7 @@ public class Forum_Forum_Bookmark extends ForumBase{
 	 * CaseID 71115
 	 */
 	@Test
-	public void test03_BookmarkForum() {
+	public void test03_BookmarkTopic() {
 		String category = "Category_71115";
 		String forum = "Forum_71115";
 		String topic = "Topic_71115";

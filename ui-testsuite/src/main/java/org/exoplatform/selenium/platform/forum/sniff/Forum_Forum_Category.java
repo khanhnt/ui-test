@@ -110,7 +110,7 @@ public class Forum_Forum_Category extends ForumBase {
 		click(By.linkText(catName));
 		
 		magCat.exportForumsOfCategory(fileName);
-		Utils.pause(3000);
+		Utils.pause(5000);
 		assert checkFileExisted(fileName + ".zip");
 		
 		info("Delete forums");
@@ -133,13 +133,13 @@ public class Forum_Forum_Category extends ForumBase {
 	/**CaseId: 68913 -> Watch/Unwatch category
 	 * 
 	 */
-	@Test (groups = "email")
+	@Test (groups = {"email"})
 	public void test04_WatchUnwatchCategory(){
-		String catName = "CategoryForum_04";
+		String catName = "Category 68913";
 		String description = "Add new category in forum";
-		String forumName = "Forum04";
-		String topic = "Topic04";
-		String message = "New topic 04";
+		String forumName = "Forum 68913";
+		String topic = "Topic 68913";
+		String message = "New topic 68913";
 		By mail = By.xpath("//*[text()='[" + catName + "][" + forumName + "] " + topic + "']");
 		
 		magCat.addNewCategoryInForum(catName, "1", 0, null, description, 0, null);
@@ -154,7 +154,7 @@ public class Forum_Forum_Category extends ForumBase {
 		checkAndDeleteMail(mail, REGISTER_MAIL_CONTENT);
 		
 		driver.switchTo().window(handlesBefore);
-		click(By.linkText(catName));
+		click(magForum.ELEMENT_CATEGORY_BREAD.replace("${category}", catName));
 		Utils.pause(1000);
 		watchItem(false);
 		magCat.deleteCategoryInForum(catName);

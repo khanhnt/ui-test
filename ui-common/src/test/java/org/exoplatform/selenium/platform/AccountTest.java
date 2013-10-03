@@ -87,7 +87,7 @@ public class AccountTest extends NavigationToolbar{
 		goToUsersAndGroupsManagement();
 		userGroup.goToEditUserInfo(username);
 		type(ELEMENT_INPUT_EMAIL, "exotestaccountedit@localhost.com", true);
-		button.save();
+		but.save();
 	    waitForMessage("The user profile has been updated.");
 	    waitForTextPresent("exotestaccountedit@localhost.com");
 	    magAcc.signOut()  ;

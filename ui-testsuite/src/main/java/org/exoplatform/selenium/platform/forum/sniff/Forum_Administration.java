@@ -27,6 +27,7 @@ public class Forum_Administration extends ForumBase {
 	
 	@BeforeMethod
 	public void setUpBeforeTest(){
+		setPreferenceRunTime();
 		initSeleniumTest();
 		magAc = new ManageAccount(driver);
 		cat = new ForumManageCategory(driver);
@@ -58,6 +59,7 @@ public class Forum_Administration extends ForumBase {
 		String descriptionUpdate = "TAGMOTUPDATE";
 		String exampleUpdate = "<TAGMOTUPDATE=option>tag01update</TAGMOTUPDATE>";
 		
+		info("Add edit delete BBCode");
 		goToBBCodeManagement();
 		addBBCode(tag, replace, description, example, false);
 		editBBcode(tag, tagnew, replaceUpdate, descriptionUpdate, exampleUpdate, true);

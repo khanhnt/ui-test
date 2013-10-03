@@ -23,7 +23,7 @@ public class NavigationToolbar extends PlatformBase {
 	public NavigationToolbar(WebDriver dr){
 		driver = dr;
 		brandMag = new BrandingManagement(driver);
-		button = new Button(driver);
+		but = new Button(driver);
 	} 
 
 	//Go to portal sites
@@ -49,8 +49,8 @@ public class NavigationToolbar extends PlatformBase {
 		waitForAndGetElement(brandMag.ELEMENT_UPLOAD_BUTTON);
 		waitForAndGetElement(brandMag.ELEMENT_NAVIGATION_STYLE);
 		waitForAndGetElement(brandMag.ELEMENT_TABLE_COLUMN_CONTAINER);
-		waitForAndGetElement(button.ELEMENT_CANCEL_BUTTON);
-		waitForAndGetElement(button.ELEMENT_SAVE_BUTTON);
+		waitForAndGetElement(but.ELEMENT_CANCEL_BUTTON);
+		waitForAndGetElement(but.ELEMENT_SAVE_BUTTON);
 	}
 	
 	//Go to portal sites

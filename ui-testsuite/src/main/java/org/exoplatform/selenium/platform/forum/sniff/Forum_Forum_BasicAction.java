@@ -111,7 +111,7 @@ public class Forum_Forum_BasicAction extends ForumBase{
 		String topic2 = "Topic_68914_02";
 
 		info("Watch&Unwatch forum");
-		
+		waitForAndGetElement(ELEMENT_WHAT_GOING_ON);
 		magAc.updateUserProfile(null,null, null, EMAIL_ADDRESS1);
 		goToForums();
 		//Add forum

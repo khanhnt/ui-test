@@ -21,7 +21,7 @@ public class Forum_Answers_Search extends AnswerBase {
 	AnswerManageCategory magCat;
 	AnswerManageQuestion magQuest;
 	
-	@BeforeMethod
+	@BeforeMethod(groups = "error")
 	public void setUpBeforeTest(){
 		initSeleniumTest();
 		driver.get(baseUrl);
@@ -29,11 +29,11 @@ public class Forum_Answers_Search extends AnswerBase {
 		magCat = new AnswerManageCategory(driver);
 		magQuest = new AnswerManageQuestion(driver);
 		
-		magAc.signIn("john", "gtn");
+		magAc.signIn(DATA_USER1, DATA_PASS);
 		goToAnswer();
 	}
 
-	@AfterMethod
+	@AfterMethod(groups = "error")
 	public void afterTest(){
 		driver.manage().deleteAllCookies();
 		driver.quit();
@@ -48,7 +48,7 @@ public class Forum_Answers_Search extends AnswerBase {
 		String description = "Add new category for answer";
 		String[] userGroup = {"demo"};
 		
-		magCat.addNewCategoryInAnswer(categoryName, null, description, 2, userGroup, true, false);
+		magCat.addNewCategoryInAnswer(categoryName, null, description, 3, userGroup, true, false);
 
 		quickSearchInAnswer(categoryName);
 		waitForAndGetElement(By.linkText(categoryName));

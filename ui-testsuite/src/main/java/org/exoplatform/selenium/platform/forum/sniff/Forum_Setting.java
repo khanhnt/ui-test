@@ -37,7 +37,7 @@ public class Forum_Setting extends ForumBase {
 		forum = new ForumManageForum(driver);
 		magtopic = new ForumManageTopic(driver);
 		post = new ForumManagePost(driver);
-		button = new Button(driver);
+		but = new Button(driver);
 		navTool = new NavigationToolbar(driver);
 		pageE = new PageEditor(driver);
 		magAc.signIn("john", "gtn");
@@ -69,7 +69,7 @@ public class Forum_Setting extends ForumBase {
 		waitForAndGetElement(ELEMENT_CHECKBOX_EMAIL.replace("${name}", catName), DEFAULT_TIMEOUT, 1, 2);
 		type(ELEMENT_SETTING_EMAIL_ADDRESS, EMAIL_ADDRESS1, true);
 		click(ELEMENT_SETTING_EMAIL_UPDATE);
-		button.save();
+		but.save();
 		
 		info("Reset data");
 		cat.deleteCategoryInForum(catName);
@@ -114,8 +114,8 @@ public class Forum_Setting extends ForumBase {
 		waitForAndGetElement(By.linkText(title));
 		click(ELEMENT_USER_MANAGEMENT_POST_TAB);
 		waitForAndGetElement(By.linkText(postname));
-		button.save();
-		button.close();
+		but.save();
+		but.close();
 		waitForElementNotPresent(ELEMENT_USER_MANAGEMENT_POPUP);
 		magAc.signOut();
 		
@@ -135,8 +135,8 @@ public class Forum_Setting extends ForumBase {
 		settingUserManagementProfile("Jack Miller", "User", null, null, "", true, false, true);
 		forumsSettings("0.00", "MM/dd/yyyy", "EEE,=MMMM dd, yyyy", "12-hour", "10", "10", "false");
 		banUser(false, null, null);
-		button.save();
-		button.close();
+		but.save();
+		but.close();
 		waitForElementNotPresent(ELEMENT_USER_MANAGEMENT_POPUP);
 	}
 	

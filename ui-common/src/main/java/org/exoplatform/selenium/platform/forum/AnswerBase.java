@@ -151,7 +151,7 @@ public class AnswerBase extends ForumBase {
 	 * @param display
 	 */
 	public void setDisplayCategoryScoping(String categoryScope, boolean display){
-		button = new Button(driver);
+		but = new Button(driver);
 		String[] cat = categoryScope.split("/");
 
 		click(ELEMENT_CATEGORY_SCOPING_TAB);
@@ -162,7 +162,7 @@ public class AnswerBase extends ForumBase {
 				uncheck(ELEMENT_CATEGORY_IN_SCOPE_TAB.replace("${catName}", cat[i]), 2);
 			}
 		}
-		button.save();
+		but.save();
 		click(ELEMENT_OK_INFOR_POPUP);
 		Utils.pause(1000);
 	}
@@ -175,7 +175,7 @@ public class AnswerBase extends ForumBase {
 	 * @param opts
 	 */
 	public void settingDisplayMode(boolean all, boolean date, boolean ascending, boolean...opts){
-		button = new Button(driver);
+		but = new Button(driver);
 		click(ELEMENT_DISPLAY_MODE_TAB);
 		if (all){
 			select(ELEMENT_SELECT_DISPLAY_MODE, "All");
@@ -227,7 +227,7 @@ public class AnswerBase extends ForumBase {
 				uncheck(ELEMENT_POST_QUESTION_IN_ROOT, 2);
 			}			
 		}
-		button.save();
+		but.save();
 		click(ELEMENT_OK_INFOR_POPUP);
 		Utils.pause(1000);
 	}
@@ -248,7 +248,7 @@ public class AnswerBase extends ForumBase {
 		}else {
 			uncheck(ELEMENT_ENABLE_DISCUSSION_CHECKBOX, 2);
 		}
-		button.save();
+		but.save();
 		click(ELEMENT_OK_INFOR_POPUP);
 		Utils.pause(1000);
 	}
@@ -274,7 +274,7 @@ public class AnswerBase extends ForumBase {
 
 		inputDataToFrameInFrame(ELEMENT_MAIL_CONTENT_FRAME1, ELEMENT_MAIL_CONTENT_FRAME2, content, true);
 		switchToParentWindow();
-		button.save();
+		but.save();
 		click(ELEMENT_OK_INFOR_POPUP);
 		Utils.pause(1000);
 	}

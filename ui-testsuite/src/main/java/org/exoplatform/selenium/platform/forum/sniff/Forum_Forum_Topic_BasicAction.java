@@ -5,6 +5,7 @@ import org.exoplatform.selenium.platform.ManageAccount;
 import org.exoplatform.selenium.platform.forum.ForumBase;
 import org.exoplatform.selenium.platform.forum.ForumManageCategory;
 import org.exoplatform.selenium.platform.forum.ForumManageForum;
+import org.exoplatform.selenium.platform.forum.ForumManagePost;
 import org.exoplatform.selenium.platform.forum.ForumManageTopic;
 import org.openqa.selenium.By;
 import org.testng.annotations.AfterMethod;
@@ -21,6 +22,7 @@ public class Forum_Forum_Topic_BasicAction extends ForumBase {
 	ForumManageCategory mngCat;
 	ForumManageForum mngFru;
 	ForumManageTopic mngTopic;
+	ForumManagePost mngPost;
 
 	@BeforeMethod
 	public void setUpBeforeTest(){
@@ -29,6 +31,7 @@ public class Forum_Forum_Topic_BasicAction extends ForumBase {
 		mngCat = new ForumManageCategory(driver);
 		mngFru = new ForumManageForum(driver);
 		mngTopic = new ForumManageTopic(driver);
+		mngPost = new ForumManagePost(driver);
 
 		magAc.signIn(DATA_USER1, DATA_PASS);
 		goToForums();
@@ -76,7 +79,7 @@ public class Forum_Forum_Topic_BasicAction extends ForumBase {
 		//create category, forum, topic
 		mngTopic.addCategoryForumTopic(titleCat, titleForum, titleTop,titleTop); 
 		click(mngFru.ELEMENT_TOPIC_LINK.replace("${topic}", titleTop));
-
+		waitForAndGetElement(mngPost.ELEMENT_POST_QUICK_BUTTON);
 		mngTopic.deleteTopic(titleTop);
 
 		//Delete data

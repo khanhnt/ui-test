@@ -74,7 +74,7 @@ public class Forum_Answers_Category extends AnswerBase {
 		
 		String categoryName2 = "Answercategory2_2";
 		String description2 = "Add new category2 for answer";
-		String[] userGroup2 = {"Platform/Content Management", "", "/platform/web-contributors"};
+		String[] userGroup2 = {"Platform/Content Management"};
 		
 		info("Add 2 category at root");
 		magCat.addNewCategoryInAnswer(categoryName1, null, description1, 2, userGroup1, true, false);

@@ -27,7 +27,7 @@ public class ForumManagePoll extends ForumBase {
 		magTopic = new ForumManageTopic(driver);
 		app = new ManageApplications(driver);
 		userGroup = new UserGroupManagement(driver);
-		button = new Button(driver);
+		but = new Button(driver);
 		alert = new ManageAlert(driver);
 	}
 
@@ -133,8 +133,8 @@ public class ForumManagePoll extends ForumBase {
 		waitForElementNotPresent(ELEMENT_ADD_POLL_FORM);
 		waitForAndGetElement(By.xpath(ELEMENT_POLL_TITLE.replace("${pollQuestion}", pollQuestion)));
 		select(ELEMENT_SELECT_POLL,pollQuestion);
-		button.save();
-		button.close();
+		but.save();
+		but.close();
 		pageE.finishEditLayout();
 		waitForAndGetElement(By.xpath(ELEMENT_POLL_QUESTION_LINK.replace("${pollQuestion}", pollQuestion)));
 
@@ -187,8 +187,8 @@ public class ForumManagePoll extends ForumBase {
 		click(ELEMENT_EDIT_PORTLET);
 		click(ELEMENT_DELETE_POLL_BUTTON);
 		waitForElementNotPresent(By.xpath(ELEMENT_POLL_TITLE.replace("${pollQuestion}", pollQuestion)));
-		button.save();
-		button.close();
+		but.save();
+		but.close();
 		pageE.finishEditLayout();
 
 	}
@@ -216,8 +216,8 @@ public class ForumManagePoll extends ForumBase {
 		click(ELEMENT_SUBMIT_POLL_BUTTON);
 		waitForElementNotPresent(ELEMENT_EDIT_POLL_FORM);
 		select(ELEMENT_SELECT_POLL, newPollQuestion);		
-		button.save();		
-		button.close();		
+		but.save();		
+		but.close();		
 		pageE.finishEditLayout();		
 		waitForAndGetElement(By.xpath(ELEMENT_POLL_QUESTION_LINK.replace("${pollQuestion}", newPollQuestion)));
 	}

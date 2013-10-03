@@ -18,7 +18,7 @@ public class AnswerManageAnwser extends AnswerBase {
 
 	public AnswerManageAnwser(WebDriver dr){
 		driver = dr;
-		button = new Button(driver);
+		but = new Button(driver);
 		alert = new ManageAlert(driver);
 
 	}
@@ -71,7 +71,7 @@ public class AnswerManageAnwser extends AnswerBase {
 			for(int i = 0; i < question.length; i ++){
 				check(ELEMENT_QUESTION_IN_ADD_RELATION.replace("${question}", question[i]), 2);
 			}
-			button.save();
+			but.save();
 			Utils.pause(1000);
 		}
 	}
@@ -128,7 +128,7 @@ public class AnswerManageAnwser extends AnswerBase {
 		if (removeRelation){
 			removeRelationForAnswer(questionRemove);
 		}
-		button.save();
+		but.save();
 	}
 	
 	/**
@@ -196,7 +196,7 @@ public class AnswerManageAnwser extends AnswerBase {
 		info("Edit answer");	
 		goToMoreActionsOfAnswer(answerName, "Edit Answer");
 		modifyAnwser(language, answerContent, approved, activated, addRelation, questionToLink, removeRelation, questionRemove);
-		waitForAndGetElement(ELEMENT_ANSWER_IN_QUESTION.replace("${answer}", answerName));
+		waitForAndGetElement(ELEMENT_ANSWER_IN_QUESTION.replace("${answer}", answerContent));
 	}
 
 	/**

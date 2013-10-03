@@ -30,7 +30,7 @@ public class FAQ extends AnswerBase {
 	public final String DATA_ANSWER_FAQ_PAGE_NAME="AnswerFAQ";
 	public final By ELEMENT_FAQ_VIEWER = By.id("UIFAQPortlet");
 	public final By ELEMENT_FQA_CONTAINER = By.xpath("//a[@title='faq']");
-	public final By ELEMENT_FAQ_PORLET = By.id("Collaboration/FAQPortlet");
+	public final By ELEMENT_FAQ_PORLET = By.xpath("//*[@id='Collaboration/FAQPortlet']//img");
 	public final By ELEMENT_ANSWER_PAGE = By.id("UIPage");
 	public final String ELEMENT_FAQ_CATEGORY = "//*[@id='UIFAQPortlet']//h5/*[text()='${cat}']";
 	public final String ELEMENT_FAQ_QUESTION = "//*[@id='UIFAQPortlet']//a[text()='${quest}']";
@@ -85,6 +85,8 @@ public class FAQ extends AnswerBase {
 			navTool.goToEditPageEditor();
 			click(By.linkText("Collaboration"));
 			dragAndDropToObject(ELEMENT_FAQ_PORLET, ELEMENT_ANSWER_PAGE);
+			waitForAndGetElement("//*[@class='portletLayoutDecorator' and contains(text(), 'FAQPortlet')]");
+			info("drag and drop FAQ");
 			pageE.finishEditLayout();
 		}
 	}
@@ -150,14 +152,14 @@ public class FAQ extends AnswerBase {
 	 * @param display
 	 */
 	public void settingDisplayCategoryScope(String category, boolean display){
-		button = new Button(driver);
+		but = new Button(driver);
 		click(ELEMENT_FAQ_DISPLAY_CATEGORY_TAB);
 		if (display){
 			check(ELEMENT_SELECT_DISPLAY_CHECKBOX.replace("${name}", category), 2);
 		}else {
 			uncheck(ELEMENT_SELECT_DISPLAY_CHECKBOX.replace("${name}", category), 2);
 		}
-		button.save();
+		but.save();
 		click(ELEMENT_OK_INFOR_POPUP);
 		Utils.pause(1000);
 	}
@@ -167,10 +169,10 @@ public class FAQ extends AnswerBase {
 	 * @param file
 	 */
 	public void settingFAQTemplate(String data){
-		button = new Button(driver);
+		but = new Button(driver);
 		click(ELEMENT_FAQ_EDIT_TEMPLATE_TAB);
 		type(ELEMENT_FAQ_EDIT_TEMP_INPUT, data, false);
-		button.save();
+		but.save();
 		click(ELEMENT_OK_INFOR_POPUP);
 		Utils.pause(1000);
 	}

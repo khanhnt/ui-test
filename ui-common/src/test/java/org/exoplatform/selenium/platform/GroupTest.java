@@ -76,7 +76,7 @@ public class GroupTest extends NavigationToolbar{
 		//userGroup.editGroup(groupName, true);
 		type(ELEMENT_INPUT_LABEL, "", true);
 		type(ELEMENT_TEXTAREA_DESCRIPTION, "edit a group description", true);
-		button.save();
+		but.save();
 		Utils.pause(1000);
 		magAcc.signOut();
 		Utils.pause(1000);

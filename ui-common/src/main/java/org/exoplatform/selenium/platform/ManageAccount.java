@@ -222,10 +222,10 @@ public class ManageAccount extends PlatformBase {
 		if (pos != null){
 			mouseOverAndClick(ELEMENT_EDIT_POSITION);
 			type(ELEMENT_POSITION_TEXTBOX_EDIT, pos, true);
-			mouseOverAndClick(ELEMENT_EDIT_POSITION_SAVE_BUTTON);
+			click(ELEMENT_EDIT_POSITION_SAVE_BUTTON);
 		}
 		if (first != null || last != null || email != null){
-			mouseOverAndClick(ELEMENT_EDIT_BASIC_INFORMATION);
+			click(ELEMENT_EDIT_BASIC_INFORMATION);
 			if (first != null){
 				type(ELEMENT_FIRST_NAME_TEXTBOX_EDIT, first, true);
 			}

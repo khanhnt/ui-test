@@ -29,7 +29,7 @@ public class Forum_Forum_PublishActivity_TopicActivity extends ForumBase{
 	ForumManagePost mngPost;
 	HomePageActivity hpgAct;
 	
-	@BeforeMethod
+	@BeforeMethod(groups="fail")
 	public void setUpBeforeTest(){
 		initSeleniumTest();
 		driver.get(baseUrl);
@@ -45,7 +45,7 @@ public class Forum_Forum_PublishActivity_TopicActivity extends ForumBase{
 		goToForums();
 	}
 
-	@AfterMethod
+	@AfterMethod(groups="fail")
 	public void afterTest(){
 		driver.manage().deleteAllCookies();
 		driver.quit();
@@ -76,6 +76,7 @@ public class Forum_Forum_PublishActivity_TopicActivity extends ForumBase{
 		click(By.linkText(titleCat));
 		click(By.linkText(titleForum));
 		click(mngFru.ELEMENT_TOPIC_LINK.replace("${topic}", titleTop));
+		waitForAndGetElement(mngPost.ELEMENT_POST_REPLY_BUTTON);
 		mngTopic.moveTopic(titleTop, forum2);
 		
 		//Check activity

@@ -1,9 +1,9 @@
 package org.exoplatform.selenium;
 
 import static org.exoplatform.selenium.TestLogger.*;
+import java.awt.*;
 
 import java.awt.AWTException;
-import java.awt.DisplayMode;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
@@ -89,8 +89,11 @@ public class Utils {
 	public static Rectangle getScreenSize() {
 		GraphicsEnvironment graphE = GraphicsEnvironment.getLocalGraphicsEnvironment();
 		GraphicsDevice graphD = graphE.getDefaultScreenDevice();
-		DisplayMode displayM = graphD.getDisplayMode();
-		return new Rectangle(displayM.getWidth(), displayM.getHeight());
+		Window displayM = graphD.getFullScreenWindow();
+		if(displayM != null)
+			return new Rectangle(displayM.getWidth(), displayM.getHeight());
+		else
+			return new Rectangle(1000,1000);
 	}
 
 	//
@@ -163,7 +166,7 @@ public class Utils {
 		String currentUrl = driver.getCurrentUrl();
 		File file = new File(currentUrl);
 		String fileNameWithExt = file.getName();
-		
+
 		if (extension){
 			int position = fileNameWithExt.lastIndexOf(".");
 			String fileNameWithOutExt = null;
@@ -177,25 +180,25 @@ public class Utils {
 			return fileNameWithExt;
 		}
 	}
-	
+
 	/**
 	 * @author lientm
 	 * @return ipV4 of local machine
 	 */
 	public static String getIPOfLocal(){
 		info("Get IP of localhost");
-        String interName = "";
-        Map <String, String> inter = getInterfaces();
-        for (String key: inter.keySet()){
-        	if (key.contains("eth")){
-        		interName = inter.get(key);
-        		break;
-        	}
-        }
-        info(interName);
-        return interName;
+		String interName = "";
+		Map <String, String> inter = getInterfaces();
+		for (String key: inter.keySet()){
+			if (key.contains("eth")){
+				interName = inter.get(key);
+				break;
+			}
+		}
+		info(interName);
+		return interName;
 	}
-	
+
 	/**
 	 * @author lientm
 	 * @return map of interface name and Ip of local machine
@@ -203,27 +206,27 @@ public class Utils {
 	public static Map<String, String> getInterfaces(){
 		Map<String,String> inter = new HashMap <String,String>();
 		String IP = "";
-	      try {
-	         Enumeration<NetworkInterface> e = NetworkInterface.getNetworkInterfaces();
-	 
-	         while(e.hasMoreElements()) {
-	            NetworkInterface ni = (NetworkInterface) e.nextElement();
-	            info("Net interface: " + ni.getName()); 
-	            
-	            Enumeration<InetAddress> e2 = ni.getInetAddresses(); 
-	            while (e2.hasMoreElements()){
-	               InetAddress ip = (InetAddress) e2.nextElement();
-		            if(!ip.isLinkLocalAddress()) {
-		                IP = ip.getHostAddress();
-		            }
-	            }
-	            info("IP address: "+ IP.toString());
-		        inter.put(ni.getName(), IP.toString());
-	         }
-	      }
-	      catch (Exception e) {
-	         e.printStackTrace();
-	      }
-	   return inter;
+		try {
+			Enumeration<NetworkInterface> e = NetworkInterface.getNetworkInterfaces();
+
+			while(e.hasMoreElements()) {
+				NetworkInterface ni = (NetworkInterface) e.nextElement();
+				info("Net interface: " + ni.getName()); 
+
+				Enumeration<InetAddress> e2 = ni.getInetAddresses(); 
+				while (e2.hasMoreElements()){
+					InetAddress ip = (InetAddress) e2.nextElement();
+					if(!ip.isLinkLocalAddress()) {
+						IP = ip.getHostAddress();
+					}
+				}
+				info("IP address: "+ IP.toString());
+				inter.put(ni.getName(), IP.toString());
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return inter;
 	}
 }

@@ -30,7 +30,7 @@ public class Forum_Answers_Questions extends AnswerBase {
 		magAc = new ManageAccount(driver);
 		magCat = new AnswerManageCategory(driver);
 		magQuest = new AnswerManageQuestion(driver);
-		magAc.signIn("john", "gtn");
+		magAc.signIn(DATA_USER1, DATA_PASS);
 		goToAnswer();
 	}
 
@@ -229,7 +229,7 @@ public class Forum_Answers_Questions extends AnswerBase {
 	/**
 	 * CaseId: 68959: Send question to friend
 	 */
-	@Test (groups = "email")
+	@Test (groups = {"email"})
 	public void test06_SendQuestion() {
 		String categoryName = "Category6";
 		String description = "Description for category6";
@@ -263,7 +263,7 @@ public class Forum_Answers_Questions extends AnswerBase {
 	    
 	    info("delete mail");
 	    
-		click(ELEMENT_DELETE_MAIL);
+		click(ELEMENT_DELETE_MAIL_2);
 		
 		Utils.pause(2000);
 		

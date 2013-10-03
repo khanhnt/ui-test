@@ -25,7 +25,7 @@ public class NavigationManagement extends  PlatformBase{
 	// Add a node for portal at portal navigation
 	public void addNodeForPortal(String currentNavigation, String currentNodeLabel, boolean useAddNodeLink, String nodeName, boolean extendedLabelMode,
 			Map<String, String> languages, String nodeLabel, String pageName, String pageTitle, boolean verifyPage, boolean verifyNode){
-		button = new Button(driver);
+		but = new Button(driver);
 
 		//String node = ELEMENT_NODE_LINK.replace("${nodeLabel}", nodeLabel);
 		String currentNode = ELEMENT_NODE_LINK.replace("${nodeLabel}", currentNodeLabel);
@@ -84,7 +84,7 @@ public class NavigationManagement extends  PlatformBase{
 
 		info("-- Save add node for portal --");
 		Utils.pause(500);
-		button.save();
+		but.save();
 		if (verifyNode) {
 			waitForTextNotPresent("Page Node Settings");
 			//waitForTextPresent(nodeName);
@@ -135,13 +135,13 @@ public class NavigationManagement extends  PlatformBase{
 			type(ELEMENT_INPUT_PAGE_NAME, pageName, true);
 			type(ELEMENT_INPUT_PAGE_TITLE, pageTitle, true);
 			click(ELEMENT_CREATE_PAGE_LINK);
-			button.save();
+			but.save();
 		}else {
 			click(ELEMENT_SEARCH_SELECTOR_PAGE_LINK);
 			type(ELEMENT_INPUT_POPUP_SEARCH_TITLE, pageTitle, true);
 			click(ELEMENT_PAGE_MANAGEMENT_SEARCH_BUTTON);
 			click(ELEMENT_SELECT_SEARCHED_PAGE);	
-			button.save();
+			but.save();
 		}
 		Utils.pause(500);
 		//button.save();
@@ -152,7 +152,7 @@ public class NavigationManagement extends  PlatformBase{
 	public void deleteNode(String currentNavigation, String nodeNameHome, String nodeName, boolean firstLevel){
 		info("--Delete a node from navigation--");
 		alt = new ManageAlert(driver);
-		button = new Button(driver);
+		but = new Button(driver);
 		String currentNodeHome = ELEMENT_NODE_LINK.replace("${nodeLabel}", nodeNameHome);	
 		String currentNodeName = ELEMENT_NODE_LINK.replace("${nodeLabel}", nodeName);
 		editNavigation(currentNavigation);
@@ -163,7 +163,7 @@ public class NavigationManagement extends  PlatformBase{
 			click(ELEMENT_NAVIGATION_DELETE_NODE);
 			alt.waitForConfirmation("Are you sure you want to delete this node?");
 			waitForElementNotPresent(currentNodeName);
-			button.save();		
+			but.save();		
 		}else {
 			if (waitForAndGetElement(currentNodeName, 5000, 0) == null){
 				click(currentNodeHome);
@@ -173,9 +173,9 @@ public class NavigationManagement extends  PlatformBase{
 			click(ELEMENT_NAVIGATION_DELETE_NODE);
 			alt.waitForConfirmation("Are you sure you want to delete this node?");
 			waitForElementNotPresent(currentNodeName);
-			button.save();		
+			but.save();		
 		}
 		//waitForTextNotPresent("Navigation Management");
-		waitForElementNotPresent(button.ELEMENT_SAVE_BUTTON);
+		waitForElementNotPresent(but.ELEMENT_SAVE_BUTTON);
 	}
 }

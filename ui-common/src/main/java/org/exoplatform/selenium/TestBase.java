@@ -51,7 +51,7 @@ public class TestBase {
 	//public final By ELEMENT_MENU_PAGE_LINK = By.linkText("Page");
 	//public final String AJAX_LOADING_MASK = "//div[@id='AjaxLoadingMask']";
 	public final String DEFAULT_BASEURL="http://localhost:8080/portal";
-
+	
 	/*======= Welcome Screen (Term and Conditions) =====*/
 	By ELEMENT_FIRSTNAME_ACCOUNT = By.name("firstNameAccount");
 	By ELEMENT_LASTNAME_ACCOUNT = By.name("lastNameAccount");
@@ -255,16 +255,18 @@ public class TestBase {
 		return elem;
 	}
 
-	public boolean isTextPresent(String text) {
+	public boolean isTextPresent(String text, int...opts) {
+		int display = opts.length > 0 ? opts[0] : 1;
 		Utils.pause(500);
-		String allVisibleTexts = getText(By.xpath("//body"));
+		String allVisibleTexts = getText(By.xpath("//body"),display);
 		return allVisibleTexts.contains(text);
 	}
 
-	public String getText(Object locator) {
+	public String getText(Object locator,int...opts) {
 		WebElement element = null;
+		int display = opts.length > 0 ? opts[0] : 1;
 		try {
-			element = waitForAndGetElement(locator);
+			element = waitForAndGetElement(locator,DEFAULT_TIMEOUT,1,display);
 			return element.getText();
 		} catch (StaleElementReferenceException e) {
 			checkCycling(e, DEFAULT_TIMEOUT/WAIT_INTERVAL);
@@ -430,13 +432,14 @@ public class TestBase {
 		actions.moveToElement(element).click(element).build().perform();
 	}
 
-	public void waitForTextPresent(String text, int...wait) {
-		int waitTime = wait.length > 0 ? wait[0] : DEFAULT_TIMEOUT;
+	public void waitForTextPresent(String text, int...opts) {
+		int waitTime = opts.length > 0 ? opts[0] : DEFAULT_TIMEOUT;
+		int display = opts.length > 1 ? opts[1] : 1;
 		for (int second = 0;; second++) {
 			if (second >= waitTime/WAIT_INTERVAL) {
 				Assert.fail("Timeout at waitForTextPresent: " + text);
 			}
-			if (isTextPresent(text)) {
+			if (isTextPresent(text,display)) {
 				break;
 			}
 			Utils.pause(WAIT_INTERVAL);
@@ -807,4 +810,12 @@ public class TestBase {
 		((JavascriptExecutor)driver).executeScript("arguments[0].style.display = 'block';",element);	
 	}
 
+
+	
+	public void setPreferenceRunTime(){
+		FirefoxProfile fp = new FirefoxProfile();
+		
+		fp.setPreference("dom.max_script_run_time", 30);
+	}
+	
 }

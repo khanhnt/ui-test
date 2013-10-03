@@ -51,13 +51,13 @@ public class Forum_Answers_Answers extends AnswerBase {
 	 */
 	@Test
 	public void test01_AddEditDeleteAnswerForQuestion(){
-		String categoryName = "CategoryAnswer1";
+		String categoryName = "Category70955";
 		String description = "Add new category for answer";	
 		String questionName = "Answer_Question1";
 		String questionContent = "Add new question for category";
-		String answerContent = "AnswerQuestion1";
+		String answerContent = "Answer70955";
 		String answerContentEdit = "Update answer content";
-		
+		info("Answer a question, edit and delete answer");
 		magQuest.quickAddCategoryAndQuestion(categoryName, description, questionName, questionContent);
 		
 		info("Answer this question");
@@ -85,7 +85,7 @@ public class Forum_Answers_Answers extends AnswerBase {
 		String questionName = "Answer_Question2";
 		String questionContent = "Add new question for category";	
 		String answerContent = "AnswerQuestion2";
-		
+		info("Answer a question in Manage Question form");
 		magQuest.quickAddCategoryAndQuestion(categoryName, description, questionName, questionContent);
 		
 		info("Go to manage question -> open question tab");
@@ -111,7 +111,7 @@ public class Forum_Answers_Answers extends AnswerBase {
 		String comment1 = "CommentQuestion3_1";
 		String newComment1 = "CommentQuestion3_1 Update";
 		String comment2 = "CommentQuestion3_2";
-		
+		info("Add, edit, delete and promote comment for question");
 		magQuest.quickAddCategoryAndQuestion(categoryName, description, questionName, questionContent);
 		
 		click(By.linkText(questionName));

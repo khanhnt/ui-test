@@ -64,6 +64,7 @@ public class Forum_Forum_Topic_OtherAction extends ForumBase{
 		//create category, forum, topic
 		mngTopic.addCategoryForumTopic(titleCat, titleForum, titleTop, titleTop);
 		click(mngFru.ELEMENT_TOPIC_LINK.replace("${topic}", titleTop));
+		waitForAndGetElement(mngPost.ELEMENT_POST_QUICK_BUTTON);
 		mngTopic.actionOnTopic(3);
 
 		mngTopic.actionOnTopic(4);
@@ -120,11 +121,11 @@ public class Forum_Forum_Topic_OtherAction extends ForumBase{
 	 */
 	@Test
 	public void test04_WatchUnwatchTopic() {
-		String titleCat = "Category 04";
-		String titleForum = "Forum 04";
-		String titleTop = "Topic 04";
-		String newTopic = "New topic 04";
-		String post2 = "New post 2";
+		String titleCat = "Category 68915";
+		String titleForum = "Forum 68915";
+		String titleTop = "Topic 68915";
+		String newTopic = "New topic 68915";
+		String post2 = "New post 68915";
 
 		info("Watch & Unwatch topic");
 		//create category, forum, topic
