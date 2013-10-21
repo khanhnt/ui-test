@@ -428,6 +428,7 @@ public class Activity extends SocialBase {
 			click(ELEMENT_MENTION_USER_BUTTON);
 			inputText.sendKeys(userName);
 			click(hpActivity.ELEMENT_ACTIVITY_TEXTBOX);
+			Utils.pause(1000);
 			click("//*[@class='avatarSmall']");
 			click(ELEMENT_SHARE_BUTTON);
 			waitForAndGetElement(By.xpath(ELEMENT_USER_NAME_LINK_ACTIVITY.replace("${userName}", userName)));
@@ -437,7 +438,9 @@ public class Activity extends SocialBase {
 			//Add a new comment following an activity 
 			click(ELEMENT_COMMENT_ICON.replace("${activityText}", activityText));
 			type(ELEMENT_INPUT_COMMENT_TEXT_AREA.replace("${activityText}", activityText), "@"+userName, false);
+			Utils.pause(1000);
 			click(ELEMENT_INPUT_COMMENT_TEXT_AREA.replace("${activityText}", activityText));
+			Utils.pause(1000);
 			//click("//*[@class='avatarSmall' and text()='"+userName+"']");
 			click("//*[@class='avatarSmall']");
 			//Click on Comment button

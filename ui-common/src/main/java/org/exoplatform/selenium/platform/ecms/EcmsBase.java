@@ -667,10 +667,8 @@ public class EcmsBase extends ManageAccount {
 		if (temp.length != 0){
 			for (int i=0; i < temp.length ; i++ ){
 				if (waitForAndGetElement(By.id(temp[i]), DEFAULT_TIMEOUT, 0, 2) != null){
-					if(waitForAndGetElement(By.id(temp[i]), DEFAULT_TIMEOUT, 0, 2).isSelected() == false){
-						click(By.id(temp[i]), 2);
+						check(By.id(temp[i]), 2);
 						info("Select checkbox with id " + temp[i]);
-					}
 				}else{
 					info("Can not found checkbox with id " + temp[i]);
 				}

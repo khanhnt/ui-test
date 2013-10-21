@@ -1,14 +1,26 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 <suite name="Platform Sniff Test" verbose="1" preserve-order="true">
-	<test name="social-sniff" enabled="true">
+	<test name="social-sniff" enabled="true" preserve-order="true">
 		<groups>
 			<run>
 				<exclude name="pending" />
 			</run>
 		</groups>
-		<packages>
-			<package name="org.exoplatform.selenium.platform.social.sniff" />
-		</packages>
+		 <classes>
+            <class name="org.exoplatform.selenium.platform.social.sniff.Social_HomePage_Activity"/>
+            <class name="org.exoplatform.selenium.platform.social.sniff.Social_Space_MemberManagement"/>
+            <class name="org.exoplatform.selenium.platform.social.sniff.Social_Dashboard"/>
+            <class name="org.exoplatform.selenium.platform.social.sniff.Social_HomePage_ActivityComposer"/>
+            <class name="org.exoplatform.selenium.platform.social.sniff.Social_HomePage_ActivityStream"/>
+            <class name="org.exoplatform.selenium.platform.social.sniff.Social_People"/>
+            <class name="org.exoplatform.selenium.platform.social.sniff.Social_Space_ManageNavigation"/>
+            <class name="org.exoplatform.selenium.platform.social.sniff.Social_Space_Search"/>
+            <class name="org.exoplatform.selenium.platform.social.sniff.Social_Space_SpaceList"/>
+            <class name="org.exoplatform.selenium.platform.social.sniff.Social_Space_SpaceManagement_Applications"/>
+            <class name="org.exoplatform.selenium.platform.social.sniff.Social_Space_SpaceManagement_ManageSpace"/>
+            <class name="org.exoplatform.selenium.platform.social.sniff.Social_Space_SpaceManagement_SpaceAccess"/>
+            <class name="org.exoplatform.selenium.platform.social.sniff.Social_Space_SpaceManagement_WikiPageAccess"/>
+        </classes>
 	</test>
 	<listeners>
 		<listener class-name="org.exoplatform.selenium.TestReportListener" />

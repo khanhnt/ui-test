@@ -47,7 +47,6 @@ public class ECMS_WCM_Others extends PlatformBase{
 	SitesExplorer siteExp;
 	PageEditor pEditor;
 	SEO seo;
-	
 	String acmeURL = DEFAULT_BASEURL + "/acme/"; 
 
 	/**
@@ -57,7 +56,7 @@ public class ECMS_WCM_Others extends PlatformBase{
 	 */
 	@Test
 	public void test01_ShowDraftPublicContentFromPage(){
-		String node1 = "test01_ShowDraftPublicContentFromPage";
+		String node1 = "ShowDraftPublicContentFromPage65874";
 		String page = "test01_page";
 		By bNode = By.xpath(siteExp.ELEMENT_SE_NODE.replace("{$node}", node1));
 		String contentPath = "General Drives/Sites Management/" + node1;

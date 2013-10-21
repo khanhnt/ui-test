@@ -98,6 +98,7 @@ public class PeopleProfile extends PlatformBase {
 			type(ELEMENT_INPUT_EMAIL, email, true);
 		click(ELEMENT_SAVE_UPDATE_INFO);
 		waitForElementNotPresent(ELEMENT_SAVE_UPDATE_INFO);
+		Utils.pause(1000);
 	}
 
 	/**

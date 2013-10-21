@@ -280,7 +280,8 @@ public class PageEditor extends PlatformBase {
 		Boolean nClose = (Boolean) (params.length > 1 ? params[1]: true) ;
 
 		info("-- Select the content path: "+ contentPath +"--");
-		String ELEMENT_SELECT_CONTENT_FOLDER_PATHS = "//a[@data-original-title='${pathName}']";
+		String ELEMENT_SELECT_CONTENT_FOLDER_PATHS = "//span[contains(text(),'${pathName}')]";
+		String ELEMENT_SELECT_CONTENT_FOLDER_PATHS_A = "//a[@data-original-title='${pathName}']";
 		String[] pathNames = contentPath.split("/");
 		//if (isTextNotPresent("Folder Browser")){
 		//click(ELEMENT_SELECT_CONTENT_PATH_LINK);
@@ -298,9 +299,23 @@ public class PageEditor extends PlatformBase {
 					click(ELEMENT_SELECT_CONTENT_PATH_LINK);
 				}
 			}
+			info("-- Load frame 1 --");
+			if(waitForAndGetElement(By.id("UIContentSelectorOne"),DEFAULT_TIMEOUT,0)==null){
+				info("-- Load frame 2 --");
+				if(waitForAndGetElement(By.id("CorrectContentSelectorPopupWindow"),DEFAULT_TIMEOUT,0)==null){
+					info("-- Load frame 3 --");
+					waitForAndGetElement(By.id("UIContentSelectorFolder"));
+				}
+			}
 			for(int i = 0; i < pathNames.length - 1; i ++ ){
-				String pathToSelect = ELEMENT_SELECT_CONTENT_FOLDER_PATHS.replace("${pathName}", pathNames[i]);
-				click(pathToSelect);
+				String pathToSelect = ELEMENT_SELECT_CONTENT_FOLDER_PATHS.replace("${pathName}", pathNames[i])+"/../../../div[@class='expandIcon']";
+				String pathToSelectA = ELEMENT_SELECT_CONTENT_FOLDER_PATHS_A.replace("${pathName}", pathNames[i])+"/../../div[@class='expandIcon']";
+				if(waitForAndGetElement(pathToSelect,DEFAULT_TIMEOUT,0)!=null)
+					click(pathToSelect);
+				else if(waitForAndGetElement(pathToSelectA,DEFAULT_TIMEOUT,0)!=null)
+					click(pathToSelectA);
+				else
+					waitForAndGetElement(ELEMENT_SELECT_CONTENT_FOLDER_PATHS.replace("${pathName}", pathNames[i])+"/../../../div[@class='collapseIcon']");
 			}
 			click(ELEMENT_RIGHT_WORKSPACE_NODE.replace("${node}", pathNames[pathNames.length - 1]));
 			//wait 1s

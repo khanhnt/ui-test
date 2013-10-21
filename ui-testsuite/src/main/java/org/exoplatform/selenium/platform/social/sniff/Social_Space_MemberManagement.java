@@ -52,7 +52,7 @@ public class Social_Space_MemberManagement extends Activity{
 	 * Test case ID: 67664
 	 * Step 1: Change member's role
 	 */
-	@Test
+	@Test(priority=0)
 	public void test01_ChangeMemberRoleInSpace(){
 		//Declare variable
 		String spaceName = "space67664";

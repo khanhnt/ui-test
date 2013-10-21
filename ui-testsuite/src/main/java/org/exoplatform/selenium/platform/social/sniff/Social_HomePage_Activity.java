@@ -89,9 +89,6 @@ public class Social_HomePage_Activity extends Activity {
 		By bNameWebContent = By.xpath(siteExp.ELEMENT_SE_NODE.replace("{$node}", nameWebContent));
 
 		//Create data
-		info("-- Create activity --");
-		addActivity(true, activity1, false,"");
-
 		info("-- Create space --");
 		magMember.goToMySpacePage();
 		magMember.addNewSpace(spaceName, "");
@@ -102,6 +99,9 @@ public class Social_HomePage_Activity extends Activity {
 		actBar.goToAddNewContent();
 		conTemp.createNewFile(nameWebContent, nameWebContent, "");
 		navToolBar.goToHomePage();
+		
+		info("-- Create activity --");
+		addActivity(true, activity1, false,"");
 
 		/*Step 1: Check layout of activity*/ 
 		//- log in and goto intranet hompage
@@ -111,19 +111,19 @@ public class Social_HomePage_Activity extends Activity {
 		//	(see attached)
 		//	  1.  the author
 		info("-- Verify author name --");
-		waitForAndGetElement(activity.ELEMENT_ACTIVITY_AUTHOR_NAME.replace("${index}", "3").replace("${author}", user));
+		waitForAndGetElement(activity.ELEMENT_ACTIVITY_AUTHOR_NAME.replace("${index}", "1").replace("${author}", user));
 		//	  2.  the author's avatar
 		info("-- Verify author avatar --");
-		waitForAndGetElement(activity.ELEMENT_ACTIVITY_AUTHOR_AVATAR.replace("${index}", "3").replace("${author}", user));
+		waitForAndGetElement(activity.ELEMENT_ACTIVITY_AUTHOR_AVATAR.replace("${index}", "1").replace("${author}", user));
 		//	  3.  the space (optional)
-		waitForAndGetElement(activity.ELEMENT_CONTENT_ACTIVITY_INDEX.replace("${index}", "2").replace("${content}", spaceName));
+		waitForAndGetElement(activity.ELEMENT_CONTENT_ACTIVITY_INDEX.replace("${index}", "3").replace("${content}", spaceName));
 		//	  4.  the type (optional)
 		//	  5.  the activity message
 		info("-- Verify activity message --");
-		waitForAndGetElement(activity.ELEMENT_CONTENT_ACTIVITY_INDEX.replace("${index}", "3").replace("${content}", activity1));
+		waitForAndGetElement(activity.ELEMENT_CONTENT_ACTIVITY_INDEX.replace("${index}", "1").replace("${content}", activity1));
 		//	  6.  the featured content (optional)
 		info("-- Verify the featured content --");
-		waitForAndGetElement(activity.ELEMENT_CONTENT_ACTIVITY_INDEX.replace("${index}", "1").replace("${content}", nameWebContent));
+		waitForAndGetElement(activity.ELEMENT_CONTENT_ACTIVITY_INDEX.replace("${index}", "2").replace("${content}", nameWebContent));
 		//	  7.  the Action bar (Comment and Like links + custom actions)
 		info("-- Verify action bar --");
 		waitForAndGetElement(ELEMENT_COMMENT_ICON.replace("${activityText}", activity1));
