@@ -84,28 +84,7 @@ public class Forum_Forum_Topic_BasicAction extends ForumBase {
 		mngCat.deleteCategoryInForum(titleCat, true);
 	}
 
-	/** Lock/Unlock a topic
-	 * caseID: 74752
-	 */
-	@Test
-	public void test03_LockUnlockTopic() {
-		String titleCat = "Category 03";
-		String titleForum = "Forum 03";
-		String titleTop = "Topic 03";
-
-		info("Lock/Unlock a topic");
-		//create category, forum, topic
-		mngTopic.addCategoryForumTopic(titleCat, titleForum, titleTop,titleTop); 
-		click(mngFru.ELEMENT_TOPIC_LINK.replace("${topic}", titleTop));
-
-		mngTopic.actionOnTopic(1);
-		
-		mngTopic.actionOnTopic(2);
-
-		//Delete data
-		click(By.linkText(titleCat));
-		mngCat.deleteCategoryInForum(titleCat, true);
-	}
+	//FQA-1342: remove LockUnlockTopic
 
 	/** Move a topic
 	 * caseID: 71197

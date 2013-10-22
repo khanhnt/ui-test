@@ -52,10 +52,10 @@ public class Forum_Forum_PublishActivity_TopicActivity extends ForumBase{
 	}
 	/**
 	 * CaseID: 75275
-	 * Move a topic
+	 * Check topic AS after Move a topic
 	 */
 	@Test
-	public void test01_MoveTopic(){
+	public void test01_CheckTopicASafterMoveTopic(){
 		String titleCat = "Category 01";
 		String titleForum = "Forum 01";
 		String titleTop = "Topic 01";
@@ -90,10 +90,10 @@ public class Forum_Forum_PublishActivity_TopicActivity extends ForumBase{
 	
 	/**
 	 * CaseID: 75276
-	 * Create new Topic
+	 * Check topic activity after create topic
 	 */
 	@Test
-	public void test02_CreateTopic(){
+	public void test02_CheckTopicASafterCreateTopic(){
 		String titleCat = "Category 02";
 		String titleForum = "Forum 02";
 		String titleTop = "Topic 02";
@@ -122,10 +122,10 @@ public class Forum_Forum_PublishActivity_TopicActivity extends ForumBase{
 	
 	/**
 	 * CaseID: 75277
-	 * Update topic title
+	 * Check update topic activity after Update topic title
 	 */
 	@Test
-	public void test03_UpdateTopicTitle(){
+	public void test03_CheckTopicASafterUpdateTopicTitle(){
 		String titleCat = "Category 03";
 		String titleForum = "Forum 03";
 		String titleTop = "Topic 03";
@@ -151,10 +151,10 @@ public class Forum_Forum_PublishActivity_TopicActivity extends ForumBase{
 	
 	/**
 	 * CaseID: 75278
-	 * Update topic content
+	 * Check update Topic activity after Update topic content
 	 */
 	@Test
-	public void test04_UpdateTopicContent(){
+	public void test04_CheckTopicASafterUpdateTopicContent(){
 		String titleCat = "Category 04";
 		String titleForum = "Forum 04";
 		String titleTop = "Topic 04";
@@ -180,10 +180,10 @@ public class Forum_Forum_PublishActivity_TopicActivity extends ForumBase{
 	
 	/**
 	 * CaseID: 75279
-	 * Lock/Unlock a topic
+	 * Check topic activity after Lock/Unlock a topic
 	 */
 	@Test
-	public void test05_LockUnlockTopic(){
+	public void test05_CheckTopicASafterLockUnlockTopic(){
 		String titleCat = "Category 05";
 		String titleForum = "Forum 05";
 		String titleTop = "Topic 05";
@@ -196,12 +196,15 @@ public class Forum_Forum_PublishActivity_TopicActivity extends ForumBase{
 		//Lock a topic
 		mngTopic.actionOnTopic(1);
 		
+		//Check if topic AS is updated or not after lock topic
 		navTool.goToHomePage();
 		hpgAct.checkLockTopic(titleTop);
 		
 		//Unlock a topic
 		goToForums();
 		mngTopic.actionOnTopic(2);
+		
+		//Check if topic AS is updated or not after unlock topic
 		navTool.goToHomePage();
 		hpgAct.checkUnlockTopic(titleTop);
 		
@@ -213,10 +216,10 @@ public class Forum_Forum_PublishActivity_TopicActivity extends ForumBase{
 	
 	/**
 	 * CaseID: 75280
-	 * Delete topic
+	 * Check topic activity after Delete topic
 	 */
 	@Test
-	public void test06_DeleteTopic(){
+	public void test06_CheckTopicASafterDeleteTopic(){
 		String titleCat = "Category 06";
 		String titleForum = "Forum 06";
 		String titleTop = "Topic 06";
