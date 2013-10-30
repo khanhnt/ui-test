@@ -29,7 +29,7 @@ public class Forum_Forum_PublishActivity_TopicActivity extends ForumBase{
 	ForumManagePost mngPost;
 	HomePageActivity hpgAct;
 	
-	@BeforeMethod
+	@BeforeMethod(groups={"fail"})
 	public void setUpBeforeTest(){
 		initSeleniumTest();
 		driver.get(baseUrl);
@@ -45,7 +45,7 @@ public class Forum_Forum_PublishActivity_TopicActivity extends ForumBase{
 		goToForums();
 	}
 
-	@AfterMethod
+	@AfterMethod(groups={"fail"})
 	public void afterTest(){
 		driver.manage().deleteAllCookies();
 		driver.quit();
@@ -308,7 +308,7 @@ public class Forum_Forum_PublishActivity_TopicActivity extends ForumBase{
 	 * CaseID: 75288
 	 * Jump to related reply
 	 */
-	@Test
+	@Test(groups={"fail"})
 	public void test09_OpenRelatedReply(){
 		String titleCat = "Category 09";
 		String titleForum = "Forum 09";

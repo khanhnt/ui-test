@@ -21,6 +21,7 @@ public class ForumManagePoll extends ForumBase {
 	ForumManageTopic magTopic;
 	ManageApplications app;
 	UserGroupManagement userGroup;
+	ForumManagePost mngPost;
 	
 	public ForumManagePoll(WebDriver dr){
 		driver = dr;
@@ -29,6 +30,7 @@ public class ForumManagePoll extends ForumBase {
 		userGroup = new UserGroupManagement(driver);
 		button = new Button(driver);
 		alert = new ManageAlert(driver);
+		mngPost = new ForumManagePost(driver);
 	}
 
 	//Poll Manage
@@ -272,8 +274,8 @@ public class ForumManagePoll extends ForumBase {
 	public void goToAddPoll(){
 		info("Go to add poll for topic");
 		Utils.pause(2000);
-		//waitForAndGetElement(ELEMENT_MORE_ACTION);
-		mouseOverAndClick(ELEMENT_MORE_ACTION);
+		waitForAndGetElement(mngPost.ELEMENT_POST_REPLY_BUTTON);
+		click(ELEMENT_MORE_ACTION);
 		//waitForAndGetElement(ELEMENT_ADD_POLL);
 		click(ELEMENT_ADD_POLL);
 		waitForAndGetElement(ELEMENT_POLL_POPUP);
