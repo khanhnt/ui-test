@@ -1,7 +1,5 @@
 package org.exoplatform.selenium.platform.ecms.sniff.siteexplorer;
 
-import static org.exoplatform.selenium.TestLogger.info;
-
 import org.exoplatform.selenium.Button;
 import org.exoplatform.selenium.Utils;
 import org.exoplatform.selenium.platform.ManageAccount;
@@ -10,14 +8,17 @@ import org.exoplatform.selenium.platform.PlatformBase;
 import org.exoplatform.selenium.platform.ecms.EcmsBase;
 import org.exoplatform.selenium.platform.ecms.contentexplorer.ActionBar;
 import org.exoplatform.selenium.platform.ecms.contentexplorer.ContentTemplate;
-import org.exoplatform.selenium.platform.ecms.contentexplorer.ContextMenu;
 import org.exoplatform.selenium.platform.ecms.contentexplorer.ContentTemplate.folderType;
+import org.exoplatform.selenium.platform.ecms.contentexplorer.ContextMenu;
 import org.exoplatform.selenium.platform.ecms.contentexplorer.ContextMenu.actionType;
+import org.exoplatform.selenium.platform.social.ManageMember;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
+import static org.exoplatform.selenium.TestLogger.info;
 
 /**
  * @date 20/05/2013
@@ -33,6 +34,7 @@ public class ECMS_SE_Create extends PlatformBase {
 	EcmsBase ecms;
 	ContentTemplate cTemp;
 	Button button;
+    ManageMember magMember;
 	
 	public final String DATA_USER = "john";
 	public final String DATA_PASS = "gtn";
@@ -53,6 +55,7 @@ public class ECMS_SE_Create extends PlatformBase {
 		button = new Button(driver);
 		ecms = new EcmsBase(driver);
 		magAcc.signIn(DATA_USER, DATA_PASS);
+        magMember = new ManageMember(driver);
 	}
 
 	@AfterMethod
@@ -174,7 +177,7 @@ public class ECMS_SE_Create extends PlatformBase {
 		actBar.actionsOnElement(file2, actionType.DELETE);
 	}
 	
-	/**CaseId: 75242 + 75243: Upload then delete uploaded files in space document
+	/**CaseId: 75242 : Upload then delete uploaded files in space document
 	 * pending: do not merge the functions to create space
 	 */
 	
@@ -236,4 +239,34 @@ public class ECMS_SE_Create extends PlatformBase {
 		//cMenu.deleteData(By.linkText(file1));
 		cMenu.deleteData(By.linkText(file2));
 	}
+
+    /**CaseId: 75243 : Delete an uploaded file in Space/Document
+     * @author hzekri
+     */
+    @Test
+    public void test28_DeleteUploadedFileInSpaceDocument(){
+        //Declare variables
+        String spacename = "SpaceTestUploadDelete";
+        String spacedesc = "Description Of SpaceTestUploadDelete";
+
+        //Add new space
+        magMember.goToMySpacePage();
+        magMember.addNewSpace(spacename, spacedesc);
+
+        //Open Documents in this space
+        waitForAndGetElement(magMember.ELEMENT_DOCUMENTS_TAB);
+        click(magMember.ELEMENT_DOCUMENTS_TAB);
+
+
+        info("Upload file in space document");
+        actBar.uploadFile("TestData/" + file1, true);
+
+        info("Delete Uploaded file");
+        click(actBar.ELEMENT_VIEW_MODE_LINK.replace("${viewName}", "List"));
+        actBar.actionsOnElement(file1, actionType.DELETE, false, true);
+
+        // remove space after using it
+        magMember.goToMySpacePage();
+        magMember.deleteSpace(spacename,300000);
+    }
 }
