@@ -50,7 +50,7 @@ public class HomePageActivity extends PlatformBase{
 	public final String ELEMENT_ACTIVITY_DELETE_COMMENT_ICON = "//*[@class='contentComment' and contains(text(), '${comment}')]/../..//*[contains(@id, 'DeleteCommentButton')]";
 	public final String DATA_MESSAGE_CONFIRM_DELETE_COMMENT = "Are you sure you want to delete this comment?";
 	public final String ELEMENT_COMMENTBOX="//*[text()='${title}']/../../../..//div[@class='exo-mentions']/div[contains(@id,'DisplayCommentTextarea')]";
-	public final String ELEMENT_ICON_COMMENT = "//*[text()='${title}']/../../../..//div[@class='actionBar clearfix forumActivityIcon']//i[@class='uiIconComment uiIconLightGray']";
+	public final String ELEMENT_ICON_COMMENT = "//*[text()='${title}']/../../../..//i[@class='uiIconComment uiIconLightGray']";
 
 	//Content activity
 	public final String ELEMENT_CONTENT_NAME = "//a[@title='@{fileName}']";
@@ -113,6 +113,13 @@ public class HomePageActivity extends PlatformBase{
 	public final String ELEMENT_QUESTION_RATE = "//a[@class='linkTitle' and text()='${title}']/../..//div[@class='avgRatingImages sumaryRate']/i[@class='voted'][${rate}]";
 	public final String ELEMENT_QUESTION_HAFT_RATE = "//a[@class='linkTitle' and text()='${title}']/../..//div[@data-original-title='Average']/i[@class='votedHaft']";
 	public final String ELEMENT_QUESTION_VIEW_COMMENT = "//a[text()='${title}']/../../../..//div[@class='commentListInfo clearfix']/a";
+	public final String ELEMENT_ANSWER_ACTIVITY_LINK = "//a[text()='${title}']/../../../..//a[contains(@id,'AnswerLink')]";
+	public final String ELEMENT_COMMENT_LABEL = "//*[text()='${title}']/../../../..//*[contains(@id,'DisplayCommentTextarea')]/../div[@class='placeholder']";
+	public final String ELEMENT_COMMENT_BUTTON = "//*[text()='${title}']/../../../..//button[contains(@id,'CommentButton')]";
+	public final String MSG_ANSWER_APPROVE = "Answer has been approved: ${answer}"; 
+	public final String MSG_ANSWER_DISAPPROVE = "Answer has been unapproved: ${answer}";
+	public final String MSG_QUESTION_ADD_LANGUAGE = "Question has been added in: ${language}";
+	
 	//Forum activity
 	public final String ELEMENT_FORUM_ACT_CONTENT = "//a[text()='${title}']/../../..//div[@class='contentForum theContent']//p";
 	public final String ELEMENT_FORUM_NUMBER_REPLY = "//a[text()='${title}']/../../..//div[@class='contentForum theContent']/span[text()='${number} Replies']";
@@ -131,7 +138,8 @@ public class HomePageActivity extends PlatformBase{
 	public final String ELEMENT_VOTE_RATE = "//div[@class='uiBox roundedBottom introBox pollShare']//a[contains(text(),'${poll}')]/../../..//div[@class='titleVote' and contains(text(),'${vote}')]/..//div[@class='progressing' and contains(text(),'(${rate} vote)')]";
 	public final String ELEMENT_POLL_VOTE = "//a[contains(text(),'${poll}')]/../../../..//i[@class='uiIconSocVote uiIconSocLightGray']";
 	public final String ELEMENT_TOPIC_COMMENT = "//a[contains(text(),'${title}')]/../../../..//*[@class='contentComment' and contains(text(), '${comment}')]/../..";
-
+	
+	
 	public HomePageActivity(WebDriver dr){
 		driver = dr;
 		post = new ForumManagePost(driver);
@@ -525,7 +533,7 @@ public class HomePageActivity extends PlatformBase{
 	public void checkAnswerOfQuestion(String question, String...answer){
 		int number = answer.length;
 		info("Check for comment for Answer of question on activity");
-
+		driver.navigate().refresh();
 		//Check number of answer
 		waitForAndGetElement(ELEMENT_QUESTION_NUM_ANSWER.replace("${number}", Integer.toString(number)));
 

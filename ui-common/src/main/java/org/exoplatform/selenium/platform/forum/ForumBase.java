@@ -292,6 +292,7 @@ public class ForumBase extends PlatformBase {
 			for (int repeat = 0;; repeat++) {
 				if (repeat >= DEFAULT_TIMEOUT/WAIT_INTERVAL) {
 					info("Fail to input data to frame");
+					break;
 				}
 				driver.switchTo().frame(waitForAndGetElement(frame1));
 				driver.switchTo().frame(waitForAndGetElement(frame2));

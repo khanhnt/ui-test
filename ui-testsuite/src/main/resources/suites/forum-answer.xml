@@ -10,7 +10,7 @@
 		</groups>
 		<packages>
 			<package name="org.exoplatform.selenium.platform.forum.functional.answer.*" />
-		</packages>
+		</packages> 
 	</test>
 	<listeners>
 		<listener class-name="org.exoplatform.selenium.TestReportListener" />
