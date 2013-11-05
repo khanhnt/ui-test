@@ -59,7 +59,7 @@ public class Social_HomePage_ActivityComposer extends Activity {
 	 * Test case ID: 67900
 	 * Step 1: Mentions on User Activity Stream
 	 */
-	@Test()
+	@Test(priority=0)
 	public void test01_MentionAUserInActivityComposer(){
 		/*Step 1: Mentions on User Activity Stream*/ 
 		//Hover the mouse over the name of user and select My Activity streams
@@ -82,7 +82,7 @@ public class Social_HomePage_ActivityComposer extends Activity {
 	 * Test case ID: 74711
 	 * Step 1: Share your status
 	 */
-	@Test
+	@Test(priority=1)
 	public void test02_ShareYourStatus(){
 		//Declare variables
 		String activity1 = "Activity1";
@@ -105,7 +105,7 @@ public class Social_HomePage_ActivityComposer extends Activity {
 	 * Step 2: Select document
 	 * Step 3: Share the document
 	 */
-	@Test
+	@Test(priority=2)
 	public void test03_AddAdocument(){
 		//Declare variables
 		String file="test03_AddAdocument";
@@ -152,7 +152,7 @@ public class Social_HomePage_ActivityComposer extends Activity {
 	 * Step 3: Upload a file
 	 * Step 4: Share the document
 	 */
-	@Test
+	@Test(priority=3)
 	public void test04_AddNewFolderAndUploadFile(){
 		//Declare variables
 		String uploadFileName = "ECMS_DMS_SE_Upload_pdffile.pdf";
@@ -197,7 +197,7 @@ public class Social_HomePage_ActivityComposer extends Activity {
 	 * Step 1: Add a link
 	 * Step 2: Share the document
 	 */
-	@Test
+	@Test(priority=4)
 	public void test05_AddALink(){
 		//Declare variables
 		String link = "https://www.google.com.vn/";

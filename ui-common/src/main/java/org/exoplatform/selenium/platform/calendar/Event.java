@@ -6,6 +6,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.exoplatform.selenium.Button;
 import org.exoplatform.selenium.ManageAlert;
+import org.exoplatform.selenium.Utils;
 
 /**
  * @Date 10 Oct 2013
@@ -223,6 +224,7 @@ public class Event extends CalendarBase{
 		inputFromToEvent(from, to, allDay);
 		button.save();
 		waitForElementNotPresent(ELEMENT_ADD_EVENT_POPUP);
+		Utils.pause(1000);
 	}
 
 

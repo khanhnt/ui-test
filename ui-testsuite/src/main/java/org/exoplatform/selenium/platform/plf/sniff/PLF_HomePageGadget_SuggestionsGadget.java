@@ -133,6 +133,7 @@ public class PLF_HomePageGadget_SuggestionsGadget extends Activity{
 		magMember.managerInviteUserToJoinSpace(userType.DEVELOPER,spaceName2,userType.ADMIN,false);
 
 		//Login with "John"
+		acc.userSignIn(userType.ADMIN);
 		waitForElementNotPresent(homeGad.ELEMENT_VERIFY_SPACE_SUGGESTIONS.replace("${spaceName}", spaceName1));
 		waitForElementNotPresent(homeGad.ELEMENT_VERIFY_SPACE_SUGGESTIONS.replace("${spaceName}", spaceName2));
 
@@ -151,6 +152,7 @@ public class PLF_HomePageGadget_SuggestionsGadget extends Activity{
 		//Cancel request
 		navToolBar.goToConnectionPage();
 		peoConn.cancelRequest(user1);
+		peoConn.cancelRequest(user2);
 		peoConn.cancelRequest(user3);
 		peoConn.cancelRequest(user4);
 

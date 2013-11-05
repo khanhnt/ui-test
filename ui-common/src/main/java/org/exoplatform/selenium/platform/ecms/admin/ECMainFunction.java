@@ -110,11 +110,13 @@ public class ECMainFunction extends EcmsBase{
 			click(ELEMENT_REPOSITORY_TAB);
 		}
 		click(ELEMENT_MANAGE_LOCKS);
+		Utils.pause(2000);
 	}
 
 	public void goToManageLockTab(){
 		goToLockedTab();
 		click(ELEMENT_MANAGE_LOCK_TAB);
+		Utils.pause(2000);
 	}
 
 	//Go To Content Administration / Repository / Node Types Tab

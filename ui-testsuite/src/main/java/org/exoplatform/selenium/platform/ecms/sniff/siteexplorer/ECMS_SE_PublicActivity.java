@@ -114,7 +114,7 @@ public class ECMS_SE_PublicActivity extends PlatformBase {
 	/**CaseId: 74820 -> Check intranet homepage after adding FreeLayout Web Content
 	 * 
 	 */
-	//@Test
+	@Test
 	public void test02_CheckIntranetHomePage_afterAddingWebContent(){
 		String name = "Public_activity_web_content_02";
 		String sum = "line1/line2/line3/line4/line5";
@@ -142,7 +142,7 @@ public class ECMS_SE_PublicActivity extends PlatformBase {
 	/** CaseId: 74821 -> Check intranet homepage after adding Product content
 	 * 
 	 */
-	//@Test
+	@Test
 	public void test03_CheckIntranetHomePage_AfterAddingProduct(){
 		String name = "Public_activity_product_03";
 		String sum = "line1/line2/line3/line4/line5";
@@ -207,7 +207,7 @@ public class ECMS_SE_PublicActivity extends PlatformBase {
 	@Test
 	public void test05_CheckIntranetHomePage_AfterAddingTagToContent(){
 		String name = "Public_activity_web_content_05";
-		String sum = "line1/line2/line3/line4/line5";
+		String sum = "line1/line2/line3";
 		By elementWeb = By.linkText(name);
 		String tag1[] = {"Activity_Tag1"};
 		String tag2[] = {"Activity_Tag2", "Activity_Tag3"};
@@ -251,7 +251,7 @@ public class ECMS_SE_PublicActivity extends PlatformBase {
 	@Test
 	public void test06_CheckIntranetHomepage_AfterDeletingContent(){
 		String name = "Public_activity_web_content_06";
-		String sum = "line1/line2/line3/line4/line5";
+		String sum = "line1/line2/line3";
 		By elementWeb = By.linkText(name);
 		
 		createWebContentThenCheckActivity(name, sum);
@@ -269,7 +269,7 @@ public class ECMS_SE_PublicActivity extends PlatformBase {
 	@Test
 	public void test07_CheckIntranetHomePage_AfterPublishingContent(){
 		String name = "Public_activity_web_content_07";
-		String sum = "line1/line2/line3/line4/line5";
+		String sum = "line1/line2/line3";
 		By elementWeb = By.linkText(name);
 		
 		createWebContentThenCheckActivity(name, sum);
@@ -391,7 +391,7 @@ public class ECMS_SE_PublicActivity extends PlatformBase {
 	@Test
 	public void test12_EditAContentFromContentActivity(){
 		String name = "Public_activity_web_content_11";
-		String sum = "line1/line2/line3/line4/line5";
+		String sum = "line1/line2/line3";
 		By elementWeb = By.linkText(name);
 		
 		createWebContentThenCheckActivity(name, sum);
@@ -505,7 +505,7 @@ public class ECMS_SE_PublicActivity extends PlatformBase {
 	@Test
 	public void test17_CheckIntranetHomePage_AfterMovingContent(){
 		String name = "Public_activity_web_content_17";
-		String sum = "line1/line2/line3/line4/line5";
+		String sum = "line1/line2/line3";
 		By elementWeb = By.linkText(name);
 		String folder = "contentfolder17";
 		By elementFolder = By.linkText(folder);

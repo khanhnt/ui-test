@@ -49,7 +49,7 @@ public class SitesExplorer extends EcmsBase{
 
 	/* sidebar */
 	public final String ELEMENT_SE_NODE = "//*[@title='{$node}']"; 
-	public final By ELEMENT_SIDEBAR_SITES_MANAGEMENT = By.xpath("//*[@data-original-title = 'Sites Management']");
+	public final By ELEMENT_SIDEBAR_SITES_MANAGEMENT = By.xpath("//*[@data-original-title = 'Sites Management' or @title = 'Sites Management']");
 	public final By ELEMENT_SIDEBAR_COLLABORATION = By.xpath("//*[@data-original-title = 'Collaboration']");
 	//File Explorer - relation -clipboard - tag clould - saved search
 	public final String ELEMENT_TAG_IN_CONTAINER_LIST = "//*[@class='tagContainer']/*[text()='${tagName}']"; 

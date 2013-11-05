@@ -73,7 +73,7 @@ public class NavigationToolbar extends PlatformBase {
 			}
 			info("Retry...[" + repeat + "]");
 		}
-		waitForTextPresent("Manage Sites");
+		waitForAndGetElement(ELEMENT_MANAGE_SITE_TITLE);
 	}
 
 	//Go to Portal Manage Pages	
@@ -374,22 +374,11 @@ public class NavigationToolbar extends PlatformBase {
 	 */
 	public void goToEditLayout(){
 		info("Go to Edit layout form");
-		for(int repeat=0;; repeat ++){
-			if (repeat > 4){
-				mouseOverAndClick(ELEMENT_MENU_EDIT_LINK);
-				break;
-			}
-			mouseOver(ELEMENT_MENU_EDIT_LINK, true);
-			if (waitForAndGetElement(ELEMENT_MENU_PAGE_LINK, DEFAULT_TIMEOUT, 0)!= null) {
-				info("-- Click Pagemenu --");
-				mouseOver(ELEMENT_MENU_PAGE_LINK,true);
-				if (waitForAndGetElement(ELEMENT_MENU_EDIT_LAYOUT, DEFAULT_TIMEOUT, 0)!= null){
-					click(ELEMENT_MENU_EDIT_LAYOUT);
-					break;
-				}
-			}
-			info("Retry...[" + repeat + "]");
-		}
+		Utils.pause(1000);
+		mouseOverAndClick(ELEMENT_MENU_EDIT_LINK);
+		mouseOver(ELEMENT_MENU_PAGE_LINK, true);
+		WebElement editLayout = waitForAndGetElement(ELEMENT_MENU_EDIT_LAYOUT,10000,0,2);
+		((JavascriptExecutor)driver).executeScript("arguments[0].click()",editLayout);		
 		Utils.pause(1000);
 	}
 
@@ -454,6 +443,7 @@ public class NavigationToolbar extends PlatformBase {
                 }
                 info("Retry...[" + repeat + "]");
         }
+        Utils.pause(2000);
 	}
 	
 	/** Go to Event/Task

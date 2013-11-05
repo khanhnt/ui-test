@@ -195,6 +195,13 @@ public class ECMS_Admin_Advanced extends PlatformBase{
 		//create a node by user who hasn't [read] permission
 		magAcc.signIn("mary", "gtn");
 		nav.goToSiteExplorer();
+		actBar.addItem2ActionBar("addDocument", actBar.ELEMENT_NEW_CONTENT_LINK);
+		magAcc.signOut();
+		magAcc.signIn("mary", "gtn");
+		nav.goToSiteExplorer();
+		 if(waitForAndGetElement(actBar.ELEMENT_VIEW_MODE_LINK.replace("${viewName}", "Web"),DEFAULT_TIMEOUT,0)!=null){
+			 click(actBar.ELEMENT_VIEW_MODE_LINK.replace("${viewName}", "Web"));
+		 }
 		ecms.goToNode("intranet/documents");
 		actBar.goToAddNewContent();
 		info("Create new File document: " + DATA_FILE);

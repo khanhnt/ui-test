@@ -10,9 +10,9 @@
             <class name="org.exoplatform.selenium.platform.social.sniff.Social_HomePage_Activity"/>
             <class name="org.exoplatform.selenium.platform.social.sniff.Social_Space_MemberManagement"/>
             <class name="org.exoplatform.selenium.platform.social.sniff.Social_Dashboard"/>
+            <class name="org.exoplatform.selenium.platform.social.sniff.Social_People"/>
             <class name="org.exoplatform.selenium.platform.social.sniff.Social_HomePage_ActivityComposer"/>
             <class name="org.exoplatform.selenium.platform.social.sniff.Social_HomePage_ActivityStream"/>
-            <class name="org.exoplatform.selenium.platform.social.sniff.Social_People"/>
             <class name="org.exoplatform.selenium.platform.social.sniff.Social_Space_ManageNavigation"/>
             <class name="org.exoplatform.selenium.platform.social.sniff.Social_Space_Search"/>
             <class name="org.exoplatform.selenium.platform.social.sniff.Social_Space_SpaceList"/>

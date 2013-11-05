@@ -79,7 +79,7 @@ public class Social_HomePage_Activity extends Activity {
 	 * Test case ID: 74725
 	 * Step 1: Check layout of activity
 	 */
-	@Test
+	@Test(priority = 0)
 	public void test01_CheckLayoutOfActivities(){
 		//Declare variable
 		String activity1 = "activity747251";
@@ -156,7 +156,7 @@ public class Social_HomePage_Activity extends Activity {
 	 * Test case ID: 95701
 	 * Step 1: Check the order of activities
 	 */
-	@Test
+	@Test(priority = 0)
 	public void test02_CheckOrderOfTheActivities(){
 		//Declare variable
 		String activity1 = "activity 95701";

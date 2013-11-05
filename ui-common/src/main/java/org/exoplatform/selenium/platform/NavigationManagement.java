@@ -86,7 +86,7 @@ public class NavigationManagement extends  PlatformBase{
 		Utils.pause(500);
 		button.save();
 		if (verifyNode) {
-			waitForTextNotPresent("Page Node Settings");
+			//waitForTextNotPresent("Page Node Settings");
 			//waitForTextPresent(nodeName);
 			waitForAndGetElement( ELEMENT_NODE_LINK.replace("${nodeLabel}", nodeName));
 			//button.save();

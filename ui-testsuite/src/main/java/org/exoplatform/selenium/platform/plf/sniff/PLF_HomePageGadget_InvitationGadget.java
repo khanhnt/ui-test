@@ -61,8 +61,8 @@ public class PLF_HomePageGadget_InvitationGadget extends Activity{
 	@Test
 	public void test01_InvitationGadget() {
 
-		String spaceName1 = "space1";
-		String spaceName2 = "space2";
+		String spaceName1 = "space705791";
+		String spaceName2 = "space705792";
 		String user2="Jack Miller";
 		String user3="James Davis";
 		String user5="John Smith";

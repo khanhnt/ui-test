@@ -2,6 +2,7 @@ package org.exoplatform.selenium.platform.plf.sniff;
 
 import static org.exoplatform.selenium.TestLogger.info;
 
+import org.exoplatform.selenium.Utils;
 import org.exoplatform.selenium.platform.ManageAccount;
 import org.exoplatform.selenium.platform.NavigationToolbar;
 import org.exoplatform.selenium.platform.calendar.Event;
@@ -286,8 +287,10 @@ public class PLF_Navigation_TopNavigation extends BasicAction {
 		click(ELEMENT_HELP_ICON);
 		//- A new tab in the internet browser is opened
 		//- The user guide is opened and the chapter displayed matched with the current navigation of the user.
+		Utils.pause(1000);
 		switchToNewWindow();
 		String url = driver.getCurrentUrl();
+		Utils.pause(1000);
 		assert url.contains("http://docs.exoplatform.com");
 	}
 

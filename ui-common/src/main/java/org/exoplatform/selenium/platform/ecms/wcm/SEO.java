@@ -90,7 +90,7 @@ public class SEO extends EcmsBase{
 		click(ELEMENT_SEO_DELETE_ICON.replace("${language}", language));
 		alt.waitForConfirmation(MSG_SEO_DELETE);
 		waitForElementNotPresent(ELEMENT_SEO_DELETE_ICON.replace("${language}", language));
-		click(button.ELEMENT_SAVE_BUTTON);
+		//click(button.ELEMENT_SAVE_BUTTON);
 		button.closeWindow();
 		Utils.pause(1000);
 	}

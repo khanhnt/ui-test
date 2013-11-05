@@ -253,6 +253,7 @@ public class PLF_HomepageGadget_CalendarGadget extends CalendarBase{
 
 		goToCalendarPage();
 		deleteCalendar(Calendar_Information_1, true);
+		Utils.pause(1000);
 		deleteCalendar(Calendar_Information_2, true);
 	}
 }

@@ -89,9 +89,9 @@ public class PlatformBase extends TestBase {
 
 	//Page
 	public final By ELEMENT_MENU_PAGE_LINK = By.xpath("//li[@class='dropdown-submenu']/a[contains(text(),'Page')]");
-	public final By ELEMENT_MENU_EDIT_LAYOUT = By.linkText("Edit Layout");
+	public final By ELEMENT_MENU_EDIT_LAYOUT = By.xpath("//a[contains(text(),'Edit Layout')]");
 	public final By ELEMENT_MENU_SEO_LINK = By.xpath("//span[text()='SEO']");
-	public final By ELEMENT_MENU_ADD_PAGE_LINK = By.linkText("Add Page");
+	public final By ELEMENT_MENU_ADD_PAGE_LINK = By.xpath("//a[contains(text(),'Add Page')]");
 	//site
 
 	/* End Edit*/
@@ -125,6 +125,7 @@ public class PlatformBase extends TestBase {
 	public final String ELEMENT_LINK_SITES   = "//a[text()='Sites']";
 	public final String ELEMENT_LINK_GROUP = "//a[text()='Group Sites']";
 	public final String ELEMENT_LINK_BRANDING = "//a[text()='Branding']";
+	
 	//Administration
 	//IDE
 	public final By ELEMENT_LINK_IDE = By.linkText("IDE");
@@ -254,6 +255,7 @@ public class PlatformBase extends TestBase {
 	public final String ELEMENT_SELECT_SEARCH_OPTION = "//select[@name='searchOption']";
 	public final String ELEMENT_SEARCH_ICON_REGISTER = "//img[@class='SearchIcon']";
 	public final String ELEMENT_ADD_NEW_PORTAL_LINK = "//a[text()='Add New Site']";	
+	public final By ELEMENT_MANAGE_SITE_TITLE = By.xpath("//*[@class='uiManagementSite']//*[contains(text(),'Manage Sites')]");
 	public final String ELEMENT_CHECKBOX_SHOW_INFO_BAR_BY_DEFAULT = "//input[@name='showInfobar']";
 	public final String ELEMENT_PORTAL_IN_LIST = "//td[@class='Content']/div[@class='Label' and text()='${portalName}']";
 	public final String ELEMENT_PORTAL_DELETE_ICON = "//*[text()='${portalName}']/../..//*[text()='Delete']";

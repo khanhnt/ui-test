@@ -1,6 +1,7 @@
 package org.exoplatform.selenium.platform;
 import static org.exoplatform.selenium.TestLogger.info;
 import org.exoplatform.selenium.Button;
+import org.exoplatform.selenium.ManageAlert;
 import org.exoplatform.selenium.Utils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -105,6 +106,7 @@ public class SettingSearchPage extends PlatformBase {
 		pEditor = new PageEditor(driver);
 		button = new Button(driver);
 		app = new ManageApplications(driver);
+		alert = new ManageAlert(driver);
 	}
 
 	public void addQuickSearchPage(String pageName, String gadget){
@@ -125,8 +127,9 @@ public class SettingSearchPage extends PlatformBase {
 	 * @param searchText
 	 */
 	public void quickSearch(String searchText){
+		info("-- Go to quick search --");
 		click(ELEMENT_QUICK_SEARCH_ICON);
-		waitForAndGetElement(ELEMENT_QUICK_SEARCH_TEXTBOX).sendKeys(searchText);
+		type(ELEMENT_QUICK_SEARCH_TEXTBOX,searchText,true);
 		Utils.pause(3000);
 		waitForAndGetElement(ELEMENT_QUICK_SEARCH_TEXTBOX).sendKeys(Keys.RETURN);
 		Utils.pause(1000);
@@ -174,8 +177,10 @@ public class SettingSearchPage extends PlatformBase {
 			check(ELEMENT_SEARCH_WIKI_CHECKBOX,2);
 		else
 			uncheck(ELEMENT_SEARCH_WIKI_CHECKBOX);
-		waitForAndGetElement(ELEMENT_SAVE_SETTING).click();
+		click(ELEMENT_SAVE_SETTING);
+		alert.acceptAlert();
 		button.close();
+		pEditor.finishEditLayout();
 
 	}
 
@@ -220,8 +225,10 @@ public class SettingSearchPage extends PlatformBase {
 			check(ELEMENT_SEARCH_WIKI_CHECKBOX,2);
 		else
 			uncheck(ELEMENT_SEARCH_WIKI_CHECKBOX);
-		waitForAndGetElement(ELEMENT_SAVE_SETTING).click();
+		click(ELEMENT_SAVE_SETTING);
+		alert.acceptAlert();
 		button.close();
+		pEditor.finishEditLayout();
 
 	}
 

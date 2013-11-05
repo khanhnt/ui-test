@@ -1,6 +1,7 @@
 package org.exoplatform.selenium.platform.plf.sniff;
 import static org.exoplatform.selenium.TestLogger.info;
 
+import org.exoplatform.selenium.Utils;
 import org.exoplatform.selenium.platform.HomePageActivity;
 import org.exoplatform.selenium.platform.ManageAccount;
 import org.exoplatform.selenium.platform.ManageApplications;
@@ -81,7 +82,8 @@ public class PLF_Integration extends PlatformBase {
 		/*Step 2: Check showing IDE page*/ 
 		//Check look of IDE page
 		/*switch to ckeditor frame*/
-		driver.switchTo().frame(driver.findElement(ELEMENT_IDE_WORKSPACE_FRAME));
+		Utils.pause(2000);
+		driver.switchTo().frame(waitForAndGetElement(ELEMENT_IDE_WORKSPACE_FRAME));
 		//IDE page is shown correctly, dev-monit workspace is selected as default
 		waitForAndGetElement(ELEMENT_IDE_WORKSPACE_DEFAULT);
 		driver.switchTo().defaultContent();

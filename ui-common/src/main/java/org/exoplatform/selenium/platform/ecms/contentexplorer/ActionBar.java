@@ -1331,6 +1331,7 @@ public class ActionBar extends EcmsBase{
 		WebElement viewMetadata = waitForAndGetElement(ELEMENT_VIEW_METADATA_ICON,5000,0);
 		if (viewMetadata == null)
 			click(ELEMENT_MORE_LINK_WITHOUT_BLOCK);
+		Utils.pause(3000);
 		click(ELEMENT_VIEW_METADATA_ICON);
 		waitForAndGetElement(ELEMENT_METADATA_POPUP_TEXT);
 		button.cancel();

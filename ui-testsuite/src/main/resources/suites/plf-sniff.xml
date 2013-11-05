@@ -1,14 +1,27 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 <suite name="Platform Sniff Test" verbose="1" preserve-order="true">
-	<test name="plf-sniff" enabled="true">
+	<test name="plf-sniff" enabled="true" preserve-order="true">
 		<groups>
 			<run>
 				<exclude name="pending" />
 			</run>
 		</groups>
-		<packages>
-			<package name="org.exoplatform.selenium.platform.plf.sniff" />
-		</packages>
+		<classes>
+			<class name="org.exoplatform.selenium.platform.plf.sniff.PLF_UnifiedSearch"/>
+			<class name="org.exoplatform.selenium.platform.plf.sniff.PLF_HomepageGadget_CalendarGadget"/>
+            <class name="org.exoplatform.selenium.platform.plf.sniff.PLF_Integration"/>
+            <class name="org.exoplatform.selenium.platform.plf.sniff.PLF_Registration"/>
+            <class name="org.exoplatform.selenium.platform.plf.sniff.PLF_Navigation_UserNavigation"/>
+            <class name="org.exoplatform.selenium.platform.plf.sniff.PLF_Navigation_TopNavigation"/>
+            <class name="org.exoplatform.selenium.platform.plf.sniff.PLF_Navigation_SpaceNavigation"/>
+            <class name="org.exoplatform.selenium.platform.plf.sniff.PLF_Navigation_LeftNavigation"/>
+            <class name="org.exoplatform.selenium.platform.plf.sniff.PLF_HomePageGadget_SuggestionsGadget"/>
+            <class name="org.exoplatform.selenium.platform.plf.sniff.PLF_HomePageGadget_InvitationGadget"/>
+            <class name="org.exoplatform.selenium.platform.plf.sniff.PLF_HomePageGadget_GettingStartedGadget"/>   
+            <class name="org.exoplatform.selenium.platform.plf.sniff.PLF_Branding"/>
+            <class name="org.exoplatform.selenium.platform.plf.sniff.PLF_AccountSetup"/>
+            <class name="org.exoplatform.selenium.platform.plf.sniff.PLF_HomepageGadget_WhoIsOnlineGadget"/>
+        </classes>
 	</test>
 	<listeners>
 		<listener class-name="org.exoplatform.selenium.TestReportListener" />

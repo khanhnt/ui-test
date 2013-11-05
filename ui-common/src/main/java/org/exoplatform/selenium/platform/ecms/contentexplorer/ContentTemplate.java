@@ -426,6 +426,7 @@ public class ContentTemplate extends EcmsBase{
 		type(ELEMENT_PRODUCT_NAME_TEXTBOX, name, false);
 		//type(ELEMENT_PRODUCT_TITLE_TEXTBOX, title, false);
 		click(button.ELEMENT_SAVE_CLOSE_BUTTON);
+		Utils.pause(1000);
 	}
 
 	/** function add new Product content with full inputs

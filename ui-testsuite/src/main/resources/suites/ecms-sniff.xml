@@ -8,12 +8,12 @@
 			</run>
 		</groups>
 		<classes>
+			<class name="org.exoplatform.selenium.platform.ecms.sniff.siteexplorer.ECMS_SE_BasicAction" />
+			<class name="org.exoplatform.selenium.platform.ecms.sniff.siteexplorer.ECMS_SE_Info" />
+			<class name="org.exoplatform.selenium.platform.ecms.sniff.siteexplorer.ECMS_SE_Collaboration" />
 			<class name="org.exoplatform.selenium.platform.ecms.sniff.siteexplorer.ECMS_SE_PublicActivity" />
 			<class name="org.exoplatform.selenium.platform.ecms.sniff.siteexplorer.ECMS_SE_Admin" />
-			<class name="org.exoplatform.selenium.platform.ecms.sniff.siteexplorer.ECMS_SE_BasicAction" />
-			<class name="org.exoplatform.selenium.platform.ecms.sniff.siteexplorer.ECMS_SE_Collaboration" />
 			<class name="org.exoplatform.selenium.platform.ecms.sniff.siteexplorer.ECMS_SE_Create" />
-			<class name="org.exoplatform.selenium.platform.ecms.sniff.siteexplorer.ECMS_SE_Info" />
 			<class name="org.exoplatform.selenium.platform.ecms.sniff.siteexplorer.ECMS_SE_Search" />
 			<class name="org.exoplatform.selenium.platform.ecms.sniff.siteexplorer.ECMS_SE_Setting" />
 		</classes>

@@ -19,6 +19,7 @@ import org.exoplatform.selenium.platform.SettingSearchPage;
 import org.exoplatform.selenium.platform.SearchAdministration;
 import org.exoplatform.selenium.platform.calendar.Event;
 import org.exoplatform.selenium.platform.calendar.Task;
+import org.exoplatform.selenium.platform.ecms.EcmsBase;
 import org.exoplatform.selenium.platform.ecms.contentexplorer.ActionBar;
 import org.exoplatform.selenium.platform.ecms.contentexplorer.ContentTemplate;
 import org.exoplatform.selenium.platform.ecms.contentexplorer.ContextMenu;
@@ -67,6 +68,7 @@ public class PLF_UnifiedSearch extends Template {
 	AnswerManageAnwser ansMagAn;
 	AnswerManageQuestion magQuest;
 	NavigationManagement navMag;
+	EcmsBase ecms;
 
 	@BeforeMethod
 	public void beforeMethods() {
@@ -96,6 +98,7 @@ public class PLF_UnifiedSearch extends Template {
 		ansMagAn = new AnswerManageAnwser(driver);
 		magQuest = new AnswerManageQuestion(driver);
 		navMag = new NavigationManagement(driver);
+		ecms = new EcmsBase(driver);
 		magAcc.signIn(DATA_USER1, DATA_PASS);
 	}
 
@@ -113,7 +116,7 @@ public class PLF_UnifiedSearch extends Template {
 	 * Step 2: Enable a content type
 	 * Step 3: Disable a content type
 	 */
-	@Test
+	@Test(priority=2)
 	public void test01_AdministrateTheUnifiedSearchEngine(){
 		/*Declare variables*/
 		String contentType = "Documents";
@@ -135,6 +138,10 @@ public class PLF_UnifiedSearch extends Template {
 		//- This content type will no longer appear in the search results, nor in the search apps settings
 		naviToolbar.goToSearch();
 		searchAdmin.disableContentTypeSearch(contentType);
+		
+		//Restore data
+		naviToolbar.goToSearch();
+		searchAdmin.enableContentTypeSearch(contentType);
 	}
 
 	/**
@@ -142,7 +149,7 @@ public class PLF_UnifiedSearch extends Template {
 	 * Test case ID: 70831
 	 * Step 1: Configure Quick search
 	 */
-	@Test
+	@Test(priority=3)
 	public void test02_ConfigureQuickSearch(){
 		/*Declare variables*/
 		String qsGadget = "Quick Search";
@@ -176,7 +183,7 @@ public class PLF_UnifiedSearch extends Template {
 	 * Step 1: Go to search page 
 	 * Step 2: Configure search page
 	 */
-	@Test
+	@Test(priority=4)
 	public void test03_ConfigureSearchPage(){
 		/*Declare variables*/
 		String searchText = "searchtext70919";
@@ -197,6 +204,10 @@ public class PLF_UnifiedSearch extends Template {
 		//- Click Save settings, 
 		//- value is save
 		qsPage.editSearchSettingEditMode("10",true,true,true,true,true,true);	
+		
+		//Restore value
+		qsPage.goToEditSearchPortlet();
+		qsPage.editSearchSettingEditMode("10",false,false,false,true,true,true);
 	}
 
 	/**
@@ -205,7 +216,7 @@ public class PLF_UnifiedSearch extends Template {
 	 * Step 1: Quick search
 	 * Step 2: Filter search
 	 */
-	@Test
+	@Test(priority=0)
 	public void test04_FilterSearch(){
 		/*Declare variables*/
 		String searchText = "FilterSearch70834";
@@ -231,7 +242,7 @@ public class PLF_UnifiedSearch extends Template {
 		//Add space
 		info("-- Create space --");
 		magMember.goToMySpacePage();
-		magMember.addNewSpace(spaceName, "");
+		magMember.addNewSpace(spaceName, spaceName);
 
 		/*Step 1: Quick search*/
 		//- Login and Open intranet home or ACME homepage
@@ -269,7 +280,7 @@ public class PLF_UnifiedSearch extends Template {
 	 * Test case ID: 70771
 	 * Step 1: Quick search
 	 */
-	@Test
+	@Test(priority=1)
 	public void test05_QuickSearch(){
 		/*Declare variables*/
 		String searchText = "FilterSearch70771";
@@ -295,7 +306,7 @@ public class PLF_UnifiedSearch extends Template {
 		//Add space
 		info("-- Create space --");
 		magMember.goToMySpacePage();
-		magMember.addNewSpace(spaceName, "");
+		magMember.addNewSpace(spaceName, spaceName);
 
 		/*Step 1: Quick search*/
 		//- Login and Open intranet home
@@ -326,7 +337,7 @@ public class PLF_UnifiedSearch extends Template {
 	 * Test case ID: 71619
 	 * Step 1: Search Answers
 	 */
-	@Test
+	@Test(priority=5)
 	public void test06_SearchAnswers(){
 		/*Declare variables*/
 		String searchText = "Search";
@@ -379,7 +390,7 @@ public class PLF_UnifiedSearch extends Template {
 	 * Test case ID: 71612
 	 * Step 1: Search Discussions
 	 */
-	@Test
+	@Test(priority=6)
 	public void test07_SearchDiscussions(){
 		/*Declare variables*/
 		String searchText = "Search";
@@ -440,7 +451,7 @@ public class PLF_UnifiedSearch extends Template {
 	 * Test case ID: 71611
 	 * Step 1: Search documents
 	 */
-	@Test
+	@Test(priority=7)
 	public void test08_SearchDocuments(){
 		/*Declare variables*/
 		String searchText = "Search71611Con";
@@ -455,10 +466,10 @@ public class PLF_UnifiedSearch extends Template {
 		actBar.addItem2ActionBar("addDocument", actBar.ELEMENT_NEW_CONTENT_LINK);
 		actBar.goToAddNewContent();
 		conTemp.createNewProduct(contentName1, contentName1);
-		click(naviToolbar.ELEMENT_SITE_EXPLORER_HOME);
+		ecms.goToNode(siteExp.ELEMENT_SIDEBAR_SITES_MANAGEMENT);
 		actBar.goToAddNewContent();
 		conTemp.createNewProduct(contentName2, contentName2);
-		click(naviToolbar.ELEMENT_SITE_EXPLORER_HOME);
+		ecms.goToNode(siteExp.ELEMENT_SIDEBAR_SITES_MANAGEMENT);
 		actBar.goToAddNewContent();
 		conTemp.createNewProduct(contentName3, contentName3);
 
@@ -486,7 +497,9 @@ public class PLF_UnifiedSearch extends Template {
 		//Delete file
 		naviToolbar.goToSiteExplorer();
 		cMenu.deleteDocument(siteExp.ELEMENT_SE_NODE.replace("{$node}", contentName1));
+		naviToolbar.goToSiteExplorer();
 		cMenu.deleteDocument(siteExp.ELEMENT_SE_NODE.replace("{$node}", contentName2));
+		naviToolbar.goToSiteExplorer();
 		cMenu.deleteDocument(siteExp.ELEMENT_SE_NODE.replace("{$node}", contentName3));
 	}
 
@@ -495,17 +508,19 @@ public class PLF_UnifiedSearch extends Template {
 	 * Test case ID: 71614
 	 * Step 1: Search events
 	 */
-	@Test
+	@Test(priority=8)
 	public void test09_SearchEvents(){
 		/*Declare variables*/
 		String searchText = "Search71614";
 		String eventName1 = "Search71614Event";
 		String eventName2 = "event092";
 		String eventName3 = "event093";
+		String timeZone = "(GMT +07:00) Asia/Saigon";
 
 		//Create data
 		//Some events are existed on Calendar.
 		evt.goToCalendarPage();
+		evt.setTimezoneForCalendar(timeZone);
 		evt.addQuickEvent(eventName1,eventName1,getDate(1,"MM/dd/yyyy"),getDate(1,"MM/dd/yyyy"),true);
 		evt.goToCalendarPage();
 		evt.addQuickEvent(eventName2,eventName2,getDate(1,"MM/dd/yyyy"),getDate(1,"MM/dd/yyyy"),true);
@@ -550,7 +565,7 @@ public class PLF_UnifiedSearch extends Template {
 	 * Test case ID: 71610
 	 * Step 1: Search files (nt:file)
 	 */
-	@Test
+	@Test(priority=9)
 	public void test10_SearchFiles(){
 		/*Declare variables*/
 		String searchText = "Search71610";
@@ -607,7 +622,7 @@ public class PLF_UnifiedSearch extends Template {
 	 * Test case ID: 71615
 	 * Step 1: Search pages
 	 */
-	@Test
+	@Test(priority=15)
 	public void test11_SearchPages(){
 		/*Declare variables*/
 		String searchText = "Search71615";
@@ -671,7 +686,7 @@ public class PLF_UnifiedSearch extends Template {
 	 * Test case ID: 71618
 	 * Step 1: Search people
 	 */
-	@Test
+	@Test(priority=10)
 	public void test12_SearchPeople(){
 		/*Declare variables*/
 		String searchText = "John Smith";
@@ -718,7 +733,7 @@ public class PLF_UnifiedSearch extends Template {
 	 * Test case ID: 71617
 	 * Step 1: Search spaces
 	 */
-	@Test
+	@Test(priority=12)
 	public void test13_SearchSpaces(){
 		/*Declare variables*/
 		String searchText = "Search72617";
@@ -729,7 +744,7 @@ public class PLF_UnifiedSearch extends Template {
 		//Some spaces are existed.
 		info("-- Create space --");
 		magMember.goToMySpacePage();
-		magMember.addNewSpace(spaceName1, "");
+		magMember.addNewSpace(spaceName1, spaceName1);
 
 		magMember.goToMySpacePage();
 		magMember.addNewSpace(spaceName2, spaceName2);
@@ -770,17 +785,19 @@ public class PLF_UnifiedSearch extends Template {
 	 * Test case ID: 71613
 	 * Step 1: Search tasks
 	 */
-	@Test
+	@Test(priority=13)
 	public void test14_SearchTasks(){
 		/*Declare variables*/
 		String searchText = "Search71613";
 		String taskName1 = "Search71613Task";
 		String taskName2 = "task092";
 		String taskName3 = "task093";
+		String timeZone = "(GMT +07:00) Asia/Saigon";
 
 		//Create data
 		//Tasks are existed on calendar
 		evt.goToCalendarPage();
+		evt.setTimezoneForCalendar(timeZone);
 		tsk.addQuickTask(taskName1,taskName1,getDate(2,"MM/dd/yyyy"),getDate(2,"MM/dd/yyyy"),true);
 		evt.goToCalendarPage();
 		tsk.addQuickTask(taskName2,taskName2,getDate(2,"MM/dd/yyyy"),getDate(2,"MM/dd/yyyy"),true);
@@ -825,7 +842,7 @@ public class PLF_UnifiedSearch extends Template {
 	 * Test case ID: 71616
 	 * Step 1: Search wikis
 	 */
-	@Test
+	@Test(priority=14)
 	public void test15_SearchWikis(){
 		/*Declare variables*/
 		String searchText = "Search72616";
@@ -843,7 +860,7 @@ public class PLF_UnifiedSearch extends Template {
 		addBlankWikiPage(wikiName1, wikiName1, 0);
 		String feedTxt = waitForAndGetElement(ELEMENT_WIKI_PAGE_INFO_FEED).getText();
 		String wikiDate = feedTxt.substring(feedTxt.indexOf("at")+3, feedTxt.indexOf('M')+1).trim();
-		SimpleDateFormat formatter = new SimpleDateFormat("MMMM d, yyyy hh:mm aaa");
+		SimpleDateFormat formatter = new SimpleDateFormat("MMMM d, yyyy K:mm a");
 		Date date = new Date();
 		try {
 			date = new SimpleDateFormat("MMMM d, yyyy hh:mm aaa",Locale.ENGLISH).parse(wikiDate);
@@ -852,6 +869,7 @@ public class PLF_UnifiedSearch extends Template {
 			e.printStackTrace();
 		}
 		wikiDate = formatter.format(date);
+		info(wikiDate);
 		click(ELEMENT_TITLE_WIKI_HOME_LINK);
 		addBlankWikiPage(wikiName2, wikiName2, 0);
 		click(ELEMENT_TITLE_WIKI_HOME_LINK);
@@ -876,6 +894,8 @@ public class PLF_UnifiedSearch extends Template {
 		waitForAndGetElement(qsPage.ELEMENT_RESULT_LOCATION_DATETIME.replace("${keySearch}", searchText).replace("${item}", "Wiki"));
 		String searchWikiLocationDate = waitForAndGetElement(qsPage.ELEMENT_RESULT_LOCATION_DATETIME.replace("${keySearch}", searchText).replace("${item}", "Wiki")).getText();
 		String searchWikiDate = searchWikiLocationDate.substring(searchWikiLocationDate.indexOf(',')+1).trim();
+		info(searchWikiLocationDate);
+		info(searchWikiDate);
 		assert searchWikiDate.contains(wikiDate);
 		assert searchWikiLocationDate.contains(wikiSpace.toLowerCase());
 
@@ -896,7 +916,7 @@ public class PLF_UnifiedSearch extends Template {
 	 * Step 1: Quick search
 	 * Step 2: Sort search results
 	 */
-	@Test
+	@Test(priority=11)
 	public void test16_SortSearchResult(){
 		/*Declare variables*/
 		String searchText = "searchtext71633";

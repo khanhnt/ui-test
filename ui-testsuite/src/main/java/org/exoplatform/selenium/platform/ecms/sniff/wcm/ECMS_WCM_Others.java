@@ -107,12 +107,12 @@ public class ECMS_WCM_Others extends PlatformBase{
 	 */
 	@Test
 	public void test02_SearchContentDocumentPage(){
-		String node1 = "test02 SearchContent 1";
-		String node2 = "test02 SearchContent 2";
-		String node3 = "test02 SearchContent 3";
-		String node4 = "test02 SearchContent 4";
-		String page1 = "test02_page3";
-		String page2 = "test02_page2";
+		String node1 = "SearchContent658711";
+		String node2 = "SearchContent658712";
+		String node3 = "SearchContent658713";
+		String node4 = "SearchContent658714";
+		String page1 = "page658713";
+		String page2 = "page658712";
 		By bNode = By.xpath(siteExp.ELEMENT_SE_NODE.replace("{$node}", node1));
 		String contentPath1 = "General Drives/Sites Management/acme/" + node1;
 		String contentPath2 = "General Drives/Sites Management/acme/" + node3;

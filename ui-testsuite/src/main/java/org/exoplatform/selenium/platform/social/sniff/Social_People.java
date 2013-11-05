@@ -116,6 +116,7 @@ public class Social_People extends SocialBase {
 
 		/*Clear data*/
 		info("clear data");
+		peoSearch.searchPeople(false,"");
 		peoConn.removeConnection(user1);
 	}
 
@@ -167,6 +168,7 @@ public class Social_People extends SocialBase {
 		peoConn.connectPeople(user1);
 
 		//Clear data
+		peoSearch.searchPeople(false,"");
 		peoConn.cancelRequest(user1);
 	}
 
@@ -191,6 +193,7 @@ public class Social_People extends SocialBase {
 		waitForAndGetElement("//*[contains(text(),'"+user1+"')]");
 
 		//Click Cancel Request
+		peoSearch.searchPeople(false,"");
 		peoConn.cancelRequest(user1);
 	}
 
@@ -217,6 +220,7 @@ public class Social_People extends SocialBase {
 		waitForAndGetElement("//*[contains(text(),'"+user+"')]");
 
 		//Invited user can Accept/Ignore the invitation
+		peoSearch.searchPeople(false,"");
 		peoConn.acceptInvitation(user);
 		peoConn.removeConnection(user);
 	}

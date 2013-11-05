@@ -208,7 +208,6 @@ public class ECMS_SE_Admin extends PlatformBase {
 		String node1 = "test07_ImportNode1";
 		By bNode = By.xpath(siteExp.ELEMENT_SE_NODE.replace("{$node}", node1));
 		String filePath = "TestData/sysview.xml";
-		String fileVersion = "TestData/sysview_versionHistory.zip";
 		
 		info("Import a node");
 		
@@ -220,7 +219,7 @@ public class ECMS_SE_Admin extends PlatformBase {
 		actBar.addItem2ActionBar("importNode",actBar.ELEMENT_IMPORT_LINK);
 		
 		//Import node 
-		actBar.importNode(filePath,fileVersion,"Create New",true);
+		actBar.importNode(filePath,"","Create New",true);
 		
 		//Delete data
 		cMenu.deleteDocument(bNode);
@@ -286,11 +285,8 @@ public class ECMS_SE_Admin extends PlatformBase {
 	
 	@BeforeMethod
 	public void beforeMethods() {
-		initSeleniumTest();
-		driver.close();
 		getDriverAutoSave();
 		driver.get(baseUrl);
-		driver.manage().window().maximize();
 		magAcc = new ManageAccount(driver);
 		navToolBar = new NavigationToolbar(driver);
 		ecms = new EcmsBase(driver);

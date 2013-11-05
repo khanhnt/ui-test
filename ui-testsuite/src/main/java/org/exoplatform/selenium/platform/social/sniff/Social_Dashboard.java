@@ -100,6 +100,7 @@ public class Social_Dashboard extends DashBoard {
 		//- Click on Share Link
 		actionOnGadgetOnDashboard(gadgetName,"Maximize");
 		driver.switchTo().frame(waitForAndGetElement(ELEMENT_DASHBOARD_FRAME));
+		Utils.pause(1000);
 		click(By.xpath("//*[@id='link_0']/a[text()='Share']"));
 		Utils.pause(1000);
 
@@ -151,6 +152,7 @@ public class Social_Dashboard extends DashBoard {
 
 		//- Select a link on list in gadget and click View link
 		driver.switchTo().frame(waitForAndGetElement(ELEMENT_DASHBOARD_FRAME));
+		Utils.pause(1000);
 		click(By.xpath("//*[@id='link_0']/a[text()='view link »']"));
 		Utils.pause(1000);
 

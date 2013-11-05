@@ -93,6 +93,7 @@ public class CalendarBase extends PlatformBase {
 	public By ELEMENT_CAL_EDIT_MENU = By.xpath("//*[@id='tmpMenuElement']//a[contains(@href,'EditCalendar')]");
 	public By ELEMENT_CAL_SETTING_MENU = By.xpath("//*[@id='UIActionBar']//i[@class='uiIconSetting uiIconLightGray']");
 	public String ELEMENT_CAL_SETTING_TIMEZONE_VALUE = "//*[@id='setting']//select[@name='timeZone']/option[@value='${timezoneOpt}']";
+	public By ELEMENT_SETTING_ZONE_SAVE_BUTTON = By.xpath("//*[@id='UICalendarSettingForm']//*[text()='Save']");
 
 	//------------Export calendar---------------
 	public By ELEMENT_CALENDAR_EXPORT = By.xpath("//div[@id='CalendarPopupMenu']//*[@class='uiIconCalExportCalendar uiIconLightGray']");
@@ -370,6 +371,7 @@ public class CalendarBase extends PlatformBase {
 				type(ELEMENT_CAL_GROUP_INPUT,groups[0],true);
 			click(button.ELEMENT_ADD_BUTTON);
 		}
+		Utils.pause(1000);
 	}
 
 	/*================== Calendar Feeds ====================*/
@@ -601,7 +603,7 @@ public class CalendarBase extends PlatformBase {
 		goToAddCalendar();
 		inputAddCalendarForm(name,description,color,groups);
 		click(ELEMENT_CAL_ADD_SAVE_BUTTON);
-		waitForAndGetElement(By.linkText(name));
+		waitForAndGetElement("//*[@data-original-title = '"+name+"' ]");
 	}
 
 	/** Delete calendar
@@ -695,9 +697,10 @@ public class CalendarBase extends PlatformBase {
 		click(ELEMENT_CAL_SETTING_MENU);
 		Utils.pause(3000);
 		info("-- Select filter option of Timezone --");
-		select(ELEMENT_TIME_ZONE,timezoneOpt);
-		waitForAndGetElement(ELEMENT_CAL_SETTING_TIMEZONE_VALUE.replace("${timezoneOpt}", timezoneOpt));		 
-
+		select(ELEMENT_TIME_ZONE,timezoneOpt);	
+		Utils.pause(1000);
+		click(ELEMENT_SETTING_ZONE_SAVE_BUTTON);
+		Utils.pause(3000);
 	}
 
 	/** Quick search in Calendar

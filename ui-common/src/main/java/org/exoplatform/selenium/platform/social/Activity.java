@@ -69,6 +69,7 @@ public class Activity extends SocialBase {
 	public final String ELEMENT_COMMENT_BUTTON = "//*[contains(text(), '${activityText}')]/..//button[contains(@id,'CommentButton')]";
 	public final String ELEMENT_INPUT_COMMENT_TEXT_AREA = "//*[contains(text(), '${activityText}')]/..//*[contains(@id,'DisplayCommentTextarea')]";
 	public final String ELEMENT_ACTIVITY_ADD_YOUR_COMMENTLABEL = "//*[contains(text(), '${activityText}')]/..//*[contains(@id,'DisplayCommentTextarea')]/../div[@class='placeholder']";
+	public final String ELEMENT_MENTION_USER_AVATAR = "//*[@data-display='${userName}']/*[@class='avatarSmall']";
 
 //	public final String ELEMENT_LIKE_ICON = "//div[@class='text' or @class = 'description'or @class='linkSource' or contains(@id, 'ContextBox')]/*[contains(text(), '${activityText}')]//ancestor::div[contains(@id,'ActivityContextBox')]//*[starts-with(@id, 'LikeLink')]";
 //	public final String ELEMENT_UNLIKE_ICON = "//div[@class='text' or @class = 'description'or @class='linkSource' or contains(@id, 'ContextBox')]/*[contains(text(), '${activityText}')]//ancestor::div[contains(@id,'ActivityContextBox')]//*[starts-with(@id, 'UnLikeLink')]";
@@ -421,9 +422,11 @@ public class Activity extends SocialBase {
 			((JavascriptExecutor)driver).executeScript("arguments[0].style.display = 'block'; arguments[0].style.visibility = 'visible'", inputText);
 			click(ELEMENT_MENTION_USER_BUTTON);
 			inputText.sendKeys(userName);
+			Utils.pause(1000);
 			click(hpActivity.ELEMENT_ACTIVITY_TEXTBOX);
 			Utils.pause(1000);
-			click("//*[@class='avatarSmall']");
+			click(ELEMENT_MENTION_USER_AVATAR.replace("${userName}", userName));
+			Utils.pause(1000);
 			click(ELEMENT_SHARE_BUTTON);
 			waitForAndGetElement(By.xpath(ELEMENT_USER_NAME_LINK_ACTIVITY.replace("${userName}", userName)));
 		}
@@ -436,7 +439,8 @@ public class Activity extends SocialBase {
 			click(ELEMENT_INPUT_COMMENT_TEXT_AREA.replace("${activityText}", activityText));
 			Utils.pause(1000);
 			//click("//*[@class='avatarSmall' and text()='"+userName+"']");
-			click("//*[@class='avatarSmall']");
+			click(ELEMENT_MENTION_USER_AVATAR.replace("${userName}", userName));
+			Utils.pause(1000);
 			//Click on Comment button
 			WebElement commentButton = waitForAndGetElement(ELEMENT_COMMENT_BUTTON.replace("${activityText}", activityText));
 			((JavascriptExecutor)driver).executeScript("arguments[0].disabled = false;", commentButton);

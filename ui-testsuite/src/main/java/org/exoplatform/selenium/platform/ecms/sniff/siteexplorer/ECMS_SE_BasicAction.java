@@ -45,7 +45,7 @@ public class ECMS_SE_BasicAction extends PlatformBase {
 	public void test01_AddSymlinkForNode() {
 		String node1= "test01_AddSymlinkForNode1";
 		String node2= "test01_AddSymlinkForNode2";
-		String symlink = "Symlink1";
+		String symlink = "Symlink65824";
 		String webContent= "test01_webcontent";
 
 		info("Add symlink for a node");
@@ -351,8 +351,6 @@ public class ECMS_SE_BasicAction extends PlatformBase {
 
 	@BeforeMethod
 	public void beforeMethod() {
-		initSeleniumTest();
-		driver.close();
 		getDriverAutoOpenWindow();
 		driver.get(baseUrl);
 		dialog = new Dialog(driver);

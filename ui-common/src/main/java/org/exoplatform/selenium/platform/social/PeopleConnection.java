@@ -21,7 +21,7 @@ public class PeopleConnection extends SocialBase {
 		driver = dr;
 		peoSearch = new PeopleSearch(driver);
 	}
-	
+
 	// Go to Account Name link	
 	// My Connections
 	public final By	ELEMENT_CONNECTION_OF_USER = By.xpath("//*[@id='UIUserNavigationPortlet']//../*[contains(text(),'Connections')]");
@@ -40,39 +40,26 @@ public class PeopleConnection extends SocialBase {
 
 	//-----------------------Connections page------------------------
 	public String ELEMENT_INVITATION_RECEIVED_MSG = "//h4[@class='spaceTitle']/a[contains(text(),'${acc}')]/ancestor::div[@class='spaceBox pull-left']/div[@class='connectionBtn clearfix']/span[contains(text(),'Invitation Received')]";
-	
+
 	/**
 	 * Connect to people
 	 * @param peopleName: name of selected people (String)
 	 */
 	public void connectPeople (String peopleName) {
 		info("-- Connect to: " + peopleName);
-
 		//By ELEMENT_CONNECT_BUTTON = By.xpath("//div/a[text()='"+peopleName+"']/following::ul/li/a[@title='Connect']");
 		//By ELEMENT_CONNECT_BUTTON = By.xpath(ELEMENT_CONNECTION.replace("${peopleName}", peopleName) + "/../../ul/li/a[@title='Connect']");
 		//By ELEMENT_CANCEL_REQUEST_BUTTON = By.xpath("//div/a[text()='"+peopleName+"']/following::ul/li/a[@title='Cancel Request']");
 		//By ELEMENT_CANCEL_REQUEST_BUTTON = By.xpath(ELEMENT_CONNECTION.replace("${peopleName}", peopleName) + "/../../ul/li[2]/a[@title='Cancel Request']");
-
-		info("-----Go to find connections page-----");
-		peoSearch.searchPeople(false,peopleName);
-		if (waitForAndGetElement(ELEMENT_PEOPLE_SEARCH.replace("${peopleName}", peopleName),DEFAULT_TIMEOUT,0)==null){
-			info("-- Cannot find people: " + peopleName);
-		}else{
-
-			info("-----Click connect to people-----");
-
-			waitForAndGetElement(ELEMENT_CONNECTION_BUTTON.replace("${peopleName}", peopleName));
-
-			click(ELEMENT_CONNECTION_BUTTON.replace("${peopleName}", peopleName));
-
-			info("---Verify Connect button is disappeared----");
-
-			waitForElementNotPresent(ELEMENT_CONNECTION_BUTTON.replace("${peopleName}", peopleName));
-
-			info("-----Verify Cancel request button is displayed-----");
-
-			waitForAndGetElement(ELEMENT_CANCEL_REQUEST_BUTTON.replace("${peopleName}", peopleName));
-		}
+		info("-- Go to every one tab --");
+		click(ELEMENT_EVERYONE_TAB);
+		info("-----Click connect to people-----");
+		waitForAndGetElement(ELEMENT_CONNECTION_BUTTON.replace("${peopleName}", peopleName));
+		click(ELEMENT_CONNECTION_BUTTON.replace("${peopleName}", peopleName));
+		info("---Verify Connect button is disappeared----");
+		waitForElementNotPresent(ELEMENT_CONNECTION_BUTTON.replace("${peopleName}", peopleName));
+		info("-----Verify Cancel request button is displayed-----");
+		waitForAndGetElement(ELEMENT_CANCEL_REQUEST_BUTTON.replace("${peopleName}", peopleName));
 	}
 
 	/**
@@ -93,7 +80,8 @@ public class PeopleConnection extends SocialBase {
 
 			click(ELEMENT_REQUESTS_RECEIVED_TAB);
 		}
-
+		else
+			click(ELEMENT_REQUESTS_RECEIVED_TAB);
 		waitForAndGetElement(ELEMENT_CONFIRM_BUTTON.replace("${peopleName}", peopleName));
 
 		info("----Confirm the invitation from user '"+peopleName+"' ");
@@ -129,6 +117,8 @@ public class PeopleConnection extends SocialBase {
 
 			click(ELEMENT_REQUESTS_RECEIVED_TAB);
 		}
+		else
+			click(ELEMENT_REQUESTS_RECEIVED_TAB);
 		waitForAndGetElement(ELEMENT_IGNORE_BUTTON.replace("${peopleName}", peopleName));
 
 		info("---Ignore the invitation from user '"+peopleName+"'-----");
@@ -162,11 +152,12 @@ public class PeopleConnection extends SocialBase {
 
 			click(ELEMENT_MY_CONNECTIONS_TAB);
 		}
+		else
+			click(ELEMENT_MY_CONNECTIONS_TAB);
 		waitForAndGetElement(ELEMENT_REMOVE_CONNECTION_BUTTON.replace("${peopleName}", peopleName));
 		click(ELEMENT_REMOVE_CONNECTION_BUTTON.replace("${peopleName}", peopleName));
-
+		Utils.pause(3000);
 		waitForElementNotPresent(ELEMENT_REMOVE_CONNECTION_BUTTON.replace("${peopleName}", peopleName));
-
 		Utils.pause(1000);
 	}
 
@@ -192,6 +183,8 @@ public class PeopleConnection extends SocialBase {
 			info("---Click Pending Requests tab-----");
 			click(ELEMENT_REQUEST_PENDING_TAB);
 		}
+		else
+			click(ELEMENT_REQUEST_PENDING_TAB);
 		waitForAndGetElement(ELEMENT_CANCEL_REQUEST_BUTTON.replace("${peopleName}", peopleName));
 		info("---Cancel the invitation to user '"+peopleName+"'-----");
 		click(ELEMENT_CANCEL_REQUEST_BUTTON.replace("${peopleName}", peopleName));
