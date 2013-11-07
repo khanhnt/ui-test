@@ -1,8 +1,5 @@
 package org.exoplatform.selenium.platform.ecms.contentexplorer;
 
-import static org.exoplatform.selenium.TestLogger.info;
-import java.util.HashMap;
-
 import org.exoplatform.selenium.Button;
 import org.exoplatform.selenium.Dialog;
 import org.exoplatform.selenium.ManageAlert;
@@ -17,6 +14,10 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
+
+import java.util.HashMap;
+
+import static org.exoplatform.selenium.TestLogger.info;
 
 
 /**
@@ -95,9 +96,17 @@ public class ActionBar extends EcmsBase{
 	public By ELEMENT_VERSION_INFO_FORM = By.xpath("//*[text()='Close']");
 
 	//publication form
+
 	public final By ELEMENT_PUBLIC_STATUS = By.xpath("//*[contains(text(),'Published')]/..//a");
+    public final By ELEMENT_STAGED_STATUS = By.xpath("//*[contains(text(),'Staged')]/..//a");
+    public final By ELEMENT_PENDING_STATUS = By.xpath("//*[contains(text(),'Pending')]/..//a");
+    public final By ELEMENT_APPROVED_STATUS = By.xpath("//*[contains(text(),'Approved')]/..//a");
 	public final By ELEMENT_CURRENT_STATUS = By.xpath("//*[@class='currentStatus']");
 	public final By ELEMENT_CURRENT_PUBLIC_STATUS = By.xpath("//*[@class='currentStatus']/*[text()='Published']");
+    public final By ELEMENT_CURRENT_DRAFT_STATUS = By.xpath("//*[@class='currentStatus']/*[text()='Draft']");
+    public final By ELEMENT_CURRENT_PENDING_STATUS = By.xpath("//*[@class='currentStatus']/*[text()='Pending']");
+    public final By ELEMENT_CURRENT_APPROVED_STATUS = By.xpath("//*[@class='currentStatus']/*[text()='Approved']");
+    public final By ELEMENT_CURRENT_STAGED_STATUS = By.xpath("//*[@class='currentStatus']/*[text()='Staged']");
 
 	//View Properties form
 	public final By ELEMENT_VIEW_PROPERTIES_ICON = By.xpath("//i[@class='uiIconEcmsViewProperties']");
@@ -129,11 +138,14 @@ public class ActionBar extends EcmsBase{
 	public final By ELEMENT_EDIT_LINK = By.xpath("//*[@class='actionIcon']//*[@class='uiIconEcmsEditDocument']");
 	public final By ELEMENT_NEW_CONTENT_LINK = By.xpath("//*[@class='actionIcon']//*[@class='uiIconEcmsAddDocument']");
 	public final By ELEMENT_PUBLICATION = By.xpath("//a[contains(text(),'Publications')]");
+    public final By ELEMENT_PUBLISH_ICON = By.xpath("//*[@class='actionIcon']//*[@class='uiIconEcmsPublicationPublish']");
 	public final By ELEMENT_PUBLICATION_ICON = By.className("uiIconEcmsManagePublications");
 	public final By ELEMENT_VERSIONS_LINK = By.xpath("//*[@class='actionIcon']//*[@class='uiIconEcmsManageVersions']");
-	public final String ELEMENT_PUBLICATION_STATE = "//p[contains(text(),'{$state}')]/../a[@class='node']";	
-	public final By ELEMENT_SCHEDULE_TAB = By.xpath("//a[text()='Scheduled']");	
-	public final By ELEMENT_PUB_FROM_INPUT = By.name("UIPublicationPanelStartDateInput");	
+	public final String ELEMENT_PUBLICATION_STATE = "//p[contains(text(),'{$state}')]/../a[@class='node']";
+	public final By ELEMENT_SCHEDULE_TAB = By.xpath("//a[text()='Scheduled']");
+    public final By ELEMENT_HISTORY_TAB = By.xpath("//a[text()='History']");
+    public final By ELEMENT_REVISION_TAB = By.xpath("//a[text()='Revision']");
+    public final By ELEMENT_PUB_FROM_INPUT = By.name("UIPublicationPanelStartDateInput");
 	public final By ELEMENT_PUB_TO_INPUT = By.name("UIPublicationPanelEndDateInput");
 	public final String ELEMENT_REVISION_DATE = "//*[contains(text(), '${status}')]/../td[2]";
 	public final By ELEMENT_FIRST_REVISION_DATE = By.xpath(ELEMENT_REVISION_DATE.replace("${status}", "Draft[Current Revision]"));
