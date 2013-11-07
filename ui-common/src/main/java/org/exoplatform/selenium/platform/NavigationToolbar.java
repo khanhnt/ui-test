@@ -398,6 +398,8 @@ public class NavigationToolbar extends PlatformBase {
 		info("-- Go to home page --");
 		click(ELEMENT_HOME_PAGE);
 		Utils.pause(1000);
+		
+		waitForAndGetElement(ELEMENT_REFRESH);
 	}
 	
 	/**

@@ -42,6 +42,7 @@ public class PlatformBase extends TestBase {
 	 * Intranet
 	 * */
 	public final String ELEMENT_SIGN_IN_LINK = "//b[contains(text(),'Sign in')]";
+	public final By ELEMENT_REFRESH = By.xpath("//div[@class='activityStreamStatus pull-left']");
 
 	/*
 	 * Log in Form - Sign-out 
@@ -1103,12 +1104,12 @@ public class PlatformBase extends TestBase {
 		//login to mail
 		if(waitForAndGetElement(ELEMENT_GMAIL_USERNAME, DEFAULT_TIMEOUT,0) == null)
 			click(ELEMENT_GMAIL_SIGN_IN_LINK); 
-
-		waitForAndGetElement(ELEMENT_GMAIL_USERNAME);
+		
+		waitForAndGetElement(ELEMENT_GMAIL_USERNAME,60000);
 		type(ELEMENT_GMAIL_USERNAME, email, true);
 		type(ELEMENT_GMAIL_PASS, pass, true);
 		click(ELEMENT_GMAIL_SIGN_IN);
-		click(ELEMENT_GMAIL_INBOX);
+		click(ELEMENT_GMAIL_INBOX,60000);
 		Utils.pause(1000);
 	}
 

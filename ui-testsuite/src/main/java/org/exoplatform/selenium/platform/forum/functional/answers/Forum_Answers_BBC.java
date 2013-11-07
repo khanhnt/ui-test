@@ -1,16 +1,14 @@
 package org.exoplatform.selenium.platform.forum.functional.answers;
 
-import org.exoplatform.selenium.platform.HomePageActivity;
 import org.exoplatform.selenium.platform.ManageAccount;
 import org.exoplatform.selenium.platform.forum.AnswerBase;
-import org.exoplatform.selenium.platform.forum.AnswerManageAnwser;
 import org.exoplatform.selenium.platform.forum.AnswerManageCategory;
-import org.exoplatform.selenium.platform.forum.AnswerManageComment;
 import org.exoplatform.selenium.platform.forum.AnswerManageQuestion;
 import org.openqa.selenium.By;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import static org.exoplatform.selenium.TestLogger.info;
 
 /**
  * 
@@ -19,24 +17,18 @@ import org.testng.annotations.Test;
  */
 public class Forum_Answers_BBC extends AnswerBase{
 
-	ManageAccount Acc;
+	ManageAccount acc;
 	AnswerManageCategory mCat;
 	AnswerManageQuestion mQuest;
-	AnswerManageAnwser mAns;
-	AnswerManageComment mCom;
-	HomePageActivity HPAct;
 
 	@BeforeMethod
 	public void setUpBeforeTest(){
 		initSeleniumTest();
 		driver.get(baseUrl);
-		Acc = new ManageAccount(driver);
+		acc = new ManageAccount(driver);
 		mCat = new AnswerManageCategory(driver);
 		mQuest = new AnswerManageQuestion(driver);
-		mAns = new AnswerManageAnwser(driver);
-		mCom = new AnswerManageComment(driver);
-		Acc.signIn(DATA_USER1, DATA_PASS);
-		HPAct = new HomePageActivity(driver);
+		acc.signIn(DATA_USER1, DATA_PASS);
 
 		goToAnswer();
 	}
@@ -55,7 +47,8 @@ public class Forum_Answers_BBC extends AnswerBase{
 	public void test01_CheckBoldTagEffect() {
 		String questName = "Question 72218" ;
 		String questContent = "Hello";
-
+		
+		info("Check Bold tag effect");
 		mQuest.submitQuestion(null, questName, "[b]"+questContent + "[/b]", null, false, null);
 		click(By.linkText(questName));
 		waitForAndGetElement(mQuest.ELEMENT_QUESTION_CONTENT_BOLD.replace("${content}", questContent));
@@ -73,6 +66,7 @@ public class Forum_Answers_BBC extends AnswerBase{
 		String questName = "Question 72394" ;
 		String questContent = "Hello";
 
+		info("Check Italic tag effect");
 		mQuest.submitQuestion(null, questName, "[i]"+questContent + "[/i]", null, false, null);
 		click(By.linkText(questName));
 		waitForAndGetElement(mQuest.ELEMENT_QUESTION_CONTENT_ITALIC.replace("${content}", questContent));
@@ -90,6 +84,7 @@ public class Forum_Answers_BBC extends AnswerBase{
 		String questName = "Question 72530" ;
 		String questContent = "Hello";
 
+		info("Check Underline tag effect");
 		mQuest.submitQuestion(null, questName, "[u]"+questContent + "[/u]", null, false, null);
 		click(By.linkText(questName));
 		waitForAndGetElement(mQuest.ELEMENT_QUESTION_CONTENT_UNDERLINE.replace("${content}", questContent));
@@ -107,6 +102,7 @@ public class Forum_Answers_BBC extends AnswerBase{
 		String questName = "Question 72634" ;
 		String questContent = "Hello";
 
+		info("Check Size tag effect");
 		mQuest.submitQuestion(null, questName, "[size=200]"+questContent + "[/size]", null, false, null);
 		click(By.linkText(questName));
 		waitForAndGetElement(mQuest.ELEMENT_QUESTION_CONTENT_SIZE.replace("${size}", "200").replace("${content}", questContent));
@@ -124,6 +120,7 @@ public class Forum_Answers_BBC extends AnswerBase{
 		String questName = "Question 72718" ;
 		String questContent = "Hello";
 
+		info("Check Color tag effect");
 		mQuest.submitQuestion(null, questName, "[color=red]"+questContent + "[/color]", null, false, null);
 		click(By.linkText(questName));
 		waitForAndGetElement(mQuest.ELEMENT_QUESTION_CONTENT_COLOR.replace("${color}", "red").replace("${content}", questContent));
@@ -141,6 +138,7 @@ public class Forum_Answers_BBC extends AnswerBase{
 		String questName = "Question 72793" ;
 		String questContent = "Hello";
 
+		info("Check combined formatting tags");
 		mQuest.submitQuestion(null, questName, "[size=200][color=red][b]"+questContent + "[/b][/color][/size]", null, false, null);
 		click(By.linkText(questName));
 		waitForAndGetElement("//div[@class='theContent']/p/font[@size='200']/font[@color='red']/strong[text()='"+ questContent+"']");
@@ -158,6 +156,7 @@ public class Forum_Answers_BBC extends AnswerBase{
 		String questName = "Question 72852" ;
 		String questContent = "Hello";
 
+		info("Check Quote tag effect");
 		mQuest.submitQuestion(null, questName, "[quote=test07]"+questContent + "[/quote]", null, false, null);
 		click(By.linkText(questName));
 		waitForAndGetElement(mQuest.ELEMENT_QUESTION_CONTENT_QUOTE.replace("${title}", "test07:").replace("${content}", questContent));
@@ -175,6 +174,7 @@ public class Forum_Answers_BBC extends AnswerBase{
 		String questName = "Question 72904" ;
 		String questContent = "Hello";
 
+		info("Check Code tag effect");
 		mQuest.submitQuestion(null, questName, "[code]"+questContent + "[/code]", null, false, null);
 		click(By.linkText(questName));
 		waitForAndGetElement(mQuest.ELEMENT_QUESTION_CONTENT_CODE.replace("${content}", questContent));
@@ -192,6 +192,7 @@ public class Forum_Answers_BBC extends AnswerBase{
 		String questName = "Question 72951" ;
 		String[] list = {"item1","item2","item3"};
 
+		info("Check Unordered list effect");
 		mQuest.submitQuestion(null, questName, "[list][*]" + list[0] + "[*]" + list[1] + "[*]" + list[2] + "[/list]", null, false, null);
 		click(By.linkText(questName));
 		for(int i = 0; i < list.length; i ++)
@@ -212,6 +213,7 @@ public class Forum_Answers_BBC extends AnswerBase{
 		String[] list = {"item1","item2","item3"};
 		String[] lista = {"item a","item b","item c"};
 
+		info("Check Ordered list effect");
 		mQuest.submitQuestion(null, questName1, "[list=1][*]" + list[0] + "[*]" + list[1] + "[*]" + list[2] + "[/list]", null, false, null);
 		mQuest.submitQuestion(null, questName2, "[list=a][*]" + lista[0] + "[*]" + lista[1] + "[*]" + lista[2] + "[/list]", null, false, null);
 		click(By.linkText(questName1));
@@ -238,6 +240,7 @@ public class Forum_Answers_BBC extends AnswerBase{
 		String content2 = "https://jira.exoplatform.org";
 		String url = "http://www.exoplatform.com";
 
+		info("Check Link effect");
 		mQuest.submitQuestion(null, questName1, "[url=" + url + "]" + content1 + "[/url]", null, false, null);
 		mQuest.submitQuestion(null, questName2, "[url]" + content2 + "[/url]", null, false, null);
 		click(By.linkText(questName1));
@@ -260,6 +263,8 @@ public class Forum_Answers_BBC extends AnswerBase{
 	public void test12_CheckEmailEffect() {
 		String questName1 = "Question 1 73063" ;
 
+		info("Check Email effect");
+		
 		mQuest.submitQuestion(null, questName1, "[email]" + EMAIL_ADDRESS1 + "[/email]", null, false, null);
 		click(By.linkText(questName1));
 		waitForAndGetElement(mQuest.ELEMENT_QUESTION_CONTENT_LINK.replace("${link}", "mailto:"+EMAIL_ADDRESS1).replace("${text}", EMAIL_ADDRESS1));
@@ -278,6 +283,8 @@ public class Forum_Answers_BBC extends AnswerBase{
 		String questName1 = "Question 1 73097" ;
 		String image = "http://www.google.com/intl/en_ALL/images/logo.gif";
 
+		info("Check Adding image to a post");
+		
 		mQuest.submitQuestion(null, questName1, "[img]" + image + "[/img]", null, false, null);
 		click(By.linkText(questName1));
 		waitForAndGetElement(mQuest.ELEMENT_QUESTION_CONTENT_IMAGE.replace("${image}", image));

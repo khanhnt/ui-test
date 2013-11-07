@@ -32,7 +32,7 @@ import org.openqa.selenium.internal.Locatable;
 
 public class Activity extends SocialBase {
 
-    
+
 	Dialog dialog = new Dialog(driver);
 	ManageAlert magAlert;
 	Button button = new Button(driver);
@@ -62,7 +62,7 @@ public class Activity extends SocialBase {
 	public final By ELEMENT_ATTACH_BUTTON = By.id("AttachButton");
 	public final By ELEMENT_SHARE_BUTTON = By.id("ShareButton");
 
-//	public final String ELEMENT_COMMENT_LINK = "//div[@class='text' or @class = 'description'or @class='linkSource' or contains(@id, 'ContextBox')]/*[contains(text(), '${activityText}')]//ancestor::div[contains(@id,'ActivityContextBox')]//*[starts-with(@id, 'CommentLink')]";
+	//	public final String ELEMENT_COMMENT_LINK = "//div[@class='text' or @class = 'description'or @class='linkSource' or contains(@id, 'ContextBox')]/*[contains(text(), '${activityText}')]//ancestor::div[contains(@id,'ActivityContextBox')]//*[starts-with(@id, 'CommentLink')]";
 	public final String ELEMENT_COMMENT = "//div[@class='ContentBox']//*[contains(text(), '${activityText}')]";
 	public final String ELEMENT_SHOW_HIDE_COMMENTS = "/following::*[@class='CommentListInfo']/a[contains(text(), '${inforComment}')]";
 	public final String ELEMENT_COMMENT_ICON = "//div[@class='text' or @class = 'description'or @class='linkSource' or contains(@id, 'ContextBox')]/*[contains(text(), '${activityText}')]//ancestor::div[contains(@id,'ActivityContextBox')]//*[@class= 'uiIconComment uiIconLightGray']";
@@ -70,8 +70,8 @@ public class Activity extends SocialBase {
 	public final String ELEMENT_INPUT_COMMENT_TEXT_AREA = "//*[contains(text(), '${activityText}')]/..//*[contains(@id,'DisplayCommentTextarea')]";
 	public final String ELEMENT_ACTIVITY_ADD_YOUR_COMMENTLABEL = "//*[contains(text(), '${activityText}')]/..//*[contains(@id,'DisplayCommentTextarea')]/../div[@class='placeholder']";
 
-//	public final String ELEMENT_LIKE_ICON = "//div[@class='text' or @class = 'description'or @class='linkSource' or contains(@id, 'ContextBox')]/*[contains(text(), '${activityText}')]//ancestor::div[contains(@id,'ActivityContextBox')]//*[starts-with(@id, 'LikeLink')]";
-//	public final String ELEMENT_UNLIKE_ICON = "//div[@class='text' or @class = 'description'or @class='linkSource' or contains(@id, 'ContextBox')]/*[contains(text(), '${activityText}')]//ancestor::div[contains(@id,'ActivityContextBox')]//*[starts-with(@id, 'UnLikeLink')]";
+	//	public final String ELEMENT_LIKE_ICON = "//div[@class='text' or @class = 'description'or @class='linkSource' or contains(@id, 'ContextBox')]/*[contains(text(), '${activityText}')]//ancestor::div[contains(@id,'ActivityContextBox')]//*[starts-with(@id, 'LikeLink')]";
+	//	public final String ELEMENT_UNLIKE_ICON = "//div[@class='text' or @class = 'description'or @class='linkSource' or contains(@id, 'ContextBox')]/*[contains(text(), '${activityText}')]//ancestor::div[contains(@id,'ActivityContextBox')]//*[starts-with(@id, 'UnLikeLink')]";
 	public final String ELEMENT_ACTIVITY_NAME_CONSECUTIVE = "//*[contains(@id,'UIActivitiesContainer')]/div[1]//*[@class='description' and text()='${activityText1}']/../../../../../../div[2]//*[@class='description' and text()='${activityText2}']";
 	public final String ELEMENT_COMMENT_LINK_MENTION = "//*[@class='contentComment']/a[contains(text(),'${userName}')]";
 	public final String ELEMENT_USER_NAME_LINK_ACTIVITY = "//div[@class='description']/a[contains(text(),'${userName}')]";
@@ -235,17 +235,41 @@ public class Activity extends SocialBase {
 	 */
 	public void addComment(String activityText, String contentOfComment){
 		//Add a new comment following an activity 
-		click(ELEMENT_COMMENT_ICON.replace("${activityText}", activityText));
-		WebElement commentText = waitForAndGetElement(ELEMENT_INPUT_COMMENT_TEXT_AREA.replace("${activityText}", activityText));
-		WebElement commentButton = waitForAndGetElement(ELEMENT_COMMENT_BUTTON.replace("${activityText}", activityText));
-		WebElement workingLabel = waitForAndGetElement(ELEMENT_ACTIVITY_ADD_YOUR_COMMENTLABEL.replace("${activityText}", activityText));
-		((JavascriptExecutor)driver).executeScript("arguments[0].textContent = '';", workingLabel);
-		((JavascriptExecutor)driver).executeScript("arguments[0].textContent = '"+contentOfComment+"';", commentText);
-		((JavascriptExecutor)driver).executeScript("arguments[0].disabled = false;", commentButton);
-		((JavascriptExecutor)driver).executeScript("arguments[0].className = 'btn pull-right btn-primary';", commentButton);
-		click(ELEMENT_COMMENT_BUTTON.replace("${activityText}", activityText));
-		waitForAndGetElement(ELEMENT_DELETE_COMMENT_BUTTON.replace("${activityText}", activityText).replace("${commentText}", contentOfComment), DEFAULT_TIMEOUT,1,2);
+		info("eg " + ELEMENT_COMMENT_ICON.replace("${activityText}", activityText));
+		hpActivity = new HomePageActivity(driver);
+
+		if(waitForAndGetElement(hpActivity.ELEMENT_ICON_COMMENT.replace("${title}", activityText),DEFAULT_TIMEOUT,0) != null){
+			click(hpActivity.ELEMENT_ICON_COMMENT.replace("${title}", activityText));
+			WebElement commentAct = waitForAndGetElement(hpActivity.ELEMENT_COMMENTBOX.replace("${title}", activityText),5000,0);
+			WebElement commentLabelAct = waitForAndGetElement(hpActivity.ELEMENT_COMMENT_LABEL.replace("${title}", activityText),5000,0);
+			WebElement commentButtonAct = waitForAndGetElement(hpActivity.ELEMENT_COMMENT_BUTTON.replace("${title}", activityText),5000,0);
+
+			((JavascriptExecutor)driver).executeScript("arguments[0].textContent = '';", commentLabelAct);
+			((JavascriptExecutor)driver).executeScript("arguments[0].textContent = '"+contentOfComment+"';", commentAct);
+			((JavascriptExecutor)driver).executeScript("arguments[0].disabled = false;", commentButtonAct);
+			((JavascriptExecutor)driver).executeScript("arguments[0].className = 'btn pull-right btn-primary';", commentButtonAct);
+			click(hpActivity.ELEMENT_COMMENT_BUTTON.replace("${title}", activityText));
+			waitForAndGetElement(hpActivity.ELEMENT_ACTIVITY_COMMENT_CONTENT.replace("${title}", activityText).replace("${comment}", contentOfComment));
+
+		}
+
+		else{ 
+			click(ELEMENT_COMMENT_ICON.replace("${activityText}", activityText));
+
+			WebElement commentText = waitForAndGetElement(ELEMENT_INPUT_COMMENT_TEXT_AREA.replace("${activityText}", activityText),5000,0);
+			WebElement commentButton = waitForAndGetElement(ELEMENT_COMMENT_BUTTON.replace("${activityText}", activityText),5000,0);
+			WebElement workingLabel = waitForAndGetElement(ELEMENT_ACTIVITY_ADD_YOUR_COMMENTLABEL.replace("${activityText}", activityText),5000,0);
+
+			((JavascriptExecutor)driver).executeScript("arguments[0].textContent = '';", workingLabel);
+			((JavascriptExecutor)driver).executeScript("arguments[0].textContent = '"+contentOfComment+"';", commentText);
+			((JavascriptExecutor)driver).executeScript("arguments[0].disabled = false;", commentButton);
+			((JavascriptExecutor)driver).executeScript("arguments[0].className = 'btn pull-right btn-primary';", commentButton);
+			click(ELEMENT_COMMENT_BUTTON.replace("${activityText}", activityText));
+			waitForAndGetElement(ELEMENT_DELETE_COMMENT_BUTTON.replace("${activityText}", activityText).replace("${commentText}", contentOfComment), DEFAULT_TIMEOUT,1,2);
+		}
+
 	}
+
 
 	/**
 	 * Delete a comment
