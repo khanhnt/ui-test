@@ -222,9 +222,10 @@ public class ECMS_SE_CreateNode_Folder extends PlatformBase{
 	 * => Refer the case: Qmetry ID (67344) 
 	 */
 	//@Test
-	public void test05_AddFolderWhenDoNotInputDataInTitleField(){
-
-	}
+//	REMOVED
+//	public void test05_AddFolderWhenDoNotInputDataInTitleField(){
+//
+//	}
 
 	/**
 	 * Qmetry ID: 67346

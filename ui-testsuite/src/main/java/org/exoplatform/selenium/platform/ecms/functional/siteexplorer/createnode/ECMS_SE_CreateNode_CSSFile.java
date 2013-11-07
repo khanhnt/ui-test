@@ -102,10 +102,10 @@ public class ECMS_SE_CreateNode_CSSFile extends PlatformBase{
 	@Test
 	public void test02_CheckCSSPriorityOf2CSSFilesThatHaveDifferentContent(){
 		String FILE_TITLE_BLUE = "ECMS_SE_CSS_FILE_BLUE_02";
-		String data0 = "body{background-color:green;}";
+		String data0 = "body {background: black;}";
 
 		String FILE_TITLE_RED = "ECMS_SE_CSS_FILE_RED_02";
-		String data1 = "p{ color:red;}";
+		String data1 = "UIOptionBar .ActionIcon:hover {color: blue;}";
 
 		info("Go to CSS Folder in Site Explorer");
 		navToolBar.goToSiteExplorer();

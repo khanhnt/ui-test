@@ -393,7 +393,7 @@ public class ECMS_SE_BasicAction_Edit extends PlatformBase {
 
 	/**
 	 * Qmetry ID: 66702
-	 * Edit child node has parent node is in [Check in] status
+	 * Edit not-nt:file child node which has parent node is in [Check in] status
 	 * 
 	 */
 	//edit a document in a checked in document

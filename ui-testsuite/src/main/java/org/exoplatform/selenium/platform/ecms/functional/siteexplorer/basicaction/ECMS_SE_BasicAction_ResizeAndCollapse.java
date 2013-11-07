@@ -72,25 +72,26 @@ public class ECMS_SE_BasicAction_ResizeAndCollapse extends PlatformBase {
 	 * Resize column in right panel
 	 * -> Do not saved this resize as test case in Qmetry
 	 */
-	@Test
-	public void test02_SavedResizeOfTheRightPanel_IntranetDocuments(){
-		magDri.addView2Drive("Web", "Personal Documents");
-		actBar.goToViewMode("Web");
-		
-		String before = waitForAndGetElement(resize.ELEMENT_COLUMN_NAME.replace("${name}", "Document Title")).getAttribute("style").replace("width: ", "").replace(";", "");		
-		info("Size of column Document Title before resize is " + before);
-		resize.resizeColumnInRightPanel("2", 100);
-		String after = waitForAndGetElement(resize.ELEMENT_COLUMN_NAME.replace("${name}", "Document Title")).getAttribute("style").replace("width: ", "").replace(";", "");		
-		info("Size of column Document Title after resize is " + after);
-		assert before != after;
-		
-		nav.goToHomePage();
-		nav.goToPersonalDocuments();
-		actBar.goToViewMode("Web");
-		String after1 = waitForAndGetElement(resize.ELEMENT_COLUMN_NAME.replace("${name}", "Document Title")).getAttribute("style").replace("width: ", "").replace(";", "");		
-		info("Size of column Document Title saving is " + after1);
-		
-	}
+//	REMOVED
+//	@Test
+//	public void test02_SavedResizeOfTheRightPanel_IntranetDocuments(){
+//		magDri.addView2Drive("Web", "Personal Documents");
+//		actBar.goToViewMode("Web");
+//		
+//		String before = waitForAndGetElement(resize.ELEMENT_COLUMN_NAME.replace("${name}", "Document Title")).getAttribute("style").replace("width: ", "").replace(";", "");		
+//		info("Size of column Document Title before resize is " + before);
+//		resize.resizeColumnInRightPanel("2", 100);
+//		String after = waitForAndGetElement(resize.ELEMENT_COLUMN_NAME.replace("${name}", "Document Title")).getAttribute("style").replace("width: ", "").replace(";", "");		
+//		info("Size of column Document Title after resize is " + after);
+//		assert before != after;
+//		
+//		nav.goToHomePage();
+//		nav.goToPersonalDocuments();
+//		actBar.goToViewMode("Web");
+//		String after1 = waitForAndGetElement(resize.ELEMENT_COLUMN_NAME.replace("${name}", "Document Title")).getAttribute("style").replace("width: ", "").replace(";", "");		
+//		info("Size of column Document Title saving is " + after1);
+//		
+//	}
 	
 	/**CaseId: 74873 -> Resize the left panel from Intranet/Documents
 	 * this case is having issue ECMS-5368

@@ -411,7 +411,7 @@ public class ECMS_SE_CreateNode_Document extends PlatformBase{
 		ecmsPer.setPermissionForNode(true, false, false);
 		button.save();
 
-		info("Login by user who has not permission to add node inside the above node");
+		info("Login by user who does not have permission to add node inside the above node");
 		magAcc.signOut();
 		magAcc.signIn("mary", DATA_PASS);
 
