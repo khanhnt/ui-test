@@ -10,5 +10,44 @@
 
 	<artifactId>ui-common</artifactId>
 	<packaging>jar</packaging>
+	<properties>
+		<source.folder>${project.basedir}/src/main/java</source.folder>
+	</properties>
+
+	<build>
+		<plugins>
+			<plugin>
+                                <groupId>org.apache.maven.plugins</groupId>
+                                <artifactId>maven-javadoc-plugin</artifactId>
+                                <version>2.9</version>
+                                <executions>
+                                        <execution>
+                                                <id>c-generate</id>
+                                                <phase>compile</phase>
+                                                <goals>
+                                                        <goal>javadoc</goal>
+                                                </goals>
+                                                <configuration>
+                                                        <sourcepath>${source.folder}</sourcepath>
+                                                        <doctitle>eXo Platform - Java Selenium Test Framework Documentation 4.0</doctitle>
+                                                        <sourceFileIncludes>
+                                                                <include>org/exoplatform/selenium/platform/wiki/*.java</include>
+ 							</sourceFileIncludes>
+                                                        <groups>
+                                                                <group>
+                                                                        <title>Wiki</title>
+                                                                        <packages>org.exoplatform.selenium.platform.wiki.*</packages>
+                                                                </group>
+ 							</groups>
+	                                                        <reportOutputDirectory>${project.build.directory}</reportOutputDirectory>
+                                                        <destDir>Javadoc</destDir>
+							<skip value="false"></skip>
+                                                </configuration>
+                                        </execution>
+                                </executions>
+                        </plugin>
+		</plugins>
+	</build>
+
 
 </project>
