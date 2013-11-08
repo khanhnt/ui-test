@@ -30,7 +30,8 @@ public class HomePageActivity extends PlatformBase{
 	public final String ELEMENT_ACTIVITY_DELETE = "//div[@class='text' or @class = 'description'or @class='linkSource' or contains(@id, 'ContextBox')]/*[contains(text(), '${activityText}')]/ancestor::div[contains(@id,'ActivityContextBox')]//a[contains(@id, 'DeleteActivityButton')]";
 	public final By ELEMENT_MESSAGE_CONFIRM_DELETE_ACTIVITY = By.xpath("//*[text()='Are you sure you want to delete this activity?']");
 	public final String ELEMENT_ACTIVITY_AUTHOR_ACTIVITY = "//*[contains(text(), '${activityText}')]/../../../../..//*[@class='author']";
-
+	public final String ELEMENT_ACTIVITY_COMMENT_NUMBER = "//";
+	
 	//like and unlike icon
 	public final String ELEMENT_LIKE_ICON = "//div[@class='text' or @class = 'description'or @class='linkSource' or contains(@id, 'ContextBox')]/*[contains(text(), '${activityText}')]//ancestor::div[contains(@id,'ActivityContextBox')]//*[starts-with(@id, 'LikeLink')]";
 	public final String ELEMENT_UNLIKE_ICON = "//div[@class='text' or @class = 'description'or @class='linkSource' or contains(@id, 'ContextBox')]/*[contains(text(), '${activityText}')]//ancestor::div[contains(@id,'ActivityContextBox')]//*[starts-with(@id, 'UnLikeLink')]";
@@ -44,6 +45,8 @@ public class HomePageActivity extends PlatformBase{
 	public final String ELEMENT_COMMENT_LINK = "//div[@class='text' or @class = 'description'or @class='linkSource' or contains(@id, 'ContextBox')]/*[contains(text(), '${activityText}')]//ancestor::div[contains(@id,'ActivityContextBox')]//*[starts-with(@id, 'CommentLink')]";
 	public final String ELEMENT_ACTIVITY_COMMENT_CONTENT = "//*[contains(text(),'${title}')]/../../../..//*[@class='contentComment']/../*[contains(text(), '${comment}')]";
 	public final String ELEMENT_ACTIVITY_COMMENT_CONTENT_1 = "//*[text()='${title}']/ancestor::div[@class='boxContainer']//*[@class='contentComment']";
+	public final String ELEMENT_COMMENT_BLOCK = "//a[contains(text(),'${title}')]/../../../..//div[contains(@class,'commentItem commentItemLast')]";
+	public final String ELEMENT_COMMENT_LAST = "//a[contains(text(),'${title}')]/../../../..//div[contains(@class,'commentItem commentItemLast')]//*[contains(text(), '${comment}')]";
 
 	//Comment box for ECMS data type
 	public final String ELEMENT_ACTIVITY_COMMENT_CONTENT_2 = "//*[@title='${title}']/ancestor::div[@class='boxContainer']//*[@class='contentComment']";
@@ -107,12 +110,14 @@ public class HomePageActivity extends PlatformBase{
 
 	//Answer activity
 	public final String ELEMENT_QUESTION_CONTENT = "//a[text()='${title}']/../../..//div[@class='contentAnswer theContent']//p";
-	public final String ELEMENT_QUESTION_NUM_ANSWER = "//div[@class='contentAnswer theContent']//span[contains(text(),'${number} Answer')]";
-	public final String ELEMENT_QUESTION_NUM_COMMENT = "//div[@class='contentAnswer theContent']//span[contains(text(),'${number} Comment')]";
-	public final String ELEMENT_QUESTION_COMMENT = "//a[text()='${title}']/../../../..//div[@class='commentList']//p[@class='contentComment' and contains(text(), '${comment}')]";
+	public final String ELEMENT_QUESTION_NUM_ANSWER = "//a[contains(text(),'${title}')]/../../../..//div[@class='contentAnswer theContent']//span[contains(text(),'${number} Answer')]";
+	public final String ELEMENT_QUESTION_NUM_COMMENT = "//a[contains(text(),'${title}')]/../../../..//div[@class='contentAnswer theContent']//span[contains(text(),'${number} Comment')]";
+	public final String ELEMENT_QUESTION_COMMENT = "//a[contains(text(),'${title}')]/../../../..//div[@class='commentList']//p[@class='contentComment' and contains(text(), '${comment}')]";
 	public final String ELEMENT_QUESTION_RATE = "//a[@class='linkTitle' and text()='${title}']/../..//div[@class='avgRatingImages sumaryRate']/i[@class='voted'][${rate}]";
 	public final String ELEMENT_QUESTION_HAFT_RATE = "//a[@class='linkTitle' and text()='${title}']/../..//div[@data-original-title='Average']/i[@class='votedHaft']";
 	public final String ELEMENT_QUESTION_VIEW_COMMENT = "//a[text()='${title}']/../../../..//div[@class='commentListInfo clearfix']/a";
+	public final String MSG_ANSWER_QUESTION = "Answer has been submitted: ${answer}";
+	
 	//Forum activity
 	public final String ELEMENT_FORUM_ACT_CONTENT = "//a[text()='${title}']/../../..//div[@class='contentForum theContent']//p";
 	public final String ELEMENT_FORUM_NUMBER_REPLY = "//a[text()='${title}']/../../..//div[@class='contentForum theContent']/span[text()='${number} Replies']";
@@ -538,7 +543,7 @@ public class HomePageActivity extends PlatformBase{
 		info("Check for comment for Answer of question on activity");
 
 		//Check number of answer
-		waitForAndGetElement(ELEMENT_QUESTION_NUM_ANSWER.replace("${number}", Integer.toString(number)));
+		waitForAndGetElement(ELEMENT_QUESTION_NUM_ANSWER.replace("${title}",question).replace("${number}", Integer.toString(number)));
 
 		for (int i = 0; i < number; i ++){
 			waitForAndGetElement(ELEMENT_QUESTION_COMMENT.replace("${title}", question).replace("${comment}", "Answer has been submitted: " + answer[i]));
@@ -556,7 +561,7 @@ public class HomePageActivity extends PlatformBase{
 		info("Check for comment of question on activity");
 
 		//Check number of comment
-		waitForAndGetElement(ELEMENT_QUESTION_NUM_COMMENT.replace("${number}", Integer.toString(number)));
+		waitForAndGetElement(ELEMENT_QUESTION_NUM_COMMENT.replace("${title}", question).replace("${number}", Integer.toString(number)));
 		for (int i = 0; i < number; i ++){
 			waitForAndGetElement(ELEMENT_QUESTION_COMMENT.replace("${title}", question).replace("${comment}", comment[i]));
 		}
@@ -734,29 +739,35 @@ public class HomePageActivity extends PlatformBase{
 		waitForTextPresent(lastReply);
 
 	}
-	/**View a reply by clicking on View in activity
+	/** View Answer, comment, reply of topic...from comment of activity
 	 * @author thuntn
-	 * @param topic
-	 * @param reply
+	 * @param activity: title of question, topic...
+	 * @param comment: comment of activity
 	 */
-	public void viewReplyFromActivity(String topic, String reply){
-		info("View a reply by clicking on View in activity");
+	public void viewActivity(String activity, String comment){
 		Actions actions = new Actions(driver);
-		WebElement element = waitForAndGetElement(ELEMENT_TOPIC_COMMENT.replace("${title}",topic).replace("${comment}", reply));
+		WebElement element = waitForAndGetElement(ELEMENT_TOPIC_COMMENT.replace("${title}",activity).replace("${comment}", comment));
 
 		Locatable hoverItem = (Locatable) waitForAndGetElement(By.xpath("//div[@class='activityBottom']"));
 		int y = hoverItem.getCoordinates().onPage().getY();
 		((JavascriptExecutor)driver).executeScript("window.scrollBy(0,"+y+");");
 		actions.moveToElement(element).click().perform();
 
-		//click(ELEMENT_REPLY_VIEW.replace("${title}", topic).replace("${comment}", reply),2);
-		WebElement elementView = waitForAndGetElement(ELEMENT_REPLY_VIEW.replace("${comment}", reply), 3000, 1, 2);
+		WebElement elementView = waitForAndGetElement(ELEMENT_REPLY_VIEW.replace("${comment}", comment), 3000, 1, 2);
 		((JavascriptExecutor)driver).executeScript("arguments[0].click();", elementView);
-
-		waitForAndGetElement(post.ELEMENT_POST_REPLY_BUTTON);
-		//waitForTextPresent(reply);
-		waitForAndGetElement(post.ELEMENT_POST_CONTENT.replace("${postContent}", reply));
 	}
+	/**View a reply by clicking on View in activity
+     * @author thuntn
+     * @param topic
+     * @param reply
+     */
+    public void viewReplyFromActivity(String topic, String reply){
+            info("View a reply by clicking on View in activity");
+
+            viewActivity(topic, reply);
+            waitForAndGetElement(post.ELEMENT_POST_REPLY_BUTTON);
+            waitForAndGetElement(post.ELEMENT_POST_CONTENT.replace("${postContent}", reply));
+    }
 
 	/**
 	 * @author phuongdt

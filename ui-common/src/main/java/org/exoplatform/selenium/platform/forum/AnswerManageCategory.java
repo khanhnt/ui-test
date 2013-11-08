@@ -250,6 +250,8 @@ public class AnswerManageCategory extends AnswerBase {
 	 */
 	public void importAnswerCategory(String fileName){
 		info("Import category from file " + fileName);
+		
+		String[] links = fileName.split("/");
 		click(ELEMENT_CATEGORY_BUTTON);
 		click(ELEMENT_IMPORT_CATEGORY_LINK);
 		
@@ -257,7 +259,7 @@ public class AnswerManageCategory extends AnswerBase {
 		((JavascriptExecutor)driver).executeScript("arguments[0].style.display = 'block';", element);
 		element.sendKeys(Utils.getAbsoluteFilePath("TestData/" + fileName));
 		switchToParentWindow();
-		waitForAndGetElement("//*[text()='" + fileName + "']", DEFAULT_TIMEOUT, 1, 2);
+		waitForAndGetElement(ELEMENT_CONTAINS_TEXT.replace("${text}", links[links.length-1]), DEFAULT_TIMEOUT, 1, 2);
 		button.save();
 		waitForMessage(ELEMENT_IMPORT_SUCCESS_MESSAGE);
 		click(ELEMENT_OK_INFOR_POPUP);

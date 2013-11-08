@@ -475,7 +475,7 @@ public class WikiBase extends PlatformBase{
 	/**
 	 * Migrate to PLF 4
 	 */
-	/**
+	 /**
 	 * @author vuna2
 	 * @param user: (type: Root, Admin, Author, Developer or Publisher)
 	 * @param wikiPath: an element path indicates how to access wiki page (eg, "Wiki home/WikiTest")

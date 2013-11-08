@@ -371,23 +371,6 @@ public class AnswerBase extends ForumBase {
 		Utils.pause(1000);
 	}
 
-	/**
-	 * function get an element from link text when cannot get by text in xpath
-	 * @param text
-	 * @return
-	 */
-	public WebElement getElementFromTextByJquery(String text){
-
-		JavascriptExecutor js = (JavascriptExecutor) driver;
-		Utils.pause(2000);
-		try{
-			WebElement web = (WebElement) js.executeScript("return $(\"a:contains('" + text + "')\").get(0);");
-			return web;
-		}catch(org.openqa.selenium.WebDriverException e){
-			WebElement web = (WebElement) js.executeScript("return $(\"a:contains('" + text + "')\").get(0);");
-			return web;
-		}
-	}
 	
 	//Set display Category
 	public void setDisplayCategory(String categoryScope, boolean display){
